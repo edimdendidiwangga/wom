@@ -6,52 +6,49 @@
 						<div id="search-bar">
 							<input class="search" type="text" placeholder="Search"><i class="fa fa-search search-icon"></i>
 						</div>
-						<!-- /SEARCH BAR -->
-						
-						<!-- SIDEBAR QUICK-LAUNCH -->
-						<!-- <div id="quicklaunch">
-						<!-- /SIDEBAR QUICK-LAUNCH -->
-						
-						<!-- SIDEBAR MENU -->
 						<ul>
 							
 							<li>
 								<a href="index.php">
-								<i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">Dashboard</span>
+								<i class="fa fa-home fa-fw"></i> <span class="menu-text">Dashboard</span>
 								<span class="selected"></span>
 								</a>					
 							</li>
 							<li>
-								<a href="jawaban.php">
-								<i class="fa fa-trophy fa-fw"></i> <span class="menu-text">Hasil Tes</span>
+								<a href="data-active.php">
+								<i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">Data Active</span>
 								<span class="selected"></span>
 								</a>					
 							</li>
 							<li>
-								<a href="kunci.php">
-								<i class="fa fa-key fa-fw"></i> <span class="menu-text">Kunci Jawaban</span>
+								<a href="gaji-history.php">
+								<i class="fa fa-dollar fa-fw"></i> <span class="menu-text">Payroll</span>
 								<span class="selected"></span>
 								</a>					
 							</li>
-							<li class="has-sub">
-								<a href="javascript:;" class="">
-								<i class="fa  fa-suitcase fa-fw"></i> <span class="menu-text">Customer</span>
-								<span class="arrow"></span>
-								</a>
-								<ul class="sub">
-									<li><a class="" href="customer.php"><span class="sub-menu-text">List Customer</span></a></li>
-									<li><a class="" href="cabang.php"><span class="sub-menu-text">List Kantor Cabang</span></a></li>
-								</ul>
+							<li>
+								<a href="contract.php">
+								<i class="fa fa-suitcase fa-fw"></i> <span class="menu-text">Contract</span>
+								<span class="selected"></span>
+								</a>					
 							</li>
-							<li class="has-sub">
-								<a href="javascript:;" class="">
-								<i class="fa fa-briefcase fa-fw"></i> <span class="menu-text">Posisi</span>
-								<span class="arrow"></span>
-								</a>
-								<ul class="sub">
-									<li><a class="" href="posisi.php"><span class="sub-menu-text">List Posisi</span></a></li>
-									<li><a class="" href="sub-posisi.php"><span class="sub-menu-text">List Sub Posisi</span></a></li>
-								</ul>
+							<li>
+								<a href="resign.php">
+								<i class="fa fa-minus-square fa-fw"></i> <span class="menu-text">Resign</span>
+								<span class="selected"></span>
+								</a>					
+							</li>
+							<li>
+								<a href="mutasi-sp.php">
+								<i class="fa fa-shield fa-fw"></i> <span class="menu-text">Mutasi & SP</span>
+								<span class="selected"></span>
+								</a>					
+							</li>
+							<li>
+								<a href="bu.php">
+								<i class="fa fa-sitemap fa-fw"></i> <span class="menu-text">Manajemen BU</span>
+								<span class="selected"></span>
+								</a>					
 							</li>
 							<li>
 								<a href="admin.php">

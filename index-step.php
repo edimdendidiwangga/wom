@@ -52,10 +52,13 @@ $(document).ready(function(){
         data: "bu="+bu,
         cache: false,
         success: function(msg){
+            //jika data sukses diambil dari server kita tampilkan
+            //di <select id=kota>
             $("#cabang").html(msg);
         }
     });
   });
+ 
 });
 
 </script>
@@ -78,10 +81,10 @@ $(document).ready(function(){
 				  <div class="modal-content">
 					<div class="modal-header">
 					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title">Message Box </h4>
+					  <h4 class="modal-title">Box Settings</h4>
 					</div>
 					<div class="modal-body">
-					  Harap selesaikan kolom ini !.
+					  Here goes box setting content.
 					</div>
 					<div class="modal-footer">
 					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -108,12 +111,12 @@ $(document).ready(function(){
 											<a href="index.php">Home</a>
 										</li>
 										<li>
-											<a href="#">Tambah Data Karyawan</a>
+											<a href="#">Tambah Data Kandidat</a>
 										</li>
 									</ul>
 									<!-- /BREADCRUMBS -->
 									<div class="clearfix">
-										<h3 class="content-title pull-left">Form Tambah Data Karyawan</h3>
+										<h3 class="content-title pull-left">Form Tambah Data Kandidat</h3>
 									</div>
 									<div class="description">Form Wizard and Validations</div>
 								</div>
@@ -144,24 +147,23 @@ $(document).ready(function(){
 										   <div class="wizard-content">
 											  <ul class="nav nav-pills nav-justified steps">
 												 <li>
-													<a href="#account" data-toggle="tab" class="wiz-step active">
+													<a href="#biodata" data-toggle="tab" class="wiz-step">
 													<span class="step-number">1</span>
-													<span class="step-name"><i class="fa fa-check"></i> Biodata Karyawan </span>   
+													<span class="step-name"><i class="fa fa-check"></i> Isi Bidodata </span>   
 													</a>
 												 </li>
 
 												 <li>
-													<a href="#payment" data-toggle="tab" class="wiz-step">
+													<a href="#data-karyawan" data-toggle="tab" class="wiz-step active">
 													<span class="step-number">2</span>
 													<span class="step-name"><i class="fa fa-check"></i>Data Karyawan</span>   
 													</a>
 												 </li>
-												
 												 <li>
-													<a href="#pengiriman" data-toggle="tab" class="wiz-step">
+													<a href="#lain" data-toggle="tab" class="wiz-step active">
 													<span class="step-number">3</span>
-													<span class="step-name"><i class="fa fa-check"></i> Lain-lain </span>   
-													</a> 
+													<span class="step-name"><i class="fa fa-check"></i> Lain-lain</span>   
+													</a>
 												 </li>
 												 
 											  </ul>
@@ -177,9 +179,8 @@ $(document).ready(function(){
 													<a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
 													Your form validation is successful!
 												 </div>
-												 <div class="tab-pane active" id="account">
-												 
-													<div class="form-group">
+												 <div class="tab-pane active" id="biodata">
+												 <div class="form-group">
 													   <label class="control-label col-md-3">Nama Karyawan<span class="required">*</span></label>
 													   <div class="col-md-4">
 														  <input type="text" class="form-control" name="nama_karyawan" placeholder="Isikan Nama Lengkap" required>
@@ -321,45 +322,10 @@ $(document).ready(function(){
 														<textarea class="form-control" name="domisili_address"  placeholder="Isikan Alamat Domisili" rows="5" required></textarea> 
 														</div>
 													</div>
-													<div class="form-group">
-													   <label class="control-label col-md-3">Domisili<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <?php
-mysql_connect("localhost","root","");
-mysql_select_db("db_hrd");
-?>
+								
+												</div>
 
-<select class="form-control" name="propinsi" id="propinsi">
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Provinsi</option>
-<?php
-//mengambil nama-nama propinsi yang ada di database
-$propinsi = mysql_query("SELECT * FROM provinsi ORDER BY id_provinsi");
-while($p=mysql_fetch_array($propinsi)){
-echo "<option value=\"$p[id_provinsi]\">$p[nama_provinsi]</option>\n";
-}
-?>
-</select>
-
-<select class="form-control" name="kota" id="kota" required>
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Kota</option>
-<?php
-//mengambil nama-nama kabupaten/kota yang ada di database
-$kota = mysql_query("SELECT * FROM kabupaten ORDER BY id_kabupaten");
-while($p=mysql_fetch_array($propinsi)){
-echo "<option value=\"$p[id_kabupaten]\">$p[nama_kabupaten]</option>\n";
-}
-?>
-</select>
-
-														  <span class="error-span"></span>
-													   </div>
-													</div>
-												
-												 </div>
-												
-												<div class="tab-pane active" id="data-karyawan">
+												 <div class="tab-pane" id="data-karyawan">
 													<div class="form-group">
 													   <label class="control-label col-md-3">NIK<span class="required">*</span></label>
 													   <div class="col-md-4">
@@ -402,35 +368,32 @@ echo "<option value=\"$p[id_kabupaten]\">$p[nama_kabupaten]</option>\n";
 														  <span class="error-span"></span>
 													   </div>
 													</div>
+													<?php 
+											$que=mysql_query("SELECT nama_cabang
+										    FROM bu 
+										    where id_bu=".$_SESSION['id_bu']."");
+											if ($que === FALSE) {
+											    die(mysql_error());
+											}
+											$data = mysql_fetch_array($que);
+
+											?>
 													<div class="form-group">
-													   <label class="control-label col-md-3">BU<span class="required">*</span></label>
+													   <label class="control-label col-md-3">BU</label>
 													   <div class="col-md-4">
-														 
-
-<select class="form-control" id="bu">
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih BU</option>
-<?php
-//mengambil nama-nama propinsi yang ada di database
-$bu = mysql_query("SELECT bu FROM bu ORDER BY bu desc");
-while($p=mysql_fetch_array($bu)){
-echo "<option value=\"$p[bu]\">$p[bu]</option>\n";
-}
-?>
-</select>
-
-<select class="form-control" name="id_bu" id="cabang" required>
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Nama Cabang</option>
-
-</select>
-
+													   	<input type="text" class="form-control" value="<?php echo "BU ".$_SESSION['id_bu']; ?>" disabled>
+													   	<input type="hidden" class="form-control" name="id_bu" value="<?php echo $_SESSION['id_bu']; ?>" >
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Cabang</label>
+													   <div class="col-md-4">
+													   	<input type="text" class="form-control" value="<?php echo $data['nama_cabang'];?>" disabled>
 														  <span class="error-span"></span>
 													   </div>
 													</div>
 												
-												 </div>
-
 													<div class="form-group">
 													   <label class="control-label col-md-3">Location</label>
 													   <div class="col-md-4">
@@ -460,7 +423,7 @@ echo "<option value=\"$p[bu]\">$p[bu]</option>\n";
 															 <option value="" disabled="" selected="" style="display:none" ;="">Pilih Jaminan</option>
 															 <option value="1">Ijazah</option>
 															 <option value="2">BPKB</option>
-															 <option value="3">Ijazah+BPKB</option>			
+															 <option value="3">Ijazah+BPKB</option>
 															</select>
 														  <span class="error-span"></span>
 													   </div>
@@ -485,9 +448,7 @@ echo "<option value=\"$p[bu]\">$p[bu]</option>\n";
 																<input type="radio" name="kartu_ketenagakerjaan" value="2" data-title="LANJUT" class="uniform"/>
 															 LANJUT
 															 </label>	
-															 
 													   </div>
-													
 													</div>
 													<div class="form-group">
 													   <label class="control-label col-md-3">No BPJS Ketenagakerjaan<span class="required">*</span></label>
@@ -507,9 +468,7 @@ echo "<option value=\"$p[bu]\">$p[bu]</option>\n";
 																<input type="radio" name="kartu_kesehatan" value="2" data-title="LANJUT" class="uniform"/>
 															 LANJUT
 															 </label>	
-															 
 													   </div>
-													
 													</div>
 													<div class="form-group">
 													   <label class="control-label col-md-3">No BPJS Kesehatan<span class="required">*</span></label>
@@ -524,889 +483,118 @@ echo "<option value=\"$p[bu]\">$p[bu]</option>\n";
 													   <div class="col-md-4">
 														<textarea class="form-control" name="ket"  placeholder="Isikan Keterangan" rows="5" required></textarea> 
 														</div>
-													</div>
-													
-
-												 <div class="tab-pane" id="paymentd">
+													</div>	
+												 </div>
+												 <div class="tab-pane" id="lain">
 												 <div class="col-md-6">
 												 <div class="box border orange">
 											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Riwayat Pendidikan</h4>
+												<h4><i class="fa fa-bars"></i>Data Family</h4>
 												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													
-												</div>
-											</div>
-											<div class="box-body big">
-												 <div class="form-group">
-													   <label class="control-label col-md-4">Pendidikan<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <select class="form-control" id="mySelect" name="pendidikan">
-															   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Pendidikan Terakhir</option>
-															   <option value="S3">S3</option>
-															   <option value="S2">S2</option>
-															   <option value="S1">S1</option>
-															   <option value="D3">D3</option>
-															   <option value="D1">D1</option>
-															   <option value="SMK">SMK</option>
-															   <option value="SMA">SMA</option>
-															   <option value="SMP">SMP</option>
-														   </select>	
-														  <span class="error-span"></span>
-														  
-													   </div>
-
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Nama Sekolah<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="nama_sekolah" placeholder="Nama Sekolah" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Jurusan<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="jurusan" placeholder="Isikan Jurusan" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Tahun Lulus<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="thn_lulus" placeholder="Isikan Tahun Lulus" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">IPK<span class="required"></span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="ipk" placeholder="Isikan IPK"/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-											</div>
-										</div>
-										</div>
-
-												
-												
-											<div class="col-md-6">
-												<div class="box border blue">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Pengalaman Kerja</h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													
-												</div>
-											</div>
-											<div class="box-body" id="riwayat">
-											<div class="form-group">
-													   <label class="control-label col-md-3"></label>
-													   <div class="col-md-4">
-															 <label class="radio">
-																<input type="radio" name="nana" id="pernah" value="" class="uniform" onchange="myMethod()"/>
-															 Pernah Bekerja
-															 </label>
-														</div>
-														<div class="col-md-4">
-															 <label class="radio">
-																<input type="radio" name="nana" id="fresh" value="Freshgraduate" class="uniform" onchange="myFungsi()"/>
-															 FreshGraduate
-															 </label>	
-															 
-													   </div>
-													
-													</div>
-											</div>
-											<div class="box-body big" id="perusahaan" style="display: none">
-											
-												<div class="form-group">
-													   <label class="control-label col-md-4" id="lblpershn">Nama Perusahaan<span class="required">*</span></label>
-													   <label class="control-label col-md-4" id="lblfresh" style="display: none">FreshGraduate<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" id="nm_perusahaan" name="perusahaan" placeholder="Isikan Nama Perusahaan" required/>
-
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="jns">
-													   <label class="control-label col-md-4">Jenis Perusahaan</label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" name="jns_perusahaan" placeholder="Isikan Jenis Perusahaan"  />
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="posisi">
-													   <label class="control-label col-md-4">Posisi<span class="required">*</span></label>
-													   <div class="col-md-8">
-													    <input type="text" class="form-control" name="posisi" placeholder="Isikan Jabatan Lama"  />
-														 
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="periode">
-													   <label class="control-label col-md-4">Periode<span class="required">*</span></label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" placeholder="Periode Awal Kerja" id="datep1" required/>   to 
-														   <input type="text" class="form-control" placeholder="Periode Akhir Kerja" id="datep2" onchange="myPeriod()" />
-														   <label class="checkbox"> <div class="checker"><span><input id="datep3" type="checkbox" class="uniform" name="sekarang" value="Sekarang"></span></div> Sekarang</label>
-														   <input type="hidden" name="periode" id="v_periode" value="">
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="d1">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 1<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi1" placeholder="Isikan Deskripsi Pekerjaan" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="d2">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 2<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi2" placeholder="Isikan Deskripsi Pekerjaan" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="d3">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 3<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi3" placeholder="Isikan Deskripsi Pekerjaan" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="gaji">
-													   <label class="control-label col-md-4">Gaji Terakhir</label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" name="gaji_terakhir" placeholder="Isikan Gaji Terakhir" />
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<a id="btnplus" class="btn btn-success"><B>+</B></a>
-											</div>
-										</div>
-										</div>
-												 
-										<div class="col-md-6" id="pengalaman2" style="display: none">
-												<div class="box border blue">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Pengalaman Kerja 2</h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-											 			<i class="fa fa-refresh"></i>
-													</a>
-													
 												</div>
 											</div>
 											<div class="box-body big">
 												<div class="form-group">
-													   <label class="control-label col-md-4">Nama Perusahaan</label>
+													   <label class="control-label col-md-4">Mother Name<span class="required">*</span></label>
 													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="perusahaan_1" placeholder="Isikan Nama Perusahaan" required/>
-
+														  <input type="text" class="form-control" name="mother_name" placeholder="Isikan Nama Ibu" required/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
 												<div class="form-group">
-													   <label class="control-label col-md-4">Jenis Perusahaan</label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" name="jns_perusahaan_1" placeholder="Isikan Jenis Perusahaan" />
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Posisi</label>
+													   <label class="control-label col-md-4">Spouse Name<span class="required">*</span></label>
 													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="posisi_1" placeholder="Isikan Jabatan Lama"  />
-														 
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="periode">
-													   <label class="control-label col-md-4">Periode<span class="required">*</span></label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" placeholder="Periode Awal Kerja" id="datep1_2" required/>   to 
-														   <input type="text" class="form-control" placeholder="Periode Akhir Kerja" id="datep2_2" onchange="myPeriod2()" required/>
-
-														   <input type="hidden" name="periode_1" id="v_periode_2" value="">
+														  <input type="text" class="form-control" name="spouse_name" placeholder="Isikan Nama Pasangan" required/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
 												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 1<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi1_1" placeholder="Isikan Deskripsi Pekerjaan" required/>
+													   <label class="control-label col-md-4">Spouse Birthdate<span class="required">*</span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="spouse_birthdate" placeholder="Isikan Tgl Lahir Pasangan" required/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
 												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 2<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi2_1" placeholder="Isikan Deskripsi Pekerjaan" required/>
+													   <label class="control-label col-md-4">Chile Name 1<span class="required"></span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="chile1_name" placeholder="Isikan nama anak 1"/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
 												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 3<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi3_1" placeholder="Isikan Deskripsi Pekerjaan" required/>
+													   <label class="control-label col-md-4">Chile Birthdate 1<span class="required"></span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="chile1_birthdate" placeholder="Isikan Nama Anak 1"/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
 												<div class="form-group">
-													   <label class="control-label col-md-4">Gaji Terakhir</label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" name="gaji_terakhir_1" placeholder="Isikan Gaji Terakhir" />
+													   <label class="control-label col-md-4">Chile Name 2<span class="required"></span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="chile2_name" placeholder="Isikan nama anak 2"/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
-												<a id="btnplus2" class="btn btn-success"><B>+</B></a>
-												<a id="btnminus1" class="btn btn-warning"><B>-</B></a>
+												<div class="form-group">
+													   <label class="control-label col-md-4">Chile Birthdate 2<span class="required"></span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="chile2_birthdate" placeholder="Isikan Nama Anak 2"/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												<div class="form-group">
+													   <label class="control-label col-md-4">Chile Name 3<span class="required"></span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="chile3_name" placeholder="Isikan nama anak 3"/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												<div class="form-group">
+													   <label class="control-label col-md-4">Chile Birthdate 3<span class="required"></span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="chile3_birthdate" placeholder="Isikan Nama Anak 3"/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
 											</div>
 										</div>
 										</div>
-										<div class="col-md-6" id="pengalaman3" style="display: none">
-											<div class="box border blue">
+										<div class="col-md-6">
+												 <div class="box border orange">
 											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Pengalaman Kerja 3</h4>
+												<h4><i class="fa fa-bars"></i>Contract</h4>
 												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
 												</div>
 											</div>
 											<div class="box-body big">
 												<div class="form-group">
-													   <label class="control-label col-md-4">Nama Perusahaan</label>
+													   <label class="control-label col-md-4"> <span class="required">*</span></label>
 													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="perusahaan_2" placeholder="Isikan Nama Perusahaan"/>
-
+														  <input type="text" class="form-control" name="no_pkwt" placeholder="Isikan Nama Ibu" required/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
 												<div class="form-group">
-													   <label class="control-label col-md-4">Jenis Perusahaan</label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" name="jns_perusahaan_2" placeholder="Isikan Jenis Perusahaan" />
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Posisi</label>
+													   <label class="control-label col-md-4">Spouse Name<span class="required">*</span></label>
 													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="posisi_2" placeholder="Isikan Jabatan Lama"  />
-														 
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="periode">
-													   <label class="control-label col-md-4">Periode<span class="required">*</span></label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" placeholder="Periode Awal Kerja" id="datep1_3" required/>   to 
-														   <input type="text" class="form-control" placeholder="Periode Akhir Kerja" id="datep2_3" onchange="myPeriod3()" required/>
-														   <input type="hidden" name="periode_2" id="v_periode_3" value="">
+														  <input type="text" class="form-control" name="spouse_name" placeholder="Isikan Nama Pasangan" required/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
 												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 1</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi1_2" placeholder="Isikan Deskripsi Pekerjaan" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 2</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi2_2" placeholder="Isikan Deskripsi Pekerjaan" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 3</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi3_2" placeholder="Isikan Deskripsi Pekerjaan" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Gaji Terakhir</label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" name="gaji_terakhir_2" placeholder="Isikan Gaji Terakhir" />
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												
-												
-												<a id="btnminus2" class="btn btn-warning"><B>-</B></a>
-											</div>
-										</div>
-										</div>
-												
-											<div class="col-md-10">
-												<div class="box border purple">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Kualifikasi & Lainnya</h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													
-												</div>
-											</div>
-											<div class="box-body">
-												
-												  <div class="form-group">
-													   <label class="col-md-4 control-label" for="e2">Gaji yang Diharapkan</label>
-													   <div class="col-md-6">
-														  <select class="form-control" id="gaji_hrp" name="gaji_diinginkan">
-															   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Range Gaji yang Diharapkan</option>
-															   <option value="UMR">UMR</option>
-															   <option value=" <= 2.000.000"> <= 2 Jt</option>
-															   <option value="2.000.000 - 3.000.000">2 Jt - 3 Jt</option>
-															   <option value="3.000.000 - 4.000.000">3 Jt - 4 Jt</option>
-															   <option value="4.500.000 - 5.000.000">4.5 Jt - 5 Jt</option>
-															   <option value="5.000.000 - 6.000.000">5 Jt - 6 Jt</option>
-															   <option value="6.000.000 - 7.000.000">6 Jt - 7 Jt</option>
-															   <option value="7.000.000 - 8.000.000">7 Jt - 8 Jt</option>
-															   <option value="8.000.000 - 9.000.000">8 Jt - 9 Jt</option>
-															   <option value="9.000.000 - 10.000.000">9 Jt - 10 Jt</option>
-															   <option value=" >= 10.000.000"> >= 10 Jt</option>
-															   <option value="Sesuai dengan standart perusahaan">Sesuai dengan standart perusahaan</option>
-															   
-														   </select>	
-														 <!--  <input type="checkbox" id="lainnya2" >*Lainnya
-														  <input type="text" id="lain2" placeholder="Isikan Gaji Lainnya..?" onchange="myGaji()" style="display: none"/>
-														  -->
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="col-md-4 control-label" for="e2">Keterampilan dan Keahlian yang dimiliki<span class="required">*</span></label>
-													   <div class="col-md-6">
-												<input type="text" class="form-control" name="kualifikasi1" required>
-												<span class="error-span"></span>
-											</div>
-											</div>
-											<div class="form-group">
-											<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kualifikasi2">
-												<span class="error-span"></span>
-											</div>
-											</div>
-											<div class="form-group">
-											<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kualifikasi3">
-												<span class="error-span"></span>
-											</div>
-											</div>
-
-														 
-												
-											</div>
-										</div>
-
-								<div class="col-md-12">
-											<div class="box border pink">
-									<div class="box-title">
-										<h4><i class="fa fa-bars"></i>Kelengkapan Data</h4>
-										<div class="tools hidden-xs">
-											<a href="#box-config" data-toggle="modal" class="config">
-												<i class="fa fa-cog"></i>
-											</a>
-											<a href="javascript:;" class="reload">
-												<i class="fa fa-refresh"></i>
-											</a>
-											
-										</div>
-									</div>
-									<div class="box-body">
-										
-										  <div class="form-group">
-											
-											 <div class="col-md-6"> 
-												 <label class="checkbox"> <input name="ijazah" type="checkbox" class="uniform" value="1"> Ijazah</label> 
-												 <label class="checkbox"> <input name="transkrip" type="checkbox" class="uniform" value="1"> Transkrip Nilai</label> 
-												 <label class="checkbox"> <input name="sertifikat" type="checkbox" class="uniform" value="1"> Sertifikat Lainya</label> 
-												 <label class="checkbox"> <input name="surat_ket_kerja" type="checkbox" class="uniform" value="1" > Surat Keterangan Kerja</label> 
-												  <label class="checkbox"> <input name="skkb" type="checkbox" class="uniform" value="1"> SKKB</label> 
-												  <label class="checkbox"> <input name="skck" type="checkbox" class="uniform" value="1"> SKCK</label> 
-												 <label class="checkbox"> <input name="surat_ket_sehat" type="checkbox" class="uniform" value="1"> Surat Keterangan Sehat</label> 
-												 </div>
-												 <div class="col-md-6"> 
-												 <label class="checkbox"> <input name="photo" type="checkbox" class="uniform" value="1" > Photo</label> 
-												  <label class="checkbox"> <input name="tes_kepribadian" type="checkbox" class="uniform" value="1"> Test Kepribadian</label> 
-												 <label class="checkbox"> <input name="tes_iq" type="checkbox" class="uniform" value="1"> Test Pengetahuan Umum</label> 
-												 <label class="checkbox"> <input name="tes_eq" type="checkbox" class="uniform" value="1" > Tes Logika</label> 
-												  <label class="checkbox"> <input name="tes_disk" type="checkbox" class="uniform" value="1"> Test Disk</label> 
-												  <label class="checkbox"> <input name="tes_tiu" type="checkbox" class="uniform" value="1"> Test TIU</label> 
-												   <label class="checkbox"> <input name="lain" type="checkbox" class="uniform" value="1"> Lainnya</label> 
-												
-											 </div>
-										  </div>
-										</div>
-									</div>
-									</div>
-									</div>	 <!--
-													<div class="form-group">
-													   <label class="control-label col-md-3"><span class="required">*</span></label>
+													   <label class="control-label col-md-4">Spouse Birthdate<span class="required">*</span></label>
 													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="card_number" placeholder="Please provide 16 digit card number"/>
+														  <input type="text" class="form-control" name="spouse_birthdate" placeholder="Isikan Tgl Lahir Pasangan" required/>
 														  <span class="error-span"></span>
 													   </div>
-													</div>
-													<div class="form-group">
-													   <label class="control-label col-md-3">CVC<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" placeholder="Please provide 3 digit CVC" class="form-control" name="card_cvc"/>
-														  <span class="error-span"></span>
-													   </div>
-													</div>
-													<div class="form-group">
-													   <label class="control-label col-md-3">Card Expiry (MM/YYYY)<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" placeholder="Please provide card expiry date in MM/YYYY" maxlength="7" class="form-control" name="card_expirydate"/>
-														  <span class="error-span">e.g 12/1985</span>
-													   </div>
-													</div>												 
-													<div class="form-group">
-													   <label class="control-label col-md-3">Card Holder Name<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="card_holder_name" placeholder="Please provide card holder name"/>
-														  <span class="error-span"></span>
-													   </div>
-													</div>	
-													-->												
-												 </div>
-												 <div class="tab-pane" id="penilaian">
-												 <div class="col-md-7">
-												 <div class="box border green">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Penilaian Interview</h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													
-														
-													
 												</div>
-											</div>
-											<div class="box-body big">
-												<div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Penampilan</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="penampilan" required>
-												   <option></option>
-												   <option value="5">5 - ( Sangat Baik )</option>
-												   <option value="4">4 - ( Baik )</option>
-												   <option value="3">3 - ( Cukup )</option>
-												   <option value="2">2 - ( Kurang )</option>
-												   <option value="1">1 - ( Sangat Kurang )</option>
-												</select>												
-											 </div>
-										  </div>
-										    <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2" >Keterampilan dan Komunikasi</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="komunikasi" required>
-												   <option></option>
-												   <option value="5">5 - ( Sangat Baik )</option>
-												   <option value="4">4 - ( Baik )</option>
-												   <option value="3">3 - ( Cukup )</option>
-												   <option value="2">2 - ( Kurang )</option>
-												   <option value="1">1 - ( Sangat Kurang )</option>
-												</select>												
-											 </div>
-										  </div>
-										  <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Sikap dan Motivasi</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="sikap" required>
-												  <option></option>
-												   <option value="5">5 - ( Sangat Baik )</option>
-												   <option value="4">4 - ( Baik )</option>
-												   <option value="3">3 - ( Cukup )</option>
-												   <option value="2">2 - ( Kurang )</option>
-												   <option value="1">1 - ( Sangat Kurang )</option>
-												</select>												
-											 </div>
-										  </div>
-										  <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Pemahaman Terhadap Pekerjaan</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="pemahaman" required>
-												   <option></option>
-												   <option value="5">5 - ( Sangat Baik )</option>
-												   <option value="4">4 - ( Baik )</option>
-												   <option value="3">3 - ( Cukup )</option>
-												   <option value="2">2 - ( Kurang )</option>
-												   <option value="1">1 - ( Sangat Kurang )</option>
-												</select>												
-											 </div>
-										  </div>
-										  <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Komitmen dalam Bekerja</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="komitmen" required>
-												   <option></option>
-												   <option value="5">5 - ( Sangat Baik )</option>
-												   <option value="4">4 - ( Baik )</option>
-												   <option value="3">3 - ( Cukup )</option>
-												   <option value="2">2 - ( Kurang )</option>
-												   <option value="1">1 - ( Sangat Kurang )</option>
-												</select>												
-											 </div>
-										  </div>
-										  
-										  <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Pengalaman yang sesuai Pekerjaan</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="pengalaman" required>
-												   <option></option>
-												   <option value="5">5 - ( Sangat Baik )</option>
-												   <option value="4">4 - ( Baik )</option>
-												   <option value="3">3 - ( Cukup )</option>
-												   <option value="2">2 - ( Kurang )</option>
-												   <option value="1">1 - ( Sangat Kurang )</option>
-												</select>												
-											 </div>
-										  </div>
-										  <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Kemampuan Menggunakan Komputer</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="komputer" required>
-												   <option></option>
-												   <option value="Sangat Mahir">Sangat Mahir</option>
-												   <option value="Cukup Mahir">Cukup Mahir</option>
-												   <option value="Tidak Mahir">Tidak Mahir</option>
-												   
-												</select>												
-											 </div>
-										  </div>
-										   <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Kemampuan Bahasa Inggris</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="inggris" required>
-												   <option></option>
-												   <option value="Baik">Baik</option>
-												   <option value="Cukup Baik">Cukup Baik</option>
-												   <option value="Kurang">Kurang</option>  
-												   
-												</select>												
-											 </div>
-										  </div>
-											</div>
+												
 										</div>
 										</div>
-
-												
-												
-											<div class="col-md-5">
-												<div class="box border blue">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Tanggal Proses</h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													
-												</div>
-											</div>
-											<div class="box-body big">
-												<div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Tanggal Pemeriksaan CV<span class="required">*</span></label> 
-											 <div class="col-md-6">
-												<input type="text" class="form-control" name="tgl_periksa" id="tgl_periksa" required/>											
-											 </div>
-										  </div>
-										   <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Tanggal Interview</label> 
-											 <div class="col-md-6">
-												<input type="text" class="form-control" name="tgl_interview" id="tgl_interview" required/>											
-											 </div>
-										  </div>
-										   <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Tanggal Psikotes</label> 
-											 <div class="col-md-6">
-												<input type="text" class="form-control" name="tgl_psikotes" id="tgl_psikotes" required />											
-											 </div>
-										  </div>
-												
-												
-											</div>
 										</div>
-										</div>
-												 
-												
-												
-											<div class="col-md-12">
-												<div class="box border red">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Profil Kepribadian Berdasarkan Interview</h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													
 												</div>
-											</div>
-											<div class="box-body">
-												
-											<div class="form-group">
-												<label class="col-md-4 control-label" for="e2">Kelebihan</label>
-												<div class="col-md-6">
-												<input type="text" class="form-control" name="kl1" required>
-												<span class="error-span"></span>
-											</div>
-											</div>
-											<div class="form-group">
-											<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kl2" required>
-												<span class="error-span"></span>
-											</div>
-											</div>
-											<div class="form-group">
-											<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kl3">
-												<span class="error-span"></span>
-											</div>
-											</div>
-											<div class="form-group">
-											<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kl4" >
-												<span class="error-span"></span>
-											</div>
-											</div>	
-											<div class="form-group">
-											<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kl5">
-											</div>
-											</div>	
-										  	<div class="form-group">
-												<label class="col-md-4 control-label" for="e2">Kekurangan</label>
-												<div class="col-md-6">
-												<input type="text" class="form-control" name="kr1">
-												<span class="error-span"></span>
-										  	</div>
-											</div>	
-											<div class="form-group">
-											<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kr2">
-												<span class="error-span"></span>
-											</div>
-											</div>
-										  	<div class="form-group">
-										  	<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" name="kr3" class="form-control">
-											</div>
-											</div>
-										  	<div class="form-group"> 
-										  	<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" name="kr4" class="form-control">
-											</div>
-											</div>
-										  	<div class="form-group">
-										  	<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kr5">
-											</div>
-											</div>
-
-										  	</div>
-											</div>
-												</div>
-												</div>
-												 <div class="tab-pane" id="pengiriman">
-												<div class="form-group">
-													   <label class="control-label col-md-3">Posisi Dilamar 1<span class="required">*</span></label>
-													   <div class="col-md-6">
-														  
-														  <select class="selectpicker" data-show-subtext="true" data-live-search="true" name="dilamar1" required>
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Posisi Yang dilamar 1</option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM posisi order by nama_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_posisi']; ?>"><?php echo $cs['nama_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-													<select class="selectpicker" data-show-subtext="true" data-live-search="true" name="sub_posisi1">
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Sub Posisi</option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM sub_posisi order by nama_sub_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_sub_posisi']; ?>"><?php echo $cs['nama_sub_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-3">Posisi Dilamar 2</label>
-													   <div class="col-md-6">
-														  <select class="selectpicker" data-show-subtext="true" data-live-search="true" name="dilamar2" >
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Posisi Yang dilamar 2</option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM posisi order by nama_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_posisi']; ?>"><?php echo $cs['nama_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-													<select class="selectpicker" data-show-subtext="true" data-live-search="true" name="sub_posisi2">
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Sub Posisi</option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM sub_posisi order by nama_sub_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_sub_posisi']; ?>"><?php echo $cs['nama_sub_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-3">Posisi Dilamar 3</label>
-													   <div class="col-md-6">
-														  
-														    <select class="selectpicker" data-show-subtext="true" data-live-search="true" name="dilamar3">
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Posisi Yang dilamar 3</option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM posisi order by nama_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_posisi']; ?>"><?php echo $cs['nama_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-													<select class="selectpicker" data-show-subtext="true" data-live-search="true" name="sub_posisi3">
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Sub Posisi</option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM sub_posisi order by nama_sub_posisi asc"); 
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_sub_posisi']; ?>"><?php echo $cs['nama_sub_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-														
-														  <input type="hidden" name="status" value="0" />
-														  
-												
-												
-												<div class="form-group">
-													   <label class="control-label col-md-3">Interviewer</label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="interviewer" placeholder="Isikan Nama Interviewer"/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-3">Sumber</label>
-													   <div class="col-md-4">
-														  
-														  <select class="form-control" name="sumber" id="sumber" placeholder="Isikan Sumber Info Lowongan">
-														   <option ></option>
-														   <option value="Koran">Koran</option>
-														   <option value="JobStreet">JobStreet</option>
-														   <option value="Media Sosial Lainnya">Media Sosial</option>  
-														   <option value="Teman">Teman</option>
-														   <option value="Referensi Customer">Referensi Customer</option>
-														   <option value="Job Fair">Job Fair</option>
-														   <option value="Sekolah">Sekolah</option>
-														    <option value="Sms Center">Sms Center</option>
-														  </select>	
-														  <input type="checkbox" id="lainnya3" >*Lainnya
-														  <input type="text" id="lain3" placeholder="Isikan Sumber Lainnya..?" onchange="mySumber()" style="display: none"/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-3">Keterangan</label>
-													   <div class="col-md-4">
-													   <textarea name="keterangan" data-provide="markdown" rows="5" cols="60"></textarea>
-														<span class="error-span"></span>
-													   </div>
-												</div>
-												</div>
-												 <div class="tab-pane" id="confirm">
+												 <div class="tab-pane" id="submit">
 													<h3 class="block">Submit account details</h3>
 													<h4 class="form-section">Account Information</h4>
 													<div class="well">
@@ -1639,7 +827,7 @@ echo "<option value=\"$p[bu]\">$p[bu]</option>\n";
     });
     
   });
-  $(function() {  
+  $(function() {
     $( "#tgl_psikotes" ).datepicker({
     	dateFormat: "dd/mm/yy",
       changeMonth: true,
@@ -1675,13 +863,23 @@ echo "<option value=\"$p[bu]\">$p[bu]</option>\n";
   <script>
         $(function() {
             $( "#datelhr" ).datepicker({
+     numberOfMonths: 2,
       showButtonPanel: true,
       changeMonth: true,
       changeYear: true,
-      yearRange: '1950:2030',
-      dateFormat: "dd-M-yy"
+      yearRange: '1950:2026',
+      dateFormat: "yy-mm-dd"
     });
         });
+ 
+        window.onload=function(){
+            $('#datelhr').on('change', function() {
+                var dob = new Date(this.value);
+                var today = new Date();
+                var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+                $('#usia').val(age);
+            });
+        }
  
     </script>
   

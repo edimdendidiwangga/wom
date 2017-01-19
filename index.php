@@ -1,6 +1,8 @@
 <?php 
 include('config.php');
 include('cek-login.php');
+
+unset($_SESSION['id_bu']);
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +50,26 @@ include('cek-login.php');
 	
 	<!-- PAGE -->
 	<section id="page">
-				<?php include 'menu.php';?>
+				<div id="sidebar" class="sidebar">
+					<div class="sidebar-menu nav-collapse">
+						<div class="divide-20"></div>
+						<!-- SEARCH BAR -->
+						<div id="search-bar">
+							<input class="search" type="text" placeholder="Search"><i class="fa fa-search search-icon"></i>
+						</div>
+						<ul>
+							
+							<li>
+								<a href="index.php">
+								<i class="fa fa-home fa-fw"></i> <span class="menu-text">Dashboard</span>
+								<span class="selected"></span>
+								</a>					
+							</li>
+						</ul>
+						<!-- /SIDEBAR MENU -->
+					</div>
+				</div>
+				<!-- /SIDEBAR -->
 		<div id="main-content">
 			<!-- SAMPLE BOX CONFIGURATION MODAL FORM-->
 			  <!-- Modal for Edit button -->
@@ -70,8 +91,6 @@ include('cek-login.php');
 											<i class="fa fa-home"></i>
 											<a href="index.php">Home</a>
 										</li>
-										
-										
 									</ul>
 									<!-- /BREADCRUMBS -->
 									<div class="clearfix">
@@ -121,11 +140,10 @@ include('cek-login.php');
 											while ($data = mysql_fetch_array($query_tampil)) {
 											?>
 												<tr class="gradeX">
-													
 													<td><?php echo $no; ?></td>
 													<td class="center"><?php echo "BU ".$data['bu']; ?></td>
 													<td><?php echo $data['nama_cabang']; ?></td>
-													<td class="center"><a href="data-active.php?id_bu=<?php echo $data['id_bu'];?>" class="btn btn-info btn-xs"> VIEW</a></td>
+													<td class="center"><a href="cek-bu.php?id_bu=<?php echo $data['id_bu'];?>" class="btn btn-info btn-xs"> VIEW</a></td>
 													
 												</tr>
 												<?php 

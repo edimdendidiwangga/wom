@@ -1,8 +1,10 @@
 <?php 
 include('config.php');
 include('cek-login.php');
+if (!isset($_SESSION['id_bu']) ) {
+	header('location:index.php');
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -164,50 +166,7 @@ include('cek-login.php');
 					</div>
 				  </div>
 				</div>
-			  </div> 
-			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
-			
-			<div class="modal fade" id="export-diterima" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				  <div class="modal-content">
-					<div class="modal-header">
-					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title"></h4>
-					</div>
-					<div class="modal-body">
-					<div class="box border pink">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Export Database Interview Diterima</h4>
-												<div class="tools hidden-xs">
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													<a href="javascript:;" class="collapse">
-														<i class="fa fa-chevron-up"></i>
-													</a>
-												</div>
-											</div>
-											<div class="box-body big">
-											<form action="laporan-diterima.php" method="POST" class="form-horizontal" role="form">
-												<div class="row">
-												<label class="col-xs-3">Data Bulan</label>
-												  <div class="col-xs-6">
-													<input type="text" id="dari2" name="from" class="form-control" required>
-														<label for="to">to</label>
-														<input type="text" id="ke2" name="to" class="form-control" required>
-												  </div>
-												</div>
-											</div>
-										</div>
-					 </div>
-					<div class="modal-footer">
-					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					 <input class="btn btn-pink" type="submit" name="submit" value="Export" />
-					</form>
-					</div>
-				  </div>
-				</div>
-			  </div> 
+			  </div>
 			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
 			<div class="container">
 				<div class="row">
@@ -230,7 +189,18 @@ include('cek-login.php');
 									</ul>
 									<!-- /BREADCRUMBS -->
 									<div class="clearfix">
-										<h3 class="content-title pull-left">Tabel Kandidat</h3>
+										<h3 class="content-title pull-left">Data Karyawan WOM Cab 
+										<?php 
+											$que=mysql_query("SELECT nama_cabang
+										    FROM bu 
+										    where id_bu=".$_SESSION['id_bu']."");
+											if ($que === FALSE) {
+											    die(mysql_error());
+											}
+											$data = mysql_fetch_array($que);
+											echo $data['nama_cabang'];
+											?>
+										</h3>
 									</div>
 								</div>
 							</div>
