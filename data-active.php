@@ -226,7 +226,6 @@ if (!isset($_SESSION['id_bu']) ) {
 								<div class="tab-pane fade in active" id="box_tab1">
 											
 									<a href="index-step.php" class="btn btn-info"><i class="fa fa-plus-circle"></i> Tambah Data</a>
-									<a href="#table-modal" data-toggle="modal" class="btn btn-success"><i class="fa fa-search"></i> Search Data</a>
 									<a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="fa fa-upload"></i> Import</a>
 									<a href="#export-database" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Export</a>
 									
@@ -234,35 +233,38 @@ if (!isset($_SESSION['id_bu']) ) {
 											<thead>
 												<tr>
 													<th>Aksi</th>
-													<th>No.</th>
-													<th>nama karyawan</th>
-													<th>posisi</th>
-													<th class="hidden-xs">cabang</th>
-													<th>lokasi</th>
-													<th class="hidden-xs">nik</th>
-													<th>virtual nik</th>
-													<th>bu</th>
-													<th>hire date</th>
-													<th>join date</th>
-													<th>gaji pokok</th>
-													<th>tunjangan maintenance</th>
-													<th>tunjangan jabatan</th>
-													<th>tunjangan jaga malam</th>
-													<th>tunjangan lain</th>
-													<th>thp</th>
-													<th>vendor</th>
-													<th>tingkat</th>
-													<th>jenis</th>
-													<th>status</th>
+													<th>NO.</th>
+													<th>NAMA KARYAWAN</th>
+													<th>POSISI</th>
+													<th class="hidden-xs">CABANG</th>
+													<th>LOKASI</th>
+													<th class="hidden-xs">NIK</th>
+													<th>VIRTUAL NIK</th>
+													<th>BU</th>
+													<th>HIRE DATE</th>
+													<th>JOIN DATE</th>
+													<th>GAJI POKOK</th>
+													<th>TUNJANGAN MAINTENANCE</th>
+													<th>TUNJANGAN JABATAN</th>
+													<th>TUNJANGAN JAGA MALAM</th>
+													<th>TUNJANGAN LAIN</th>
+													<th>THP</th>
+													<th>VENDOR</th>
+													<th>TINGKAT</th>
+													<th>JENIS</th>
+													<th>STATUS</th>
 													
 												</tr>
 											</thead>
 											<tbody>
 											<?php 
-											$query_tampil=mysql_query("SELECT *
+											$query_tampil=mysql_query("SELECT karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.hire_date, contract.join_date, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, karyawan.education, karyawan.gender, data_karyawan.status
 										    FROM karyawan 
 										    inner join data_karyawan on karyawan.id_karyawan=data_karyawan.id_karyawan
-										   /* where data_karyawan.status = '1'*/
+										    inner join bu on bu.id_bu = data_karyawan.id_bu
+										    inner join contract on contract.update_contract = karyawan.update_contract
+										    inner join gaji on gaji.update_gaji = karyawan.update_gaji
+										   where data_karyawan.status = '1'
 										    Order by karyawan.id_karyawan DESC");
 											if ($query_tampil === FALSE) {
 											    die(mysql_error());
@@ -275,7 +277,6 @@ if (!isset($_SESSION['id_bu']) ) {
 												<div class="btn-group dropdown">
 											<button class="btn btn-info">
 											<i class="fa fa-gear"></i>
-											<span class="caret"></span>
 											</button>
 										  </div>
 												</td>
@@ -286,7 +287,7 @@ if (!isset($_SESSION['id_bu']) ) {
 													<td class="center"><?php echo $data['location']; ?></td>
 													<td class="center hidden-xs"><?php echo $data['nik']; ?></td>
 													<td><?php echo $data['virtual_nik']; ?></td>
-													<td><?php echo $data['bu']; ?></td>
+													<td><?php echo "BU ".$data['bu']; ?></td>
 													<td><?php echo $data['hire_date']; ?></td>
 													<td><?php echo $data['join_date']; ?></td>
 													<td><?php echo $data['gaji_pokok']; ?></td>
@@ -294,11 +295,11 @@ if (!isset($_SESSION['id_bu']) ) {
 													<td><?php echo $data['tun_jabatan']; ?></td>
 													<td><?php echo $data['tun_jaga_malam']; ?></td>
 													<td><?php echo $data['tun_lain']; ?></td>
-													<td><?php echo $data['status']; ?></td>
 													<td><?php echo ($data['gaji_pokok']+$data['tun_maintenance']+$data['tun_jabatan']+$data['tun_jaga_malam']+$data['tun_lain']); ?></td>
 													<td>PT SINAR JERNIH SUKSESINDO</td>
 													<td><?php echo $data['education']; ?></td>
 													<td><?php echo $data['gender']; ?></td>
+													<td><?php echo $data['status']; ?></td>
 												</tr>
 												<?php 
 												$no++;

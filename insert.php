@@ -20,6 +20,7 @@ $mobile_phone = trim($_POST['mobile_phone']);
 $freshgraduate = $_POST['freshgraduate'];
 $financial = $_POST['financial'];
 //data_karyawan
+$id_bu = $_POST['id_bu'];
 $nik = trim(addslashes(strtoupper($_POST['nik'])));
 $virtual_nik = trim(addslashes(strtoupper($_POST['virtual_nik'])));
 $npwp = trim(addslashes(strtoupper($_POST['npwp'])));
@@ -31,6 +32,15 @@ $location = trim(addslashes(strtoupper($_POST['location'])));
 $cabang_induk = trim(addslashes(strtoupper($_POST['cabang_induk'])));
 $org_name = trim(addslashes(strtoupper($_POST['org_name'])));
 $jaminan = $_POST['jaminan'];
+$no_ijazah = $_POST['no_ijazah'];
+$no_bpkb = $_POST['no_bpkb'];
+if(isset($no_ijazah)){
+	$no_jaminan = $no_ijazah;
+}else if (isset($no_bpkb)) {
+	$no_jaminan = $no_bpkb;
+}else if (isset($no_bpkb) && isset($no_bpkb)) {
+	$no_jaminan = $no_ijazah." / ".$no_bpkb;
+}
 $no_jaminan = trim(addslashes(strtoupper($_POST['no_jaminan'])));
 $kartu_ketenagakerjaan = $_POST['kartu_ketenagakerjaan'];
 $bpjs_ketenagakerjaan = trim(addslashes(strtoupper($_POST['bpjs_ketenagakerjaan'])));
@@ -55,7 +65,7 @@ $end_date = trim($_POST['end_date']);
 //rekening
 $atas_nama = trim(addslashes(strtoupper($_POST['atas_nama'])));
 $nama_bank = trim(addslashes(strtoupper($_POST['nama_bank'])));
-$no_rek = trim(addslashes($_POST['no_rek'])));
+$no_rek = trim(addslashes($_POST['no_rek']));
 //mutasi&sp
 $mutasi = trim(addslashes(strtoupper($_POST['mutasi'])));
 $mutasi_dari = trim(addslashes(strtoupper($_POST['mutasi_dari'])));
@@ -73,8 +83,8 @@ $sql = "select max(id_karyawan) as last_id from karyawan limit 1";
  $row = mysql_fetch_array($hasil);
  $last_id = $row['last_id'];
 //simpan data ke data_karyawan 
-$query = mysql_query("insert into data_karyawan (id_data_karyawan, id_karyawan, nik, virtual_nik, npwp, hire_date, quit_date, position, job_class, location, cabang_induk, org_name, jaminan, no_jaminan, kartu_ketenagakerjaan, bpjs_ketenagakerjaan, kartu_kesehatan, bpjs_kesehatan, ket, status) 
-	values('', '$last_id', '$nik', '$virtual_nik', '$npwp', '$hire_date', '$quit_date', '$position', '$job_class', '$location', '$cabang_induk', '$org_name', '$jaminan', '$no_jaminan', '$kartu_ketenagakerjaan', '$bpjs_ketenagakerjaan', '$kartu_kesehatan', '$bpjs_kesehatan', '$ket', '1')") or die(mysql_error());
+$query = mysql_query("insert into data_karyawan (id_data_karyawan, id_karyawan, id_bu, nik, virtual_nik, npwp, hire_date, quit_date, position, job_class, location, cabang_induk, org_name, jaminan, no_jaminan, kartu_ketenagakerjaan, bpjs_ketenagakerjaan, kartu_kesehatan, bpjs_kesehatan, ket, status) 
+	values('', '$last_id', '$id_bu', '$nik', '$virtual_nik', '$npwp', '$hire_date', '$quit_date', '$position', '$job_class', '$location', '$cabang_induk', '$org_name', '$jaminan', '$no_jaminan', '$kartu_ketenagakerjaan', '$bpjs_ketenagakerjaan', '$kartu_kesehatan', '$bpjs_kesehatan', '$ket', '1')") or die(mysql_error());
 //simpan data ke keluarga 
 $query = mysql_query("insert into keluarga (id_keluarga, id_karyawan, mother_name, spouse_name, spouse_birthdate, chile1_name, chile1_birthdate, chile2_name, chile2_birthdate, chile3_name, chile3_birthdate) 
 	values('', '$last_id', '$mother_name', '$spouse_name', '$spouse_birthdate', '$chile1_name', '$chile1_birthdate', '$chile2_name', '$chile2_birthdate', '$chile3_name', '$chile3_birthdate')") or die(mysql_error());
@@ -86,7 +96,7 @@ $query = mysql_query("insert into mutasi (id_mutasi, id_karyawan, mutasi, mutasi
 	values('', '$last_id', '$mutasi', '$mutasi_dari', '$mutasi_ke', '$sp', '$tgl_sp', '$masa_berlaku')") or die(mysql_error());
 //simpan data ke contract
 $query = mysql_query("insert into contract (id_contract, id_karyawan, pkwt, no_pkwt, join_date, end_date, update_contract) 
-	values('', '$id_karyawan', '$pkwt', '$no_pkwt', '$join_date', '$end_date', '$date')") or die(mysql_error());
+	values('', '$last_id', '$pkwt', '$no_pkwt', '$join_date', '$end_date', '$date')") or die(mysql_error());
 //simpan data ke gaji
 $query = mysql_query("insert into gaji (id_gaji, id_karyawan, ump, gaji_pokok, tun_maintenance, tun_jabatan, tun_jaga_malam, tun_lain, insentive, overtime, kehadiran, rapel, update_gaji) 
 	values('', '$last_id', '$ump', '$gaji_pokok', '$tun_maintenance', '$tun_jabatan', '$tun_jaga_malam', '$tun_lain', '$insentive', '$overtime', '$kehadiran', '$rapel', '$date')") or die(mysql_error());
@@ -106,12 +116,12 @@ $query = mysql_query("update karyawan set update_contract='$last_update_contract
 if ($query) {
 	echo "<script>
 		alert('DATA BERHASIL DITAMBAHKAN');
-		window.location='index.php';
+		window.location='data-active.php';
 		</script>";
 }else{
 echo "<script>
 		alert('GAGAL MENYIMPAN DATA');
-		window.location='index.php';
+		window.location='data-active.php';
 		</script>";
 }
 

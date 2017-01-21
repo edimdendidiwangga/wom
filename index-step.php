@@ -52,8 +52,6 @@ $(document).ready(function(){
         data: "bu="+bu,
         cache: false,
         success: function(msg){
-            //jika data sukses diambil dari server kita tampilkan
-            //di <select id=kota>
             $("#cabang").html(msg);
         }
     });
@@ -141,7 +139,7 @@ $(document).ready(function(){
 										</div>
 									</div>
 									<div class="box-body form">
-										<form id="wizForm" action="insert.php" class="form-horizontal" method="POST" enctype="multipart/form-data" data-toggle="validator" role="form">
+										<form id="wizForm" action="insert.php" class="form-horizontal" method="POST" data-toggle="validator" role="form">
 										<input type="hidden" name="approval" value="t1">
 										<div class="wizard-form">
 										   <div class="wizard-content">
@@ -205,7 +203,7 @@ $(document).ready(function(){
 													<div class="form-group">
 													   <label class="control-label col-md-3">Birthplace<span class="required">*</span></label>
 													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="birthplace" placeholder="Isikan Tempat Lahir" requirbed/>
+														  <input type="text" class="form-control" name="birthplace" placeholder="Isikan Tempat Lahir" required/>
 														  <span class="error-span"></span>
 													   </div>
 													</div>
@@ -218,11 +216,13 @@ $(document).ready(function(){
 													</div>
 													<div class="form-group">
 													   <label class="control-label col-md-3">ID Type<span class="required">*</span></label>
-													   <div class="col-md-4">
+													   <div class="col-md-2">
 															 <label class="radio">
 																<input type="radio" name="id_type" id="ktp" value="1" data-title="KTP" class="uniform" checked="checked" />
 															 KTP
 															 </label>
+														</div>
+														<div class="col-md-2">
 															 <label class="radio">
 																<input type="radio" name="id_type" id="sim" value="2" data-title="SIM" class="uniform"/>
 															 SIM
@@ -232,9 +232,9 @@ $(document).ready(function(){
 													
 													</div>
 													<div class="form-group">
-													   <label class="control-label col-md-3">ID Number <span class="required">*</span></label>
+													   <label class="control-label col-md-3" id="lbl_num">ID Number (KTP)<span class="required">*</span></label>
 													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="id_number" placeholder="Isikan ID Number" required/>
+														  <input type="text" class="form-control" name="id_number" id="id_num" placeholder="Isikan ID Number (KTP)" required/>
 														  <span class="error-span"></span>
 													   </div>
 													</div>
@@ -261,11 +261,13 @@ $(document).ready(function(){
 												</div>
 													<div class="form-group">
 													   <label class="control-label col-md-3">Gender<span class="required">*</span></label>
-													   <div class="col-md-4">
+													   <div class="col-md-2">
 															 <label class="radio">
 																<input type="radio" name="gender" value="L" data-title="Male" class="uniform" checked="checked" />
 															 Pria
 															 </label>
+														</div>
+														<div class="col-md-2">
 															 <label class="radio">
 																<input type="radio" name="gender" value="P" data-title="Female" class="uniform"/>
 															 Wanita
@@ -273,9 +275,9 @@ $(document).ready(function(){
 													   </div>
 													</div>
 													<div class="form-group">
-													   <label class="control-label col-md-3">Home Phone<span class="required">*</span></label>
+													   <label class="control-label col-md-3">Home Phone</label>
 													   <div class="col-md-4">
-														<input  class="form-control" name="home_phone" type="text" placeholder="Isikan No Telp Rumah" required>
+														<input  class="form-control" name="home_phone" type="text" placeholder="Isikan No Telp Rumah" >
 														</div>
 													</div>
 													<div class="form-group">
@@ -286,11 +288,13 @@ $(document).ready(function(){
 													</div>
 													<div class="form-group">
 													   <label class="control-label col-md-3">Freshgraduate<span class="required">*</span></label>
-													   <div class="col-md-4">
+													   <div class="col-md-2">
 															 <label class="radio">
 																<input type="radio" name="freshgraduate" value="1" data-title="Freshgraduate" class="uniform" checked="checked" />
 															 Freshgraduate
 															 </label>
+															 </div>
+															  <div class="col-md-2">
 															 <label class="radio">
 																<input type="radio" name="freshgraduate" value="2" data-title="Non Freshgraduate" class="uniform"/>
 															 Non Freshgraduate
@@ -299,11 +303,13 @@ $(document).ready(function(){
 													</div>
 													<div class="form-group">
 													   <label class="control-label col-md-3">Financial<span class="required">*</span></label>
-													   <div class="col-md-4">
+													   <div class="col-md-2">
 															 <label class="radio">
 																<input type="radio" name="financial" value="1" data-title="Male" class="uniform" checked="checked" />
 															 Financial
 															 </label>
+														</div>
+														<div class="col-md-2">
 															 <label class="radio">
 																<input type="radio" name="financial" value="2" data-title="Female" class="uniform"/>
 															 Non Financial
@@ -348,23 +354,23 @@ $(document).ready(function(){
 													   </div>
 													</div>
 													<div class="form-group">
-													   <label class="control-label col-md-3">Hire Date</label>
+													   <label class="control-label col-md-3">Hire Date<span class="required">*</span></label>
 													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="hire_date" placeholder="Isikan Tgl Perekrutan" id="hire_date">
+														  <input type="text" class="form-control" name="hire_date" placeholder="Isikan Tgl Perekrutan" id="hire_date" required>
 														  <span class="error-span"></span>
 													   </div>
 													</div>
 													<div class="form-group">
-													   <label class="control-label col-md-3">Posisi / Jabatan</label>
+													   <label class="control-label col-md-3">Posisi / Jabatan<span class="required">*</span></label>
 													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="position" placeholder="Isikan Posisi/Jabatan" >
+														  <input type="text" class="form-control" name="position" placeholder="Isikan Posisi/Jabatan" required>
 														  <span class="error-span"></span>
 													   </div>
 													</div>
 													<div class="form-group">
-													   <label class="control-label col-md-3">Job Class</label>
+													   <label class="control-label col-md-3">Job Class<span class="required">*</span></label>
 													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="job_class" placeholder="Isikan Job Class" >
+														  <input type="text" class="form-control" name="job_class" placeholder="Isikan Job Class" required>
 														  <span class="error-span"></span>
 													   </div>
 													</div>
@@ -395,9 +401,9 @@ $(document).ready(function(){
 													</div>
 												
 													<div class="form-group">
-													   <label class="control-label col-md-3">Location</label>
+													   <label class="control-label col-md-3">Location<span class="required">*</span></label>
 													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="location" placeholder="Isikan Lokasi" >
+														  <input type="text" class="form-control" name="location" placeholder="Isikan Lokasi" required>
 														  <span class="error-span"></span>
 													   </div>
 													</div>
@@ -419,7 +425,7 @@ $(document).ready(function(){
 													<div class="form-group">
 													   <label class="control-label col-md-3">Jaminan<span class="required">*</span></label>
 													   <div class="col-md-4">
-														  <select name="religion" class="form-control" required>
+														  <select id="jamin" name="jaminan" class="form-control" required>
 															 <option value="" disabled="" selected="" style="display:none" ;="">Pilih Jaminan</option>
 															 <option value="1">Ijazah</option>
 															 <option value="2">BPKB</option>
@@ -431,19 +437,22 @@ $(document).ready(function(){
 													<div class="form-group">
 													   <label class="control-label col-md-3">No Jaminan<span class="required">*</span></label>
 													   <div class="col-md-4">
-														  <input type="text" class="form-control" id="ijazah" name="no_jaminan1" placeholder="Isikan No Jaminan Ijazah" required/>
-														  <input type="text" class="form-control" id="bpkb" name="no_jaminan2" placeholder="Isikan No Jaminan BPKB" required/>
+														  <input type="text" class="form-control" id="ijazah" name="no_ijazah" placeholder="Isikan No Jaminan Ijazah" required/>
+														  <input type="text" class="form-control" id="bpkb" name="no_bpkb" placeholder="Isikan No Jaminan BPKB" required/>
+														  
 														  <span class="error-span"></span>
 													   </div>
 													</div>
 													
 													<div class="form-group">
 													   <label class="control-label col-md-3">Kartu BPJS Ketenagakerjaan<span class="required">*</span></label>
-													   <div class="col-md-4">
+													   <div class="col-md-2">
 															 <label class="radio">
 																<input type="radio" name="kartu_ketenagakerjaan" value="1" data-title="BARU" class="uniform" checked="checked" />
 															 BARU
 															 </label>
+														</div>
+														<div class="col-md-2">
 															 <label class="radio">
 																<input type="radio" name="kartu_ketenagakerjaan" value="2" data-title="LANJUT" class="uniform"/>
 															 LANJUT
@@ -459,11 +468,13 @@ $(document).ready(function(){
 													</div>
 													<div class="form-group">
 													   <label class="control-label col-md-3">Kartu BPJS Kesehatan<span class="required">*</span></label>
-													   <div class="col-md-4">
+													   <div class="col-md-2">
 															 <label class="radio">
 																<input type="radio" name="kartu_kesehatan" value="1" data-title="BARU" class="uniform" checked="checked" />
 															 BARU
 															 </label>
+														</div>
+														<div class="col-md-2">
 															 <label class="radio">
 																<input type="radio" name="kartu_kesehatan" value="2" data-title="LANJUT" class="uniform"/>
 															 LANJUT
@@ -502,58 +513,72 @@ $(document).ready(function(){
 													   </div>
 												</div>
 												<div class="form-group">
+													   <label class="control-label col-md-4">Marital Status<span class="required">*</span></label>
+													   <div class="col-md-8">
+														<select id="marital" name="marital_status" class="form-control" required>
+															 <option value="" disabled="" selected="" style="display:none" ;="">Pilih Status Perkawinan</option>
+															 <option value="TK">TK</option>
+															 <option value="K0">K0</option>
+															 <option value="K1">K1</option>
+															 <option value="K2">K2</option>
+															 <option value="K3">K3</option>
+														</select>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												<div class="form-group" id="spouse">
 													   <label class="control-label col-md-4">Spouse Name<span class="required">*</span></label>
 													   <div class="col-md-8">
 														  <input type="text" class="form-control" name="spouse_name" placeholder="Isikan Nama Pasangan" required/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
-												<div class="form-group">
+												<div class="form-group" id="spouse_birth"> 
 													   <label class="control-label col-md-4">Spouse Birthdate<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="spouse_birthdate" placeholder="Isikan Tgl Lahir Pasangan" required/>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="spouse_birthdate" id="spouse_birthdate" placeholder="Isikan Tgl Lahir Pasangan" required/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
-												<div class="form-group">
+												<div class="form-group" id="child1">
 													   <label class="control-label col-md-4">Chile Name 1<span class="required"></span></label>
-													   <div class="col-md-4">
+													   <div class="col-md-8">
 														  <input type="text" class="form-control" name="chile1_name" placeholder="Isikan nama anak 1"/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
-												<div class="form-group">
+												<div class="form-group" id="child1_birth">
 													   <label class="control-label col-md-4">Chile Birthdate 1<span class="required"></span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="chile1_birthdate" placeholder="Isikan Nama Anak 1"/>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="chile1_birthdate" id="chile1_birthdate" placeholder="Isikan Nama Anak 1"/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
-												<div class="form-group">
+												<div class="form-group" id="child2">
 													   <label class="control-label col-md-4">Chile Name 2<span class="required"></span></label>
-													   <div class="col-md-4">
+													   <div class="col-md-8">
 														  <input type="text" class="form-control" name="chile2_name" placeholder="Isikan nama anak 2"/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
-												<div class="form-group">
+												<div class="form-group" id="child2_birth">
 													   <label class="control-label col-md-4">Chile Birthdate 2<span class="required"></span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="chile2_birthdate" placeholder="Isikan Nama Anak 2"/>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="chile2_birthdate" id="chile2_birthdate" placeholder="Isikan Nama Anak 2"/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
-												<div class="form-group">
+												<div class="form-group" id="child3">
 													   <label class="control-label col-md-4">Chile Name 3<span class="required"></span></label>
-													   <div class="col-md-4">
+													   <div class="col-md-8">
 														  <input type="text" class="form-control" name="chile3_name" placeholder="Isikan nama anak 3"/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
-												<div class="form-group">
+												<div class="form-group" id="child3_birth">
 													   <label class="control-label col-md-4">Chile Birthdate 3<span class="required"></span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="chile3_birthdate" placeholder="Isikan Nama Anak 3"/>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="chile3_birthdate" id="chile3_birthdate" placeholder="Isikan Nama Anak 3"/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
@@ -561,7 +586,7 @@ $(document).ready(function(){
 										</div>
 										</div>
 										<div class="col-md-6">
-												 <div class="box border orange">
+												 <div class="box border blue">
 											<div class="box-title">
 												<h4><i class="fa fa-bars"></i>Contract</h4>
 												<div class="tools hidden-xs">
@@ -569,23 +594,82 @@ $(document).ready(function(){
 											</div>
 											<div class="box-body big">
 												<div class="form-group">
-													   <label class="control-label col-md-4"> <span class="required">*</span></label>
+													   <label class="control-label col-md-4">No PKWT<span class="required">*</span></label>
 													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="no_pkwt" placeholder="Isikan Nama Ibu" required/>
+														  <input type="text" class="form-control" name="no_pkwt" placeholder="Isikan No PKWT" required/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
 												<div class="form-group">
-													   <label class="control-label col-md-4">Spouse Name<span class="required">*</span></label>
+													   <label class="control-label col-md-4">Join Date<span class="required">*</span></label>
 													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="spouse_name" placeholder="Isikan Nama Pasangan" required/>
+														  <input type="text" class="form-control" name="join_date" id="join_date" placeholder="Isikan Tgl Awal Kontrak" required/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
 												<div class="form-group">
-													   <label class="control-label col-md-4">Spouse Birthdate<span class="required">*</span></label>
+													   <label class="control-label col-md-4">End Date<span class="required">*</span></label>
 													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="spouse_birthdate" placeholder="Isikan Tgl Lahir Pasangan" required/>
+														  <input type="text" class="form-control" name="end_date" id="end_date" placeholder="Isikan Tgl Akhir Kontrak" required/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												
+										</div>
+										</div>
+										</div>
+										<div class="col-md-6">
+												 <div class="box border green">
+											<div class="box-title">
+												<h4><i class="fa fa-bars"></i>Rekening</h4>
+												<div class="tools hidden-xs">
+												</div>
+											</div>
+											<div class="box-body big">
+												<div class="form-group">
+													   <label class="control-label col-md-4">Atas Nama<span class="required">*</span></label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="atas_nama" placeholder="Isikan Atas Nama Rekening" required/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												<div class="form-group">
+													   <label class="control-label col-md-4">Nama Bank<span class="required">*</span></label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="nama_bank" placeholder="Isikan Nama Bank" required/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												<div class="form-group">
+													   <label class="control-label col-md-4">No Rekening<span class="required">*</span></label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="no_rek" placeholder="Isikan No Rekening" required/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												
+										</div>
+										</div>
+										</div>
+										<div class="col-md-6">
+												 <div class="box border red">
+											<div class="box-title">
+												<h4><i class="fa fa-bars"></i>Mutasi</h4>
+												<div class="tools hidden-xs">
+												</div>
+											</div>
+											<div class="box-body big">
+												<div class="form-group">
+													   <label class="control-label col-md-4">Mutasi Dari</label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="mutasi_dari" placeholder="Isikan  Mutasi Dari"/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												<div class="form-group">
+													   <label class="control-label col-md-4">Mutasi Ke</label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="mutasi_ke" placeholder="Isikan Mutasi Ke"/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
@@ -740,150 +824,54 @@ $(document).ready(function(){
 	<!-- CUSTOM SCRIPT -->
 	<script src="js/script.js"></script>
 	<script src="js/bootstrap-wizard/form-wizard.min.js"></script>
-	<script>
-  $(function() {
-    $( "#datep1" ).datepicker({
-    	altField: "#datep1",
-      altFormat: "MM yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#datep2" ).datepicker({
-    	altField: "#datep2",
-      altFormat: "MM yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#datep1_2" ).datepicker({
-    	altField: "#datep1_2",
-      altFormat: "MM yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#datep2_2" ).datepicker({
-    	altField: "#datep2_2",
-      altFormat: "MM yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#datep1_3" ).datepicker({
-    	altField: "#datep1_3",
-      altFormat: "MM yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#datep2_3" ).datepicker({
-    	altField: "#datep2_3",
-      altFormat: "MM yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_periksa" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_periksa" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_interview" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_interview" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_psikotes" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_psikotes" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_pengiriman" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_pengiriman" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  </script>
-  <script>
+	
+    <script>
         $(function() {
             $( "#datelhr" ).datepicker({
-     numberOfMonths: 2,
       showButtonPanel: true,
       changeMonth: true,
       changeYear: true,
       yearRange: '1950:2026',
-      dateFormat: "yy-mm-dd"
+      dateFormat: "dd-M-yy"
+    });
+          $( "#hire_date" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
+    });
+          $( "#spouse_birthdate" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
+    });
+          $( "#chile1_birthdate" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
+    });
+          $( "#chile2_birthdate" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
+    });
+          $( "#chile3_birthdate" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
+    });
+          $( "#join_date" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
+    });
+           $( "#end_date" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
     });
         });
- 
-        window.onload=function(){
-            $('#datelhr').on('change', function() {
-                var dob = new Date(this.value);
-                var today = new Date();
-                var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
-                $('#usia').val(age);
-            });
-        }
- 
     </script>
-  
-	<script>
+    <script>
 		jQuery(document).ready(function() {		
 			App.setPage("wizards_validations");  //Set current page
 			App.init(); //Initialise plugins and elements
@@ -902,190 +890,112 @@ $(document).ready(function(){
 	<!-- /JAVASCRIPTS -->
 	 <script type="text/javascript">
 	$(function(){
-  // cache these!
- 
-  var radioButton = $("#jenkel"),
-      hijab = $("#hijab");
-      nohijab = $("#nohijab");
-      lb = $("#lb");
-      sp = $("#sp");
-      lbb = $("#lbb");
-  radioButton.change(function () { // listen for change - not click
+  var ktp = $("#ktp"),
+      sim = $("#sim"),
+      lbl_num = $("#lbl_num"),
+      id_num = $("#id_num");
+     
+  ktp.change(function () { // listen for change - not click
     if( this.checked ) { // use the "raw" DOM property `checked`
-      hijab.show();
-  	  lb.show();
-  	  sp.show();
-  	  nohijab.show();
-  	   lbb.show();
+      lbl_num.html("ID Number (KTP)");
+  	  id_num.attr("placeholder", "Isikan ID Number (KTP)");
+  	 
   }
       });
-  var radioButtonm = $("#jenkelm"),
-      hijab = $("#hijab");
-      nohijab = $("#nohijab");
-      lb = $("#lb");
-      sp = $("#sp");
-      lbb = $("#lbb");
-  radioButtonm.change(function () { // listen for change - not click
+  sim.change(function () { // listen for change - not click
     if( this.checked ) { // use the "raw" DOM property `checked`
-      hijab.hide();
-  	  lb.hide();
-  	  sp.hide();
-  	  nohijab.hide();
-  	   lbb.hide();
+      lbl_num.html("ID Number (SIM)");
+  	  id_num.attr("placeholder", "Isikan ID Number (SIM)");
+  	 
   }
       });
-  var lainnya = $("#lainnya"),
-      lain = $("#lain");
+
+  var jamin = $("#jamin"),
+      ijazah = $("#ijazah"),
+      bpkb = $("#bpkb");
+  jamin.change(function () { // listen for change - not click
+   var jaminan = jamin.val();
+    if(jaminan == "1"){
+    	ijazah.fadeIn();
+    	bpkb.fadeOut();
+    	
+    }
+    if(jaminan == "2"){
+    	ijazah.fadeOut();
+    	bpkb.fadeIn();
+    	
+    }
+    if(jaminan == "3"){
+    	ijazah.fadeIn();
+    	bpkb.fadeIn();
+    }
+    
+    });
+  var marital = $("#marital"),
+      spouse = $("#spouse"),
+      spouse_birth = $("#spouse_birth"),
+      child1 = $("#child1"),
+      child1_birth = $("#child1_birth"),
+      child2 = $("#child2"),
+      child2_birth = $("#child2_birth"),
+      child3 = $("#child3"),
+      child3_birth = $("#child3_birth");
      
-  lainnya.change(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      lain.show();
-  	  
+  marital.change(function () { // listen for change - not click
+      var kawin = marital.val();
+    if(kawin == "TK"){
+    	spouse.fadeOut();
+    	spouse_birth.fadeOut();
+    	child1.fadeOut();
+    	child1_birth.fadeOut();
+    	child2.fadeOut();
+    	child2_birth.fadeOut();
+    	child3.fadeOut();
+    	child3_birth.fadeOut();
+    }
+    if(kawin == "K0"){
+    	spouse.fadeIn();
+    	spouse_birth.fadeIn();
+    	child1.fadeOut();
+    	child1_birth.fadeOut();
+    	child2.fadeOut();
+    	child2_birth.fadeOut();
+    	child3.fadeOut();
+    	child3_birth.fadeOut();
+    }
+    if(kawin == "K1"){
+    	spouse.fadeIn();
+    	spouse_birth.fadeIn();
+    	child1.fadeIn();
+    	child1_birth.fadeIn();
+    	child2.fadeOut();
+    	child2_birth.fadeOut();
+    	child3.fadeOut();
+    	child3_birth.fadeOut();
+    }
+    if(kawin == "K2"){
+    	spouse.fadeIn();
+    	spouse_birth.fadeIn();
+    	child1.fadeIn();
+    	child1_birth.fadeIn();
+    	child2.fadeIn();
+    	child2_birth.fadeIn();
+    	child3.fadeOut();
+    	child3_birth.fadeOut();
+    }
+    if(kawin == "K3"){
+    	spouse.fadeIn();
+    	spouse_birth.fadeIn();
+    	child1.fadeIn();
+    	child1_birth.fadeIn();
+    	child2.fadeIn();
+    	child2_birth.fadeIn();
+    	child3.fadeIn();
+    	child3_birth.fadeIn();
+    }
+      });
   
-      });
-  var cbg = $("#cbg"),
-      cabang = $("#cabang");
-     
-  cbg.change(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      cabang.show();
-  	  
-  
-      });
-
-  var lainnya2 = $("#lainnya2"),
-      lain2 = $("#lain2");
-      
-     
-  lainnya2.change(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      lain2.show();
-  	  
-  
-      });
-  var lainnya3 = $("#lainnya3"),
-      lain3 = $("#lain3");
-      
-     
-  lainnya3.change(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      lain3.show();
-  	  
-  
-      });
-  var btnplus = $("#btnplus"),
-      pengalaman2 = $("#pengalaman2");
-     
-  btnplus.click(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      pengalaman2.show();
-  	  
-  
-      });
-
-
-
-  var fresh = $("#fresh"),
-  	  lblfresh = $("#lblfresh"),
-  	  lblpershn = $("#lblpershn"),
-      jns = $("#jns"),
-      posisi = $("#posisi"),
-      periode = $("#periode"),
-      d1 = $("#d1"),
-      d2 = $("#d2"),
-      d3 = $("#d3"),
-      pengalaman2 = $("#pengalaman2"),
-      pengalaman3 = $("#pengalaman3"),
-      gaji = $("#gaji");
-      btnplus = $("#btnplus");
-
-     
-  fresh.change(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      lblpershn.hide();
-      pengalaman2.hide();
-      pengalaman3.hide();
-      jns.hide();
-      posisi.hide();
-  	  periode.hide();
-  	  gaji.hide();
-  	  d1.hide();
-  	  d2.hide();
-  	  d3.hide();
-  	  btnplus.hide();
-  	  lblfresh.show();
-
-
-      });
-
-var 
-      perusahaan = $("#perusahaan"),
-      lblfresh = $("#lblfresh"),
-      datep1 = $("#datep1"),
-      datep2 = $("#datep2"),
-      v_periode = $("#v_periode"),
-      btnplus = $("#btnplus"),
-      pernah = $("#pernah");
-
-     
-  pernah.change(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      perusahaan.show();
-      lblpershn.show();
-      jns.show();
-      posisi.show();
-  	  periode.show();
-  	  datep1.show();
-  	  datep2.show();
-  	  v_periode.show();
-  	  gaji.show();
-  	  d1.show();
-  	  d2.show();
-  	  d3.show();
-  	  btnplus.show();
-      lblfresh.hide();
-
-      });
- 
-
-  var btnplus = $("#btnplus"),
-      pengalaman2 = $("#pengalaman2");
-     
-  btnplus.click(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      pengalaman2.show();
-  	  
-  
-      });
-
-   var btnplus2 = $("#btnplus2"),
-      pengalaman3 = $("#pengalaman3");
-     
-  btnplus2.click(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      pengalaman3.show();
-  	  
-  
-      });
-
-  var btnminus1 = $("#btnminus1"),
-      pengalaman2 = $("#pengalaman2");
-     
-  btnminus1.click(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      pengalaman2.hide();
-  	  
-  
-      });
-  var btnminus2 = $("#btnminus2"),
-      pengalaman3 = $("#pengalaman3");
-     
-  btnminus2.click(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      pengalaman3.hide();
-      });
-
- 
+	
     });
 	 </script>
 
