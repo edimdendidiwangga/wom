@@ -40,50 +40,7 @@ include('cek-login.php');
 
 		
 	  <script type="text/javascript" src="jquery.js"></script>
-       <script type="text/javascript">
-var htmlobjek;
-$(document).ready(function(){
-  //apabila terjadi event onchange terhadap object <select id=propinsi>
-  $("#propinsi").change(function(){
-    var propinsi = $("#propinsi").val();
-    $.ajax({
-        url: "ambilkota.php",
-        data: "propinsi="+propinsi,
-        cache: false,
-        success: function(msg){
-            //jika data sukses diambil dari server kita tampilkan
-            //di <select id=kota>
-            $("#kota").html(msg);
-        }
-    });
-  });
-  $("#kota").change(function(){
-    var kota = $("#kota").val();
-    $.ajax({
-        url: "ambilkecamatan.php",
-        data: "kota="+kota,
-        cache: false,
-        success: function(msg){
-            $("#kec").html(msg);
-        }
-    });
-  });
-
-  $("#kec").change(function(){
-    var kec = $("#kec").val();
-    $.ajax({
-        url: "ambilkelurahan.php",
-        data: "kec="+kec,
-        cache: false,
-        success: function(msg){
-            $("#kel").html(msg);
-        }
-    });
-  });
-});
-
-</script>
-    
+      
 </head>
 
 <body>
@@ -133,12 +90,12 @@ $(document).ready(function(){
 											<a href="index.php">Home</a>
 										</li>
 										<li>
-											<a href="#">Tambah Data Kandidat</a>
+											<a href="#">Edit Data Karyawan</a>
 										</li>
 									</ul>
 									<!-- /BREADCRUMBS -->
 									<div class="clearfix">
-										<h3 class="content-title pull-left">Form Tambah Data Kandidat</h3>
+										<h3 class="content-title pull-left">Form Edit Data Karyawan</h3>
 									</div>
 									<div class="description">Form Wizard and Validations</div>
 								</div>
@@ -163,43 +120,31 @@ $(document).ready(function(){
 										</div>
 									</div>
 									<div class="box-body form">
-										<form id="wizForm" name="input_data" action="update-kandidat.php" class="form-horizontal" method="POST" enctype="multipart/form-data" data-toggle="validator" role="form">
-
+										<form id="wizForm" action="insert.php" class="form-horizontal" method="POST" data-toggle="validator" role="form">
+										<input type="hidden" name="approval" value="t1">
 										<div class="wizard-form">
 										   <div class="wizard-content">
 											  <ul class="nav nav-pills nav-justified steps">
 												 <li>
-													<a href="#account" data-toggle="tab" class="wiz-step">
+													<a href="#biodata" data-toggle="tab" class="wiz-step">
 													<span class="step-number">1</span>
 													<span class="step-name"><i class="fa fa-check"></i> Isi Bidodata </span>   
 													</a>
 												 </li>
 
 												 <li>
-													<a href="#payment" data-toggle="tab" class="wiz-step active">
+													<a href="#data-karyawan" data-toggle="tab" class="wiz-step active">
 													<span class="step-number">2</span>
-													<span class="step-name"><i class="fa fa-check"></i>Riwayat Hidup</span>   
+													<span class="step-name"><i class="fa fa-check"></i>Data Karyawan</span>   
 													</a>
 												 </li>
 												 <li>
-													<a href="#penilaian" data-toggle="tab" class="wiz-step active">
+													<a href="#lain" data-toggle="tab" class="wiz-step active">
 													<span class="step-number">3</span>
-													<span class="step-name"><i class="fa fa-check"></i> Penilaian</span>   
+													<span class="step-name"><i class="fa fa-check"></i> Lain-lain</span>   
 													</a>
 												 </li>
-												 <li>
-													<a href="#pengiriman" data-toggle="tab" class="wiz-step">
-													<span class="step-number">4</span>
-													<span class="step-name"><i class="fa fa-check"></i> Lain-lain </span>   
-													</a> 
-												 </li>
-												 <!--<li>
-													<a href="#confirm" data-toggle="tab" class="wiz-step">
-													<span class="step-number">4</span>
-													<span class="step-name"><i class="fa fa-check"></i> Submit </span>   
-													</a> 
-												 </li>
-												 -->
+												 
 											  </ul>
 											  <div id="bar" class="progress progress-striped progress-sm active" role="progressbar">
 												 <div class="progress-bar progress-bar-warning"></div>
@@ -213,1536 +158,486 @@ $(document).ready(function(){
 													<a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
 													Your form validation is successful!
 												 </div>
-												 <div class="tab-pane active" id="account">
-												 
-								<!-- /BOX -->
-											 
-										
-										
-								<!-- /BOX -->
-												 <!--
-													<div class="form-group">
-													   <label class="control-label col-md-3">Email<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="email" placeholder="Please provide email address"/>
-														  <span class="error-span"></span>
-													   </div>
-													</div>
-													<div class="form-group">
-													   <label class="control-label col-md-3">Password<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="password" class="form-control" name="password" placeholder="Please provide password"/>
-														  <span class="error-span"></span>
-													   </div>
-													</div>
-													-->
-													<?php 
-														$id = $_GET['id_kandidat'];
-
-														$query = mysql_query("SELECT * 
-
-										        FROM kandidat 
-										        where kandidat.id_kandidat='$id'") or die(mysql_error());
-
-														$data = mysql_fetch_array($query);
-														?>
-														
-														<?php 
-														$i = $_GET['id_kandidat'];
-
-														$q = mysql_query("SELECT * 
-
-										        FROM kandidat inner join foto
-										        where kandidat.id_kandidat=foto.id_kandidat and kandidat.id_kandidat='$i'") or die(mysql_error());
-
-														$d = mysql_fetch_array($q);
-														?>
-
-													<?php 
-														$kd = $_GET['id_kandidat'];
-
-														$q = mysql_query("SELECT * 
-
-										        FROM kandidat inner join kelengkapan
-										        where kandidat.id_kandidat=kelengkapan.id_kandidat and kandidat.id_kandidat='$kd'") or die(mysql_error());
-
-														$dt = mysql_fetch_array($q);
-														?>
-
-													<?php 
-														$ikd = $_GET['id_kandidat'];
-
-														$qu = mysql_query("SELECT * 
-
-										        FROM kandidat inner join penilaian
-										        where kandidat.id_kandidat=penilaian.id_kandidat and kandidat.id_kandidat='$ikd'") or die(mysql_error());
-
-														$dta = mysql_fetch_array($qu);
-														?>
-												<input type="hidden" name="id_kandidat" value="<?php echo $id; ?>" />
-													<div class="form-group">
-													   <label class="control-label col-md-3">Nomor Absensi</label>
-													   <div class="col-md-4">												
-													   <input type="text" class="form-control" name="no_aplikasi" value="<?php echo $data['no_aplikasi']; ?>" />
-														  <span class="error-span"></span>
-													   </div>
-													</div>
-													<div class="form-group">
-													   <label class="control-label col-md-3">Nama<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="nama" placeholder="Isikan nama lengkap" value="<?php echo $data['nama']; ?>" required>
-														  <span class="error-span"></span>
-													   </div>
-													</div>
-													
-													<div class="form-group">
-													   <label class="control-label col-md-3">Tempat Lahir<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="tempat_lahir" placeholder="Isikan Tempat Lahir" value="<?php echo $data['tempat_lahir']; ?>" required/>
-														  <span class="error-span"></span>
-													   </div>
-													</div>
-													
-													<div class="form-group">
-													   <label class="control-label col-md-3">Tanggal Lahir<span class="required">*</span></label>
-													   <div class="col-md-4">
-														<input  class="form-control datepicker" name="tgl_lahir" type="text" placeholder="yyyy/mm/dd" id="datelhr" value="<?php echo $data['tgl_lahir']; ?>" required>
-														</div>
-													</div>
-													<div class="form-group">
-													   <label class="control-label col-md-3">Usia</label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="usia" id="usia" value="<?php echo $data['usia']; ?>" readOnly="true"/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-													<div class="form-group">
-													   <label class="control-label col-md-3">Gender</label>
-													   <div class="col-md-4">
-															 <label class="radio">
-																<input type="radio" name="jenkel" id="jenkelm" value="Pria" data-title="Male" class="uniform" <?php if($data['jenkel']=="Pria"){echo "checked";}elseif ($data['jenkel']!="Pria"){echo "id";}?>/>
-															 Pria
-															 </label>
-															 <label class="radio">
-																<input type="radio" name="jenkel" id="jenkel" value="Wanita" data-title="Female" class="uniform" <?php if($data['jenkel']=="Wanita"){echo "checked";}elseif ($data['jenkel']!="Wanita"){echo "id";}?>/>
-															 Wanita
-															 </label>	
-															 <span class="help-block" id="sp" style="display: none">Jika Wanita, Pilih Berhijab / Tidak :</span>
-															 <label class="radio" id="lb" style="display: none">
-															 <input type="radio" name="hijab" id="hijab" value="Hijab" data-title=" Berhijab" style="display: none" <?php if($data['hijab']=="Hijab"){echo "checked";}elseif ($data['hijab']!="Hijab"){echo "id";}?>/>		
-															 Hijab
-															 </label>	
-															 <label class="radio" id="lbb" style="display: none">
-																<input type="radio" name="hijab" id="nohijab" value="Tidak" data-title="Tidak Berhijab" style="display: none"/ <?php if($data['hijab']=="Tidak"){echo "checked";}elseif ($data['hijab']!="Tidak"){echo "id";}?>>
-															 Tidak Berhijab
-															 </label>	
-													   </div>
-													
-													</div>
-													<div class="form-group">
-													   <label class="control-label col-md-3">Alamat<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="alamat" placeholder="Isikan Alamat" value="<?php echo $data['alamat']; ?>" required/>
-														  <span class="error-span"></span>
-													   </div>
-													</div>
-													<div class="form-group">
-													   <label class="control-label col-md-3">Provinsi<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <?php
-mysql_connect("localhost","root","");
-mysql_select_db("db_hrd");
-?>
-
-<select class="form-control" name="propinsi" id="propinsi">
-													   
-													   <option value="">Pilih Provinsi Jika Edit Kota</option>
-<?php
-//mengambil nama-nama propinsi yang ada di database
-$propinsi = mysql_query("SELECT * FROM provinsi ORDER BY id_provinsi");
-while($p=mysql_fetch_array($propinsi)){
-echo "<option value=\"$p[id_provinsi]\">$p[nama_provinsi]</option>\n";
-}
-?>
-</select>
-
-														  <span class="error-span"></span>
-													   </div>
-													</div>
-													<div class="form-group">
-													   <label class="control-label col-md-3">Kabupaten/Kota<span class="required">*</span></label>
-													   <div class="col-md-4">
-														<select class="form-control" name="kota" id="kota" required>
-													   <option value="<?php echo $data['kota']; ?>"><?php echo $data['kota']; ?></option>
-<?php
-//mengambil nama-nama kabupaten/kota yang ada di database
-$kota = mysql_query("SELECT * FROM kabupaten ORDER BY id_kabupaten");
-while($p=mysql_fetch_array($propinsi)){
-echo "<option value=\"$p[id_kabupaten]\">$p[nama_kabupaten]</option>\n";
-}
-?>
-</select>
-														  <span class="error-span"></span>
-													   </div>
-													</div>
-													
+												 <div class="tab-pane active" id="biodata">
+												 <?php 
+												 $id_karyawan = $_GET['id_karyawan'];
+											$query_tampil=mysql_query("SELECT */*karyawan.nama_karyawan, data_karyawan.position, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.hire_date, contract.join_date, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, karyawan.education, karyawan.gender, data_karyawan.status*/
+										    FROM karyawan 
+										    inner join data_karyawan on karyawan.id_karyawan=data_karyawan.id_karyawan
+										    inner join keluarga on keluarga.id_karyawan = karyawan.id_karyawan
+										    inner join rekening on rekening.id_karyawan = karyawan.id_karyawan
+										   where karyawan.id_karyawan = $id_karyawan");
+											if ($query_tampil === FALSE) {
+											    die(mysql_error());
+											}
+											$no=1;
+											$data = mysql_fetch_array($query_tampil);
+											?>
 												 <div class="form-group">
-													   <label class="control-label col-md-3">No. HP<span class="required">*</span></label>
+													   <label class="control-label col-md-3">Nama Karyawan<span class="required">*</span></label>
 													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="no_hp" placeholder="Isikan Nomor Handphone" value="<?php echo $data['no_hp']; ?>" required/>
-														  <span class="error-span"></span>
-													   </div>
-												 </div>
-												 <div class="form-group">
-													   <label class="control-label col-md-3">No. Telp Lainnya</label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="no_telp" placeholder="Isikan Nomor Telephone" value="<?php echo $data['no_telp']; ?>"/>
+														  <input type="text" class="form-control" name="nama_karyawan" placeholder="Isikan Nama Lengkap" value="<?php echo $data['nama_karyawan']; ?>" required>
+														  <input type="hidden" name="id_karyawan" value="<?php echo $id_karyawan; ?>">
 														  <span class="error-span"></span>
 													   </div>
 													</div>
-												 <div class="form-group">
-													   <label class="control-label col-md-3">Agama<span class="required">*</span></label>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Religion<span class="required">*</span></label>
 													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="agama" placeholder="Isikan Agama" value="<?php echo $data['agama']; ?>" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-3">Tinggi Badan</label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="t_bdn" placeholder="Isikan Tinggi Badan (cm)" value="<?php echo $data['t_bdn']; ?>" required />
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-3">Berat Badan</label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="b_bdn" placeholder="Isikan Berat Badan (kg)" value="<?php echo $data['b_bdn']; ?>" required />
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-3">Status Perkawinan<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <select name="status_kawin" class="form-control" required>
-															 <option value="<?php echo $data['status_kawin']; ?>"><?php echo $data['status_kawin']; ?></option>
-															 <option value="lajang">Belum Menikah</option>
-															 <option value="menikah">Menikah</option>
-															 <option value="duda">Duda</option>
-															 <option value="Janda">Janda</option>
+														  <select name="religion" class="form-control" required>
+															 <option value="<?php echo $data['religion']; ?>" ><?php echo $data['religion']; ?></option>
+															 <option value="Islam">Islam</option>
+															 <option value="Kristen Protestan">Kristen Protestan</option>
+															 <option value="Katolik">Katolik</option>
+															 <option value="Hindu">Hindu</option>
+															 <option value="Hindu">Buddha</option>
+															 <option value="Kong Hu Cu">Kong Hu Cu</option>
 															</select>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
-												<div class="form-group">
-													  <label class="control-label col-md-3">Kebangsaan<span class="required">*</span></label>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Birthplace<span class="required">*</span></label>
 													   <div class="col-md-4">
-														  <select name="kebangsaan" id="country_select" class="col-md-12 full-width-fix" required>
-															 <option value="<?php echo $data['kebangsaan']; ?>"><?php echo $data['kebangsaan']; ?></option>
-															 <option value="AF">Afghanistan</option>
-															 <option value="AL">Albania</option>
-															 <option value="DZ">Algeria</option>
-															 <option value="AS">American Samoa</option>
-															 <option value="AD">Andorra</option>
-															 <option value="AO">Angola</option>
-															 <option value="AI">Anguilla</option>
-															 <option value="AQ">Antarctica</option>
-															 <option value="AR">Argentina</option>
-															 <option value="AM">Armenia</option>
-															 <option value="AW">Aruba</option>
-															 <option value="AU">Australia</option>
-															 <option value="AT">Austria</option>
-															 <option value="AZ">Azerbaijan</option>
-															 <option value="BS">Bahamas</option>
-															 <option value="BH">Bahrain</option>
-															 <option value="BD">Bangladesh</option>
-															 <option value="BB">Barbados</option>
-															 <option value="BY">Belarus</option>
-															 <option value="BE">Belgium</option>
-															 <option value="BZ">Belize</option>
-															 <option value="BJ">Benin</option>
-															 <option value="BM">Bermuda</option>
-															 <option value="BT">Bhutan</option>
-															 <option value="BO">Bolivia</option>
-															 <option value="BA">Bosnia and Herzegowina</option>
-															 <option value="BW">Botswana</option>
-															 <option value="BV">Bouvet Island</option>
-															 <option value="BR">Brazil</option>
-															 <option value="IO">British Indian Ocean Territory</option>
-															 <option value="BN">Brunei Darussalam</option>
-															 <option value="BG">Bulgaria</option>
-															 <option value="BF">Burkina Faso</option>
-															 <option value="BI">Burundi</option>
-															 <option value="KH">Cambodia</option>
-															 <option value="CM">Cameroon</option>
-															 <option value="CA">Canada</option>
-															 <option value="CV">Cape Verde</option>
-															 <option value="KY">Cayman Islands</option>
-															 <option value="CF">Central African Republic</option>
-															 <option value="TD">Chad</option>
-															 <option value="CL">Chile</option>
-															 <option value="CN">China</option>
-															 <option value="CX">Christmas Island</option>
-															 <option value="CC">Cocos (Keeling) Islands</option>
-															 <option value="CO">Colombia</option>
-															 <option value="KM">Comoros</option>
-															 <option value="CG">Congo</option>
-															 <option value="CD">Congo, the Democratic Republic of the</option>
-															 <option value="CK">Cook Islands</option>
-															 <option value="CR">Costa Rica</option>
-															 <option value="CL">Cloud Admin</option>
-															 <option value="CI">Cote d'Ivoire</option>
-															 <option value="HR">Croatia (Hrvatska)</option>
-															 <option value="CU">Cuba</option>
-															 <option value="CY">Cyprus</option>
-															 <option value="CZ">Czech Republic</option>
-															 <option value="DK">Denmark</option>
-															 <option value="DJ">Djibouti</option>
-															 <option value="DM">Dominica</option>
-															 <option value="DO">Dominican Republic</option>
-															 <option value="EC">Ecuador</option>
-															 <option value="EG">Egypt</option>
-															 <option value="SV">El Salvador</option>
-															 <option value="GQ">Equatorial Guinea</option>
-															 <option value="ER">Eritrea</option>
-															 <option value="EE">Estonia</option>
-															 <option value="ET">Ethiopia</option>
-															 <option value="FK">Falkland Islands (Malvinas)</option>
-															 <option value="FO">Faroe Islands</option>
-															 <option value="FJ">Fiji</option>
-															 <option value="FI">Finland</option>
-															 <option value="FR">France</option>
-															 <option value="GF">French Guiana</option>
-															 <option value="PF">French Polynesia</option>
-															 <option value="TF">French Southern Territories</option>
-															 <option value="GA">Gabon</option>
-															 <option value="GM">Gambia</option>
-															 <option value="GE">Georgia</option>
-															 <option value="DE">Germany</option>
-															 <option value="GH">Ghana</option>
-															 <option value="GI">Gibraltar</option>
-															 <option value="GR">Greece</option>
-															 <option value="GL">Greenland</option>
-															 <option value="GD">Grenada</option>
-															 <option value="GP">Guadeloupe</option>
-															 <option value="GU">Guam</option>
-															 <option value="GT">Guatemala</option>
-															 <option value="GN">Guinea</option>
-															 <option value="GW">Guinea-Bissau</option>
-															 <option value="GY">Guyana</option>
-															 <option value="HT">Haiti</option>
-															 <option value="HM">Heard and Mc Donald Islands</option>
-															 <option value="VA">Holy See (Vatican City State)</option>
-															 <option value="HN">Honduras</option>
-															 <option value="HK">Hong Kong</option>
-															 <option value="HU">Hungary</option>
-															 <option value="IS">Iceland</option>
-															 <option value="IN">India</option>
-															 <option value="Indonesia">Indonesia</option>
-															 <option value="IR">Iran (Islamic Republic of)</option>
-															 <option value="IQ">Iraq</option>
-															 <option value="IE">Ireland</option>
-															 <option value="IL">Israel</option>
-															 <option value="IT">Italy</option>
-															 <option value="JM">Jamaica</option>
-															 <option value="JP">Japan</option>
-															 <option value="JO">Jordan</option>
-															 <option value="KZ">Kazakhstan</option>
-															 <option value="KE">Kenya</option>
-															 <option value="KI">Kiribati</option>
-															 <option value="KP">Korea, Democratic People's Republic of</option>
-															 <option value="KR">Korea, Republic of</option>
-															 <option value="KW">Kuwait</option>
-															 <option value="KG">Kyrgyzstan</option>
-															 <option value="LA">Lao People's Democratic Republic</option>
-															 <option value="LV">Latvia</option>
-															 <option value="LB">Lebanon</option>
-															 <option value="LS">Lesotho</option>
-															 <option value="LR">Liberia</option>
-															 <option value="LY">Libyan Arab Jamahiriya</option>
-															 <option value="LI">Liechtenstein</option>
-															 <option value="LT">Lithuania</option>
-															 <option value="LU">Luxembourg</option>
-															 <option value="MO">Macau</option>
-															 <option value="MK">Macedonia, The Former Yugoslav Republic of</option>
-															 <option value="MG">Madagascar</option>
-															 <option value="MW">Malawi</option>
-															 <option value="MY">Malaysia</option>
-															 <option value="MV">Maldives</option>
-															 <option value="ML">Mali</option>
-															 <option value="MT">Malta</option>
-															 <option value="MH">Marshall Islands</option>
-															 <option value="MQ">Martinique</option>
-															 <option value="MR">Mauritania</option>
-															 <option value="MU">Mauritius</option>
-															 <option value="YT">Mayotte</option>
-															 <option value="MX">Mexico</option>
-															 <option value="FM">Micronesia, Federated States of</option>
-															 <option value="MD">Moldova, Republic of</option>
-															 <option value="MC">Monaco</option>
-															 <option value="MN">Mongolia</option>
-															 <option value="MS">Montserrat</option>
-															 <option value="MA">Morocco</option>
-															 <option value="MZ">Mozambique</option>
-															 <option value="MM">Myanmar</option>
-															 <option value="NA">Namibia</option>
-															 <option value="NR">Nauru</option>
-															 <option value="NP">Nepal</option>
-															 <option value="NL">Netherlands</option>
-															 <option value="AN">Netherlands Antilles</option>
-															 <option value="NC">New Caledonia</option>
-															 <option value="NZ">New Zealand</option>
-															 <option value="NI">Nicaragua</option>
-															 <option value="NE">Niger</option>
-															 <option value="NG">Nigeria</option>
-															 <option value="NU">Niue</option>
-															 <option value="NF">Norfolk Island</option>
-															 <option value="MP">Northern Mariana Islands</option>
-															 <option value="NO">Norway</option>
-															 <option value="OM">Oman</option>
-															 <option value="PK">Pakistan</option>
-															 <option value="PW">Palau</option>
-															 <option value="PA">Panama</option>
-															 <option value="PG">Papua New Guinea</option>
-															 <option value="PY">Paraguay</option>
-															 <option value="PE">Peru</option>
-															 <option value="PH">Philippines</option>
-															 <option value="PN">Pitcairn</option>
-															 <option value="PL">Poland</option>
-															 <option value="PT">Portugal</option>
-															 <option value="PR">Puerto Rico</option>
-															 <option value="QA">Qatar</option>
-															 <option value="RE">Reunion</option>
-															 <option value="RO">Romania</option>
-															 <option value="RU">Russian Federation</option>
-															 <option value="RW">Rwanda</option>
-															 <option value="KN">Saint Kitts and Nevis</option>
-															 <option value="LC">Saint LUCIA</option>
-															 <option value="VC">Saint Vincent and the Grenadines</option>
-															 <option value="WS">Samoa</option>
-															 <option value="SM">San Marino</option>
-															 <option value="ST">Sao Tome and Principe</option>
-															 <option value="SA">Saudi Arabia</option>
-															 <option value="SN">Senegal</option>
-															 <option value="SC">Seychelles</option>
-															 <option value="SL">Sierra Leone</option>
-															 <option value="SG">Singapore</option>
-															 <option value="SK">Slovakia (Slovak Republic)</option>
-															 <option value="SI">Slovenia</option>
-															 <option value="SB">Solomon Islands</option>
-															 <option value="SO">Somalia</option>
-															 <option value="ZA">South Africa</option>
-															 <option value="GS">South Georgia and the South Sandwich Islands</option>
-															 <option value="ES">Spain</option>
-															 <option value="LK">Sri Lanka</option>
-															 <option value="SH">St. Helena</option>
-															 <option value="PM">St. Pierre and Miquelon</option>
-															 <option value="SD">Sudan</option>
-															 <option value="SR">Suriname</option>
-															 <option value="SJ">Svalbard and Jan Mayen Islands</option>
-															 <option value="SZ">Swaziland</option>
-															 <option value="SE">Sweden</option>
-															 <option value="CH">Switzerland</option>
-															 <option value="SY">Syrian Arab Republic</option>
-															 <option value="TW">Taiwan, Province of China</option>
-															 <option value="TJ">Tajikistan</option>
-															 <option value="TZ">Tanzania, United Republic of</option>
-															 <option value="TH">Thailand</option>
-															 <option value="TG">Togo</option>
-															 <option value="TK">Tokelau</option>
-															 <option value="TO">Tonga</option>
-															 <option value="TT">Trinidad and Tobago</option>
-															 <option value="TN">Tunisia</option>
-															 <option value="TR">Turkey</option>
-															 <option value="TM">Turkmenistan</option>
-															 <option value="TC">Turks and Caicos Islands</option>
-															 <option value="TV">Tuvalu</option>
-															 <option value="UG">Uganda</option>
-															 <option value="UA">Ukraine</option>
-															 <option value="AE">United Arab Emirates</option>
-															 <option value="GB">United Kingdom</option>
-															 <option value="US">United States</option>
-															 <option value="UM">United States Minor Outlying Islands</option>
-															 <option value="UY">Uruguay</option>
-															 <option value="UZ">Uzbekistan</option>
-															 <option value="VU">Vanuatu</option>
-															 <option value="VE">Venezuela</option>
-															 <option value="VN">Viet Nam</option>
-															 <option value="VG">Virgin Islands (British)</option>
-															 <option value="VI">Virgin Islands (U.S.)</option>
-															 <option value="WF">Wallis and Futuna Islands</option>
-															 <option value="EH">Western Sahara</option>
-															 <option value="YE">Yemen</option>
-															 <option value="ZM">Zambia</option>
-															 <option value="ZW">Zimbabwe</option>
-														  </select>
-													   </div>													
+														  <input type="text" class="form-control" name="birthplace" placeholder="Isikan Tempat Lahir" value="<?php echo $data['birthplace']; ?>" required/>
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													
+													<div class="form-group">
+													   <label class="control-label col-md-3">Birthdate<span class="required">*</span></label>
+													   <div class="col-md-4">
+														<input  class="form-control datepicker" name="birthdate" type="text" placeholder="Isikan Tgl Lahir" id="datelhr" value="<?php echo $data['birthdate']; ?>" required>
+														</div>
 													</div>
 													<div class="form-group">
-													   <label class="control-label col-md-3">Upload Foto Kandidat</label>
+													   <label class="control-label col-md-3">ID Type<span class="required">*</span></label>
+													   <div class="col-md-2">
+															 <label class="radio">
+																<input type="radio" name="id_type" id="ktp" value="1" data-title="KTP" class="uniform" <?php if($data['id_type']=="1"){echo "checked";}elseif ($data['id_type']!="1"){echo "id";}?> />
+															 KTP
+															 </label>
+														</div>
+														<div class="col-md-2">
+															 <label class="radio">
+																<input type="radio" name="id_type" id="sim" value="2" data-title="SIM" class="uniform" <?php if($data['id_type']=="2"){echo "checked";}elseif ($data['id_type']!="2"){echo "id";}?> />
+															 SIM
+															 </label>	
+															 
+													   </div>
+													
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3" id="lbl_num">ID Number (KTP)<span class="required">*</span></label>
 													   <div class="col-md-4">
-													   <input class="form-control" name="gambar" type="hidden" value="<?php echo $d['gambar']; ?>"> 
-													   
-													   <?php
-													   if(!empty($d['gambar'])){
-													   echo '
-													   <input class="form-control" name="img" type="file">
-													   <img src="img/img-kandidat/'.$d["gambar"].'" height="150" width="150" class="img-thumbnail">';
-														}else{
-															echo '
-															<input class="form-control" name="image" type="file">
-															<p class="btn btn-warning">Foto Belum Diupload !</p>';
-														}
-													?>
+														  <input type="text" class="form-control" name="id_number" id="id_num" placeholder="Isikan ID Number (KTP)" value="<?php echo $data['id_number']; ?>" required/>
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Education<span class="required">*</span></label>
+													   <div class="col-md-4">
+														  <select name="education" class="form-control" required>
+															 <option value="<?php echo $data['education']; ?>"><?php echo $data['education']; ?> </option>
+															 <option value="SD">SD</option>
+															 <option value="SMP">SMP</option>
+															 <option value="SMK">MA</option>
+															 <option value="SMA">SMA</option>
+															 <option value="SMK">SMK</option>
+															 <option value="SMK">SMU</option>
+															 <option value="D1">D1</option>
+															 <option value="D3">D3</option>
+															 <option value="D3">D4</option>
+															 <option value="S1">S1</option>
+															 <option value="S1">S2</option>
+															 <option value="S1">S3</option>
+															</select>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
-
-
+													<div class="form-group">
+													   <label class="control-label col-md-3">Gender<span class="required">*</span></label>
+													   <div class="col-md-2">
+															 <label class="radio">
+																<input type="radio" name="gender" value="L" data-title="Male" class="uniform" <?php if($data['gender']=="L"){echo "checked";}elseif ($data['gender']!="L"){echo "id";}?> />
+															 Pria
+															 </label>
+														</div>
+														<div class="col-md-2">
+															 <label class="radio">
+																<input type="radio" name="gender" value="P" data-title="Female" class="uniform" <?php if($data['gender']=="L"){echo "checked";}elseif ($data['gender']!="L"){echo "id";}?>/>
+															 Wanita
+															 </label>	
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Home Phone</label>
+													   <div class="col-md-4">
+														<input  class="form-control" name="home_phone" type="text" placeholder="Isikan No Telp Rumah" value="<?php echo $data['home_phone']; ?>">
+														</div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Mobile Phone<span class="required">*</span></label>
+													   <div class="col-md-4">
+														<input  class="form-control" name="mobile_phone" type="text" placeholder="Isikan No Handphone" value="<?php echo $data['mobile_phone']; ?>" required>
+														</div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Freshgraduate<span class="required">*</span></label>
+													   <div class="col-md-2">
+															 <label class="radio">
+																<input type="radio" name="freshgraduate" value="1" data-title="Freshgraduate" class="uniform" <?php if($data['freshgraduate']=="1"){echo "checked";}elseif ($data['freshgraduate']!="1"){echo "id";}?> />
+															 Freshgraduate
+															 </label>
+															 </div>
+															  <div class="col-md-2">
+															 <label class="radio">
+																<input type="radio" name="freshgraduate" value="2" data-title="Non Freshgraduate" class="uniform" <?php if($data['freshgraduate']=="2"){echo "checked";}elseif ($data['freshgraduate']!="2"){echo "id";}?>/>
+															 Non Freshgraduate
+															 </label>	
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Financial<span class="required">*</span></label>
+													   <div class="col-md-2">
+															 <label class="radio">
+																<input type="radio" name="financial" value="1" data-title="Male" class="uniform" <?php if($data['financial']=="1"){echo "checked";}elseif ($data['financial']!="1"){echo "id";}?>/>
+															 Financial
+															 </label>
+														</div>
+														<div class="col-md-2">
+															 <label class="radio">
+																<input type="radio" name="financial" value="2" data-title="Female" class="uniform" <?php if($data['financial']=="2"){echo "checked";}elseif ($data['financial']!="2"){echo "id";}?>/>
+															 Non Financial
+															 </label>	
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Permanent Address<span class="required">*</span></label>
+													   <div class="col-md-4">
+														<textarea class="form-control" name="permanent_address"  placeholder="Isikan Alamat sesuai KTP" rows="5" required><?php echo $data['permanent_address']; ?></textarea>   
+														</div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Domisili Address<span class="required">*</span></label>
+													   <div class="col-md-4">
+														<textarea class="form-control" name="domisili_address"  placeholder="Isikan Alamat Domisili" rows="5" required><?php echo $data['domisili_address']; ?></textarea> 
+														</div>
+													</div>
+								
 												</div>
-												 <div class="tab-pane" id="payment">
+
+												 <div class="tab-pane" id="data-karyawan">
+													<div class="form-group">
+													   <label class="control-label col-md-3">NIK<span class="required">*</span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="nik" placeholder="Isikan NIK" value="<?php echo $data['nik']; ?>" required>
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Virtual NIK<span class="required">*</span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="virtual_nik" placeholder="Isikan Virtual NIK" value="<?php echo $data['virtual_nik']; ?>" required>
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">NPWP</label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="npwp" placeholder="Isikan No NPWP" value="<?php echo $data['npwp']; ?>">
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Hire Date<span class="required">*</span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="hire_date" placeholder="Isikan Tgl Perekrutan" id="hire_date" value="<?php echo $data['hire_date']; ?>" required>
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Posisi / Jabatan<span class="required">*</span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="position" placeholder="Isikan Posisi/Jabatan" value="<?php echo $data['position']; ?>" required>
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Job Class<span class="required">*</span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="job_class" placeholder="Isikan Job Class" value="<?php echo $data['job_class']; ?>" required>
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+														
+													<div class="form-group">
+													   <label class="control-label col-md-3">BU</label>
+													   <div class="col-md-4">
+													   <select id="bu" class="form-control" required>
+													   <?php 
+											$que=mysql_query("SELECT distinct bu
+										    FROM bu 
+										    where id_bu=".$_SESSION['id_bu']." && id_users=".$_SESSION['id_users']."");
+											if ($que === FALSE) {
+											    die(mysql_error());
+											}
+											while($d = mysql_fetch_array($que)) {
+
+											?>
+															 <option value="" disabled="" selected="" style="display:none" ;=""><?php echo "BU ".$d['bu']; ?></option>
+															 <option value="<?php echo $d['bu']; ?>"><?php echo "BU ".$d['bu']; ?></option>
+											<?php } ?>
+															</select>
+
+
+													   
+													   	<input type="hidden" class="form-control" name="id_bu" value="<?php echo $d['id_bu']; ?>" >
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Cabang</label>
+													   <div class="col-md-4">
+													   	<input type="text" class="form-control" value="<?php echo $d['nama_cabang'];?>" disabled>
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+												
+													<div class="form-group">
+													   <label class="control-label col-md-3">Location<span class="required">*</span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="location" placeholder="Isikan Lokasi" value="<?php echo $data['location']; ?>" required>
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Cabang Induk</label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="cabang_induk" placeholder="Isikan Cabang Induk" value="<?php echo $data['cabang_induk']; ?>">
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Organisasi Name</label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="org_name" placeholder="Isikan Nama Organisasi" value="<?php echo $data['org_name']; ?>">
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													
+													<div class="form-group">
+													   <label class="control-label col-md-3">Jaminan<span class="required">*</span></label>
+													   <div class="col-md-4">
+														  <select id="jamin" name="jaminan" class="form-control" required>
+															 <option value="<?php echo $data['jaminan']; ?>" ><?php if($data['jaminan']=="1"){echo"Ijazah";}elseif ($data['jaminan']=="2") {echo"BPKB";}elseif ($data['jaminan']=="3") {echo"Ijazah+BPKB";} ?> ></option>
+															 <option value="1">Ijazah</option>
+															 <option value="2">BPKB</option>
+															 <option value="3">Ijazah+BPKB</option>
+															</select>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">No Jaminan<span class="required">*</span></label>
+													   <div class="col-md-4">
+													   <?php 
+														 $no_jam  = $data['no_jaminan'];
+														  $array 	= explode('/', $no_jam);
+														  $no_ijazah =  trim($array[0]);
+														  $no_bpkb =  trim($array[1]);
+													   if($data['jaminan']=="1"){ ?>
+													  <input type="text" class="form-control" id="ijazah" name="no_ijazah" placeholder="Isikan No Jaminan Ijazah" value="<?php echo $no_ijazah; ?>" required/>
+
+													  <?php  }else if($data['jaminan']=="2"){ ?>
+													  
+													  <input type="text" class="form-control" id="bpkb" name="no_bpkb" placeholder="Isikan No Jaminan BPKB" value="<?php echo $no_bpkb; ?>" required/>
+
+													   <?php  }else if($data['jaminan']=="3"){ ?>
+													   <input type="text" class="form-control" id="ijazah" name="no_ijazah" placeholder="Isikan No Jaminan Ijazah" value="<?php echo $no_ijazah; ?>" required/>
+													   <input type="text" class="form-control" id="bpkb" name="no_bpkb" placeholder="Isikan No Jaminan BPKB" value="<?php echo $no_bpkb; ?>" required/>
+													   <?php  } ?>
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													
+													<div class="form-group">
+													   <label class="control-label col-md-3">Kartu BPJS Ketenagakerjaan<span class="required">*</span></label>
+													   <div class="col-md-2">
+															 <label class="radio">
+																<input type="radio" name="kartu_ketenagakerjaan" value="1" data-title="BARU" class="uniform" <?php if($data['kartu_ketenagakerjaan']=="1"){echo "checked";}elseif ($data['kartu_ketenagakerjaan']!="1"){echo "id";}?> />
+															 BARU
+															 </label>
+														</div>
+														<div class="col-md-2">
+															 <label class="radio">
+																<input type="radio" name="kartu_ketenagakerjaan" value="2" data-title="LANJUT" class="uniform" <?php if($data['kartu_ketenagakerjaan']=="2"){echo "checked";}elseif ($data['kartu_ketenagakerjaan']!="2"){echo "id";}?>/>
+															 LANJUT
+															 </label>	
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">No BPJS Ketenagakerjaan<span class="required">*</span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="bpjs_ketenagakerjaan" placeholder="Isikan No BPJS Ketenagakerjaan" value="<?php echo $data['bpjs_ketenagakerjaan'];?>" required/>
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">Kartu BPJS Kesehatan<span class="required">*</span></label>
+													   <div class="col-md-2">
+															 <label class="radio">
+																<input type="radio" name="kartu_kesehatan" value="1" data-title="BARU" class="uniform" <?php if($data['kartu_kesehatan']=="1"){echo "checked";}elseif ($data['kartu_kesehatan']!="1"){echo "id";}?> />
+															 BARU
+															 </label>
+														</div>
+														<div class="col-md-2">
+															 <label class="radio">
+																<input type="radio" name="kartu_kesehatan" value="2" data-title="LANJUT" class="uniform" <?php if($data['kartu_kesehatan']=="2"){echo "checked";}elseif ($data['kartu_kesehatan']!="2"){echo "id";}?>/>
+															 LANJUT
+															 </label>	
+													   </div>
+													</div>
+													<div class="form-group">
+													   <label class="control-label col-md-3">No BPJS Kesehatan<span class="required">*</span></label>
+													   <div class="col-md-4">
+														  <input type="text" class="form-control" name="bpjs_kesehatan" placeholder="Isikan No BPJS Kesehatan" value="<?php echo $data['bpjs_kesehatan'];?>" required/>
+														  <span class="error-span"></span>
+													   </div>
+													</div>
+													
+													<div class="form-group">
+													   <label class="control-label col-md-3">Keterangan<span class="required">*</span></label>
+													   <div class="col-md-4">
+														<textarea class="form-control" name="ket"  placeholder="Isikan Keterangan" rows="5" required><?php echo $data['ket'];?></textarea> 
+														</div>
+													</div>	
+												 </div>
+												 <div class="tab-pane" id="lain">
 												 <div class="col-md-6">
 												 <div class="box border orange">
 											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Riwayat Pendidikan</h4>
+												<h4><i class="fa fa-bars"></i>Data Family</h4>
 												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													
 												</div>
 											</div>
 											<div class="box-body big">
-												 <div class="form-group">
-													   <label class="control-label col-md-4">Pendidikan<span class="required">*</span></label>
+												<div class="form-group">
+													   <label class="control-label col-md-4">Mother Name<span class="required">*</span></label>
 													   <div class="col-md-8">
-														  <select class="form-control" id="mySelect" name="pendidikan">
-															   <option value="<?php echo $data['pendidikan']; ?>"><?php echo $data['pendidikan']; ?></option>
-															   <option value="S3">S3</option>
-															   <option value="S2">S2</option>
-															   <option value="S1">S1</option>
-															   <option value="D3">D3</option>
-															   <option value="D1">D1</option>
-															   <option value="SMK">SMK</option>
-															   <option value="SMA">SMA</option>
-															   <option value="SMP">SMP</option>
-														   </select>	
+														  <input type="text" class="form-control" name="mother_name" placeholder="Isikan Nama Ibu" value="<?php echo $data['mother_name']; ?>" required/>
 														  <span class="error-span"></span>
-														  
 													   </div>
-
 												</div>
 												<div class="form-group">
-													   <label class="control-label col-md-4">Nama Sekolah<span class="required">*</span></label>
+													   <label class="control-label col-md-4">Marital Status<span class="required">*</span></label>
 													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="nama_sekolah" placeholder="Nama Sekolah" value="<?php echo $data['nama_sekolah']; ?>" required/>
+														<select id="marital" name="marital_status" class="form-control" required>
+															 <option value="<?php echo $data['marital_status']; ?>" ><?php echo $data['marital_status']; ?></option>
+															 <option value="TK">TK</option>
+															 <option value="K0">K0</option>
+															 <option value="K1">K1</option>
+															 <option value="K2">K2</option>
+															 <option value="K3">K3</option>
+														</select>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Jurusan<span class="required">*</span></label>
+												<div class="form-group" id="spouse">
+													   <label class="control-label col-md-4">Spouse Name<span class="required">*</span></label>
 													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="jurusan" placeholder="Isikan Jurusan" value="<?php echo $data['jurusan']; ?>" required/>
+														  <input type="text" class="form-control" name="spouse_name" placeholder="Isikan Nama Pasangan" value="<?php echo $data['spouse_name']; ?>" required/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Tahun Lulus<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="thn_lulus" placeholder="Isikan Tahun Lulus" value="<?php echo $data['thn_lulus']; ?>" required/>
+												<div class="form-group" id="spouse_birth"> 
+													   <label class="control-label col-md-4">Spouse Birthdate<span class="required">*</span></label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="spouse_birthdate" id="spouse_birthdate" placeholder="Isikan Tgl Lahir Pasangan" value="<?php echo $data['spouse_birthdate']; ?>" required/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">IPK<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="ipk" placeholder="Isikan IPK" value="<?php echo $data['ipk']; ?>" />
+												<div class="form-group" id="child1">
+													   <label class="control-label col-md-4">Chile Name 1<span class="required"></span></label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="chile1_name" placeholder="Isikan nama anak 1" value="<?php echo $data['chile1_name']; ?>" />
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												<div class="form-group" id="child1_birth">
+													   <label class="control-label col-md-4">Chile Birthdate 1<span class="required"></span></label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="chile1_birthdate" id="chile1_birthdate" placeholder="Isikan Nama Anak 1" value="<?php echo $data['chile1_birthdate']; ?>" />
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												<div class="form-group" id="child2">
+													   <label class="control-label col-md-4">Chile Name 2<span class="required"></span></label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="chile2_name" placeholder="Isikan nama anak 2" value="<?php echo $data['chile2_name']; ?>"/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												<div class="form-group" id="child2_birth">
+													   <label class="control-label col-md-4">Chile Birthdate 2<span class="required"></span></label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="chile2_birthdate" id="chile2_birthdate" placeholder="Isikan Nama Anak 2" value="<?php echo $data['chile2_birthdate']; ?>"/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												<div class="form-group" id="child3">
+													   <label class="control-label col-md-4">Chile Name 3<span class="required"></span></label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="chile3_name" placeholder="Isikan nama anak 3" value="<?php echo $data['chile3_name']; ?>"/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												<div class="form-group" id="child3_birth">
+													   <label class="control-label col-md-4">Chile Birthdate 3<span class="required"></span></label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="chile3_birthdate" id="chile3_birthdate" placeholder="Isikan Nama Anak 3" value="<?php echo $data['chile3_birthdate']; ?>"/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
 											</div>
 										</div>
 										</div>
-
-												
-												
-											<div class="col-md-6">
-												<div class="box border blue">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Pengalaman Kerja</h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													
-												</div>
-											</div>
-											<div class="box-body" id="riwayat">
-											
-											<div class="box-body big">
-											
-											<?php if($data['perusahaan']=='Freshgraduate'){
-												echo '<div class="form-group">
-													   
-													   <label class="control-label col-md-4">FreshGraduate<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" id="nm_perusahaan" name="perusahaan" placeholder="Isikan Nama Perusahaan" value="'.$data['perusahaan'].'" required/>
-
-														  <span class="error-span"></span>
-													   </div>
-												</div>';
-											}else{ echo '
-												<div class="form-group">
-													   <label class="control-label col-md-4" id="lblpershn">Nama Perusahaan<span class="required">*</span></label>
-													   <label class="control-label col-md-4" style="display: none">FreshGraduate<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" id="nm_perusahaan" name="perusahaan" placeholder="Isikan Nama Perusahaan" value="'.$data['perusahaan'].'" required/>
-
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="jns">
-													   <label class="control-label col-md-4">Jenis Perusahaan</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="jns_perusahaan" placeholder="Isikan Jenis Perusahaan" value="'.$data['jns_perusahaan'].'" />
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Posisi<span class="required">*</span></label>
-													   <div class="col-md-8">
-													    
-														 
-													    <input class="form-control" name="posisi" value="'.$data['posisi'].'">
-													   
-
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Periode<span class="required">*</span></label>
-													   <div class="col-md-8">
-														
-														   <input type="text" name="periode" class="form-control" value="'.$data['periode'].'">
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 1</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi1" placeholder="Isikan Deskripsi Pekerjaan" value="'.$data['deskripsi1'].'" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 2</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi2" placeholder="Isikan Deskripsi Pekerjaan" value="'.$data['deskripsi2'].'"  required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 3</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi3" placeholder="Isikan Deskripsi Pekerjaan" value="'.$data['deskripsi3'].'"  required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Gaji Terakhir</label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" name="gaji_terakhir" placeholder="Isikan Gaji Terakhir" value="'.$data['gaji_terakhir'].'"/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-											';}?>
-											<a id="btnplus" class="btn btn-success"><B>+</B></a>
-											</div>
-										</div>
-										</div>
-												 </div>
-												 <?php 
-														$idd = $_GET['id_kandidat'];
-
-														$m = mysql_query("SELECT * 
-
-										        FROM kandidat inner join kerja
-										        where kandidat.id_kandidat=kerja.id_kandidat and kandidat.id_kandidat='$idd'") or die(mysql_error());
-
-														$no = 2;
-														$d=1;
-														while ($k = mysql_fetch_array($m)) {
-														?>
-
 										<div class="col-md-6">
-												<div class="box border blue">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Pengalaman Kerja <?php echo $no; ?></h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													
-												</div>
-											</div>
-											<div class="box-body big">
-												<div class="form-group">
-													   <label class="control-label col-md-4">Nama Perusahaan</label>
-													   <div class="col-md-8">
-														 
-														  <input type="hidden" name="id_kerja_<?php echo $d; ?>" value="<?php echo $k['id_kerja']; ?>"/>
-														  <input type="text" class="form-control" name="perusahaan_<?php echo $d; ?>" placeholder="Isikan Nama Perusahaan" value="<?php echo $k['perusahaan']; ?>" required/>
-														  
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="jns">
-													   <label class="control-label col-md-4">Jenis Perusahaan</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="jns_perusahaan_<?php echo $d; ?>" placeholder="Isikan Jenis Perusahaan" value="<?php echo $k['jns_perusahaan']; ?>" />
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Posisi<span class="required">*</span></label>
-													   <div class="col-md-8">
-													    
-														 
-													    <input class="form-control" name="posisi_<?php echo $d; ?>" value="<?php echo $k['posisi']; ?>">
-													   
-
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Periode<span class="required">*</span></label>
-													   <div class="col-md-8">
-														
-														   <input type="text" name="periode_<?php echo $d; ?>" class="form-control" value="<?php echo $k['periode']; ?>">
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 1</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi1_<?php echo $d; ?>" placeholder="Isikan Deskripsi Pekerjaan" value="<?php echo $k['deskripsi1']; ?>" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 2</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi2_<?php echo $d; ?>" placeholder="Isikan Deskripsi Pekerjaan" value="<?php echo $k['deskripsi2']; ?>"  required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 3</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi3_<?php echo $d; ?>" placeholder="Isikan Deskripsi Pekerjaan" value="<?php echo $k['deskripsi3']; ?>"  required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="gaji">
-													   <label class="control-label col-md-4">Gaji Terakhir</label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" name="gaji_terakhir_<?php echo $d; ?>" placeholder="Isikan Gaji Terakhir" value="<?php echo $k['gaji_terakhir']; ?>"/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<a id="btnplus2" class="btn btn-success"><B>+</B></a>
-											</div>
-										</div>
-										</div>
-										<?php
-										$no++;
-										$d++;
-										}
-										?>
-										<div class="col-md-6" id="pengalaman2" style="display: none">
-												<div class="box border blue">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Pengalaman Kerja 2</h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-											 			<i class="fa fa-refresh"></i>
-													</a>
-													
-												</div>
-											</div>
-											<div class="box-body big">
-												<div class="form-group">
-													   <label class="control-label col-md-4">Nama Perusahaan</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="perusahaan_a" placeholder="Isikan Nama Perusahaan" required/>
-
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Jenis Perusahaan</label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" name="jns_perusahaan_a" placeholder="Isikan Jenis Perusahaan" />
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Posisi</label>
-													   <div class="col-md-8">
-														  
-														  <select class="selectpicker" data-show-subtext="true" data-live-search="true" name="posisi_a" required>
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Jabatan Lama</option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM posisi order by nama_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_posisi']; ?>"><?php echo $cs['nama_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-													<select class="selectpicker" data-show-subtext="true" data-live-search="true" name="posisi_1a">
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Sub Jabatan</option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM sub_posisi order by nama_sub_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_sub_posisi']; ?>"><?php echo $cs['nama_sub_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="periode">
-													   <label class="control-label col-md-4">Periode<span class="required">*</span></label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" placeholder="Periode Awal Kerja" id="datep1_2" required/>   to 
-														   <input type="text" class="form-control" placeholder="Periode Akhir Kerja" id="datep2_2" onchange="myPeriod2()" required/>
-														   <input type="hidden" name="periode_a" id="v_periode_2" value="">
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 1<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi1_a" placeholder="Isikan Deskripsi Pekerjaan" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 2<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi2_a" placeholder="Isikan Deskripsi Pekerjaan" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 3<span class="required">*</span></label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi3_a" placeholder="Isikan Deskripsi Pekerjaan" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Gaji Terakhir</label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" name="gaji_terakhir_a" placeholder="Isikan Gaji Terakhir" />
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<a id="btnplus2" class="btn btn-success"><B>+</B></a>
-												<a id="btnminus1" class="btn btn-warning"><B>-</B></a>
-											</div>
-										</div>
-										</div>
-										<div class="col-md-6" id="pengalaman3" style="display: none">
-											<div class="box border blue">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Pengalaman Kerja 3</h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-												</div>
-											</div>
-											<div class="box-body big">
-												<div class="form-group">
-													   <label class="control-label col-md-4">Nama Perusahaan</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="perusahaan_b" placeholder="Isikan Nama Perusahaan"/>
-
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Jenis Perusahaan</label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" name="jns_perusahaan_b" placeholder="Isikan Jenis Perusahaan" />
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Posisi</label>
-													   <div class="col-md-8">
-														  
-														  <select class="selectpicker" data-show-subtext="true" data-live-search="true" name="posisi_b" required>
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Jabatan Lama</option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM posisi order by nama_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_posisi']; ?>"><?php echo $cs['nama_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-													<select class="selectpicker" data-show-subtext="true" data-live-search="true" name="posisi_2b">
-													   
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Sub Jabatan</option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM sub_posisi order by nama_sub_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_sub_posisi']; ?>"><?php echo $cs['nama_sub_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group" id="periode">
-													   <label class="control-label col-md-4">Periode<span class="required">*</span></label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" placeholder="Periode Awal Kerja" id="datep1_3" required/>   to 
-														   <input type="text" class="form-control" placeholder="Periode Akhir Kerja" id="datep2_3" onchange="myPeriod3()" required/>
-														   <input type="hidden" name="periode_b" id="v_periode_3" value="">
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 1</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi1_b" placeholder="Isikan Deskripsi Pekerjaan" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 2</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi2_b" placeholder="Isikan Deskripsi Pekerjaan" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Deskripsi Pekerjaan 3</label>
-													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="deskripsi3_b" placeholder="Isikan Deskripsi Pekerjaan" required/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-4">Gaji Terakhir</label>
-													   <div class="col-md-6">
-														  <input type="text" class="form-control" name="gaji_terakhir_b" placeholder="Isikan Gaji Terakhir" />
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												
-												
-												<a id="btnminus2" class="btn btn-warning"><B>-</B></a>
-											</div>
-										</div>
-										</div>
-												
-											<div class="col-md-12">
-												<div class="box border purple">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Kualifikasi & Lainnya</h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													
-												</div>
-											</div>
-											<div class="box-body">
-												
-												  <div class="form-group">
-													   <label class="control-label col-md-3">Gaji yang Diharapkan</label>
-													   <div class="col-md-6">
-
-														 
-														  <select class="form-control" id="gaji_hrp" name="gaji_diinginkan">
-															   <option value="<?php echo $data['gaji_diinginkan']; ?>"><?php echo $data['gaji_diinginkan']; ?></option>
-															   <option value="UMR">UMR</option>
-															   <option value=" <= 2.000.000"> <= 2 Jt</option>
-															   <option value="2.000.000 - 3.000.000">2 Jt - 3 Jt</option>
-															   <option value="3.000.000 - 4.000.000">3 Jt - 4 Jt</option>
-															   <option value="4.500.000 - 5.000.000">4.5 Jt - 5 Jt</option>
-															   <option value="5.000.000 - 6.000.000">5 Jt - 6 Jt</option>
-															   <option value="6.000.000 - 7.000.000">6 Jt - 7 Jt</option>
-															   <option value="7.000.000 - 8.000.000">7 Jt - 8 Jt</option>
-															   <option value="8.000.000 - 9.000.000">8 Jt - 9 Jt</option>
-															   <option value="9.000.000 - 10.000.000">9 Jt - 10 Jt</option>
-															   <option value=" >= 10.000.000"> >= 10 Jt</option>
-															   <option value="Sesuai dengan standart perusahaan">Sesuai dengan standart perusahaan</option>
-															   
-														   </select>	
-														 <!--  <input type="checkbox" id="lainnya2" >*Lainnya
-														  <input type="text" id="lain2" placeholder="Isikan Gaji Lainnya..?" onchange="myGaji()" style="display: none"/>
-														  -->
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-3">Keterampilan dan Keahlian yang dimiliki<span class="required">*</span></label>
-													   <div class="col-md-6">
-													   
-														  <?php 
-														  $kualifikasi = $data['kualifikasi'];
-														  $array = explode(',', $kualifikasi);
-
-											              $arrlength = count($array);
-											              		
-											              		$no=1;
-											                    for($x = 0; $x < $arrlength; $x++) {
-											                    echo '<input type="text" class="form-control"name="kualifikasi'.$no.'"  value="'.$array[$x].'"></br>';
-											                   	$no++;
-											                    }
-
-														  ?>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												
-											</div>
-										</div>
-
-								<div class="col-md-12">
-											<div class="box border pink">
-									<div class="box-title">
-										<h4><i class="fa fa-bars"></i>Kelengkapan Data</h4>
-										<div class="tools hidden-xs">
-											<a href="#box-config" data-toggle="modal" class="config">
-												<i class="fa fa-cog"></i>
-											</a>
-											<a href="javascript:;" class="reload">
-												<i class="fa fa-refresh"></i>
-											</a>
-											
-										</div>
-									</div>
-									<div class="box-body">
-										
-										  <div class="form-group">
-											
-											<div class="col-md-6"> 
-											 <input type="hidden" name="id_lengkap" value="<?php echo $data['id_lengkap']; ?>">
-												 <label class="checkbox"> <input name="ijazah" type="checkbox" class="uniform" value="1" <?php if($dt['ijazah']==""){echo "id";}elseif($dt['ijazah']=="1"){echo "checked";}?>> Ijazah D3</label> 
-												 <label class="checkbox"> <input name="transkrip" type="checkbox" class="uniform" value="1" <?php if($dt['transkrip']==""){echo "id";}elseif($dt['transkrip']=="1"){echo "checked";}?>> Transkrip Nilai</label> 
-												 <label class="checkbox"> <input name="sertifikat" type="checkbox" class="uniform" value="1" <?php if($dt['sertifikat']==""){echo "id";}elseif($dt['sertifikat']=="1"){echo "checked";};?>> Sertifikat Lainya</label> 
-												 <label class="checkbox"> <input name="surat_ket_kerja" type="checkbox" class="uniform" value="1" <?php if($dt['surat_ket_kerja']==""){echo "id";}elseif($dt['surat_ket_kerja']=="1"){echo "checked";};?>> Surat Keterangan Kerja</label> 
-												  <label class="checkbox"> <input name="skkb" type="checkbox" class="uniform" value="1" <?php if($dt['skkb']==""){echo "id";}elseif($dt['skkb']=="1"){echo "checked";};?>> SKKB</label>
-												   <label class="checkbox"> <input name="skck" type="checkbox" class="uniform" value="1" <?php if($dt['skck']==""){echo "id";}elseif($dt['skck']=="1"){echo "checked";};?>> SKKB</label> 
-												 <label class="checkbox"> <input name="surat_ket_sehat" type="checkbox" class="uniform" value="1" <?php if($dt['surat_ket_sehat']==""){echo "id";}elseif($dt['surat_ket_sehat']=="1"){echo "checked";};?>> Surat Keterangan Sehat</label> 
-												 </div>
-
-												 <div class="col-md-6"> 
-												 <label class="checkbox"> <input name="photo" type="checkbox" class="uniform" value="1" <?php if($dt['photo']==""){echo "id";}elseif($dt['photo']=="1"){echo "checked";};?>> Photo</label> 
-												  <label class="checkbox"> <input name="tes_kepribadian" type="checkbox" class="uniform" value="1" <?php if($dt['tes_kepribadian']==""){echo "id";}elseif($dt['tes_kepribadian']=="1"){echo "checked";};?>> Test Kepribadian</label> 
-												 <label class="checkbox"> <input name="tes_iq" type="checkbox" class="uniform" value="1" <?php if($dt['tes_iq']==""){echo "id";}elseif($dt['tes_iq']=="1"){echo "checked";};?>> Test Pengetahuan Umum</label> 
-												 <label class="checkbox"> <input name="tes_eq" type="checkbox" class="uniform" value="1" <?php if($dt['tes_eq']==""){echo "id";}elseif($dt['tes_eq']=="1"){echo "checked";};?>> Tes Logika</label> 
-												 <label class="checkbox"> <input name="tes_disk" type="checkbox" class="uniform" value="1" <?php if($dt['tes_disk']==""){echo "id";}elseif($dt['tes_disk']=="1"){echo "checked";};?>> Tes Disk</label>
-												  <label class="checkbox"> <input name="tes_tiu" type="checkbox" class="uniform" value="1" <?php if($dt['tes_tiu']==""){echo "id";}elseif($dt['tes_tiu']=="1"){echo "checked";};?>> Tes TIU</label>
-												  <label class="checkbox"> <input name="lain" type="checkbox" class="uniform" value="1" <?php if($dt['lain']==""){echo "id";}elseif($dt['lain']=="1"){echo "checked";};?>> Lainnya</label> 
-												
-											 </div>
-										  </div>
-										</div>
-									</div>
-									</div>
-									</div>	 <!--
-													<div class="form-group">
-													   <label class="control-label col-md-3"><span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="card_number" placeholder="Please provide 16 digit card number"/>
-														  <span class="error-span"></span>
-													   </div>
-													</div>
-													<div class="form-group">
-													   <label class="control-label col-md-3">CVC<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" placeholder="Please provide 3 digit CVC" class="form-control" name="card_cvc"/>
-														  <span class="error-span"></span>
-													   </div>
-													</div>
-													<div class="form-group">
-													   <label class="control-label col-md-3">Card Expiry (MM/YYYY)<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" placeholder="Please provide card expiry date in MM/YYYY" maxlength="7" class="form-control" name="card_expirydate"/>
-														  <span class="error-span">e.g 12/1985</span>
-													   </div>
-													</div>												 
-													<div class="form-group">
-													   <label class="control-label col-md-3">Card Holder Name<span class="required">*</span></label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="card_holder_name" placeholder="Please provide card holder name"/>
-														  <span class="error-span"></span>
-													   </div>
-													</div>	
-													-->												
-												 </div>
-												 <div class="tab-pane" id="penilaian">
-												 <div class="col-md-7">
 												 <div class="box border green">
 											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Penilaian Interview</h4>
+												<h4><i class="fa fa-bars"></i>Rekening</h4>
 												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													
-														
-													
 												</div>
 											</div>
 											<div class="box-body big">
 												<div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Penampilan</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="penampilan" required>
-												   <option value="<?php echo $dta['penampilan']; ?>"><?php echo $dta['penampilan']; ?></option>
-												   <option value="5">5 - ( Sangat Baik )</option>
-												   <option value="4">4 - ( Baik )</option>
-												   <option value="3">3 - ( Cukup )</option>
-												   <option value="2">2 - ( Kurang )</option>
-												   <option value="1">1 - ( Sangat Kurang )</option>
-												</select>												
-											 </div>
-										  </div>
-										    <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2" >Keterampilan dan Komunikasi</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="komunikasi" required>
-												   <option value="<?php echo $dta['komunikasi']; ?>"><?php echo $dta['komunikasi']; ?></option>
-												   <option value="5">5 - ( Sangat Baik )</option>
-												   <option value="4">4 - ( Baik )</option>
-												   <option value="3">3 - ( Cukup )</option>
-												   <option value="2">2 - ( Kurang )</option>
-												   <option value="1">1 - ( Sangat Kurang )</option>
-												</select>												
-											 </div>
-										  </div>
-										  <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Sikap dan Motivasi</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="sikap" required>
-												  <option value="<?php echo $dta['sikap']; ?>"><?php echo $dta['sikap']; ?></option>
-												   <option value="5">5 - ( Sangat Baik )</option>
-												   <option value="4">4 - ( Baik )</option>
-												   <option value="3">3 - ( Cukup )</option>
-												   <option value="2">2 - ( Kurang )</option>
-												   <option value="1">1 - ( Sangat Kurang )</option>
-												</select>												
-											 </div>
-										  </div>
-										  <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Pemahaman Terhadap Pekerjaan</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="pemahaman" required>
-												   <option value="<?php echo $dta['pemahaman']; ?>"><?php echo $dta['pemahaman']; ?></option>
-												   <option value="5">5 - ( Sangat Baik )</option>
-												   <option value="4">4 - ( Baik )</option>
-												   <option value="3">3 - ( Cukup )</option>
-												   <option value="2">2 - ( Kurang )</option>
-												   <option value="1">1 - ( Sangat Kurang )</option>
-												</select>												
-											 </div>
-										  </div>
-										  <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Komitmen dalam Bekerja</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="komitmen" required>
-												   <option value="<?php echo $dta['komitmen']; ?>"><?php echo $dta['komitmen']; ?></option>
-												   <option value="5">5 - ( Sangat Baik )</option>
-												   <option value="4">4 - ( Baik )</option>
-												   <option value="3">3 - ( Cukup )</option>
-												   <option value="2">2 - ( Kurang )</option>
-												   <option value="1">1 - ( Sangat Kurang )</option>
-												</select>												
-											 </div>
-										  </div>
-										  
-										  <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Pengalaman yang sesuai Pekerjaan</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="pengalaman" required>
-												   <option value="<?php echo $dta['pengalaman']; ?>"><?php echo $dta['pengalaman']; ?></option>
-												   <option value="5">5 - ( Sangat Baik )</option>
-												   <option value="4">4 - ( Baik )</option>
-												   <option value="3">3 - ( Cukup )</option>
-												   <option value="2">2 - ( Kurang )</option>
-												   <option value="1">1 - ( Sangat Kurang )</option>
-												</select>												
-											 </div>
-										  </div>
-										  <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Kemampuan Menggunakan Komputer</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="komputer" required>
-												   <option value="<?php echo $dta['komputer']; ?>"><?php echo $dta['komputer']; ?></option>
-												   <option value="Sangat Mahir">Sangat Mahir</option>
-												   <option value="Cukup Mahir">Cukup Mahir</option>
-												   <option value="Tidak Mahir">Tidak Mahir</option>
-												   
-												</select>												
-											 </div>
-										  </div>
-										   <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Kemampuan Bahasa Inggris</label> 
-											 <div class="col-md-6">
-												<select class="form-control" name="inggris" required>
-												   <option value="<?php echo $dta['inggris']; ?>"><?php echo $dta['inggris']; ?></option>
-												   <option value="Baik">Baik</option>
-												   <option value="Cukup Baik">Cukup Baik</option>
-												   <option value="Kurang">Kurang</option>  
-												   
-												</select>												
-											 </div>
-										  </div>
-											</div>
+													   <label class="control-label col-md-4">Atas Nama<span class="required">*</span></label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="atas_nama" placeholder="Isikan Atas Nama Rekening" value="<?php echo $data['atas_nama']; ?>" required/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												<div class="form-group">
+													   <label class="control-label col-md-4">Nama Bank<span class="required">*</span></label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="nama_bank" placeholder="Isikan Nama Bank" value="<?php echo $data['nama_bank']; ?>" required/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												<div class="form-group">
+													   <label class="control-label col-md-4">No Rekening<span class="required">*</span></label>
+													   <div class="col-md-8">
+														  <input type="text" class="form-control" name="no_rek" placeholder="Isikan No Rekening" value="<?php echo $data['no_rek']; ?>" required/>
+														  <span class="error-span"></span>
+													   </div>
+												</div>
+												
 										</div>
 										</div>
-
-												
-												
-											<div class="col-md-5">
-												<div class="box border blue">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Tanggal Proses</h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													
-												</div>
-											</div>
-											<div class="box-body big">
-												<div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Tanggal Pemeriksaan CV<span class="required">*</span></label> 
-											 <div class="col-md-6">
-												<input type="text" class="form-control" name="tgl_periksa" id="tgl_periksa" value="<?php echo $dta['tgl_periksa']; ?>" required/>											
-											 </div>
-										  </div>
-										   <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Tanggal Interview</label> 
-											 <div class="col-md-6">
-												<input type="text" class="form-control" name="tgl_interview" value="<?php echo $dta['tgl_interview']; ?>" id="tgl_interview" required/>											
-											 </div>
-										  </div>
-										   <div class="form-group">
-											 <label class="col-md-6 control-label" for="e2">Tanggal Psikotes</label> 
-											 <div class="col-md-6">
-												<input type="text" class="form-control" name="tgl_psikotes" id="tgl_psikotes" value="<?php echo $dta['tgl_psikotes']; ?>" required />											
-											 </div>
-										  </div>
-												
-												
-											</div>
 										</div>
-										</div>
-												
-												
-											<div class="col-md-12">
-												<div class="box border red">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Profil Kepribadian Berdasarkan Interview</h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													
+										
 												</div>
-											</div>
-											<div class="box-body">
-											<div class="form-group">
-												<label class="col-md-4 control-label" for="e2">Kelebihan</label>
-												<div class="col-md-6">
-												<input type="text" class="form-control" name="kl1" value="<?php echo $dta['kl1']; ?>" required>
-												<span class="error-span"></span>
-											</div>
-											</div>
-											<div class="form-group">
-											<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kl2" value="<?php echo $dta['kl2']; ?>" required>
-												<span class="error-span"></span>
-											</div>
-											</div>
-											<div class="form-group">
-											<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kl3" value="<?php echo $dta['kl3']; ?>">
-												<span class="error-span"></span>
-											</div>
-											</div>
-											<div class="form-group">
-											<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kl4" value="<?php echo $dta['kl4']; ?>">
-												<span class="error-span"></span>
-											</div>
-											</div>	
-											<div class="form-group">
-											<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kl5" value="<?php echo $dta['kl5']; ?>">
-											</div>
-											</div>	
-										  	<div class="form-group">
-												<label class="col-md-4 control-label" for="e2">Kekurangan</label>
-												<div class="col-md-6">
-												<input type="text" class="form-control" name="kr1" value="<?php echo $dta['kr1']; ?>">
-												<span class="error-span"></span>
-										  	</div>
-											</div>	
-											<div class="form-group">
-											<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kr2" value="<?php echo $dta['kr2']; ?>">
-												<span class="error-span"></span>
-											</div>
-											</div>
-										  	<div class="form-group">
-										  	<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" name="kr3" class="form-control" value="<?php echo $dta['kr3']; ?>">
-											</div>
-											</div>
-										  	<div class="form-group"> 
-										  	<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" name="kr4" class="form-control" value="<?php echo $dta['kr4']; ?>">
-											</div>
-											</div>
-										  	<div class="form-group">
-										  	<label class="col-md-4 control-label" for="e2"></label>
-											<div class="col-md-6">
-												<input type="text" class="form-control" name="kr5" value="<?php echo $dta['kr5']; ?>">
-											</div>
-											</div>
-											
-										  	</div>
-											</div>
-												</div>
-												</div>
-												<div class="tab-pane" id="pengiriman">
-												
-													    <?php 
-														  $dilamar  = $data['dilamar'];
-														  $aray 	= explode(',', $dilamar);
-														  
-														  $array1	= explode('.', $aray[0]);
-														  $array2	= explode('.', $aray[1]);
-														  $array3	= explode('.', $aray[2]);
-										                  ?>
-
-											              <div class="form-group">
-													   <label class="control-label col-md-3">Posisi Dilamar 1<span class="required">*</span></label>
-													   <div class="col-md-6">
-														  
-														  <select class="selectpicker" data-show-subtext="true" data-live-search="true" name="dilamar1" required>
-													   
-													   <option value="<?php echo $array1[0]; ?>"><?php echo $array1[0]; ?></option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM posisi order by nama_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_posisi']; ?>"><?php echo $cs['nama_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-													<select class="selectpicker" data-show-subtext="true" data-live-search="true" name="sub_posisi1">
-													   
-													   <option value="<?php echo $array1[1]; ?>"><?php echo $array1[1]; ?></option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM sub_posisi order by nama_sub_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_sub_posisi']; ?>"><?php echo $cs['nama_sub_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-3">Posisi Dilamar 2</label>
-													   <div class="col-md-6">
-														  <select class="selectpicker" data-show-subtext="true" data-live-search="true" name="dilamar2" >
-													   
-													   <option value="<?php echo $array2[0]; ?>"><?php echo $array2[0]; ?></option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM posisi order by nama_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_posisi']; ?>"><?php echo $cs['nama_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-													<select class="selectpicker" data-show-subtext="true" data-live-search="true" name="sub_posisi2">
-													   
-													   <option value="<?php echo $array2[1]; ?>"><?php echo $array2[1]; ?></option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM sub_posisi order by nama_sub_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_sub_posisi']; ?>"><?php echo $cs['nama_sub_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-3">Posisi Dilamar 3</label>
-													   <div class="col-md-6">
-														  
-														    <select class="selectpicker" data-show-subtext="true" data-live-search="true" name="dilamar3">
-													   
-													   <option value="<?php echo $array3[0]; ?>"><?php echo $array3[0]; ?></option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM posisi order by nama_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_posisi']; ?>"><?php echo $cs['nama_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-													<select class="selectpicker" data-show-subtext="true" data-live-search="true" name="sub_posisi3">
-													   
-													   <option value="<?php echo $array3[1]; ?>"><?php echo $array3[1]; ?></option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM sub_posisi order by nama_sub_posisi asc"); 
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_sub_posisi']; ?>"><?php echo $cs['nama_sub_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-														
-														  <input type="hidden" name="status" value="<?php echo $data['status']; ?>" />
-												
-														 
-														 
-												<div class="form-group">
-													   <label class="control-label col-md-3">Interviewer</label>
-													   <div class="col-md-4">
-														  <input type="text" class="form-control" name="interviewer" value="<?php echo $data['interviewer'];?>"/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-3">Sumber</label>
-													   <div class="col-md-4">
-														  
-														  <select class="form-control" name="sumber" id="sumber" placeholder="Isikan Sumber Info Lowongan">
-														   <option value="<?php echo $data['sumber'];?>"><?php echo $data['sumber'];?></option>
-														   <option value="Koran">Koran</option>
-														   <option value="JobStreet">JobStreet</option>
-														   <option value="Media Sosial Lainnya">Media Sosial</option>  
-														   <option value="Teman">Teman</option>
-														   <option value="Referensi Customer">Referensi Customer</option>
-														   <option value="Job Fair">Job Fair</option>
-														   <option value="Sekolah">Sekolah</option>
-														    <option value="Sms Center">Sms Center</option>
-														  </select>	
-														  <input type="checkbox" id="lainnya3" >*Lainnya
-														  <input type="text" id="lain3" placeholder="Isikan Sumber Lainnya..?" onchange="mySumber()" style="display: none"/>
-														  <span class="error-span"></span>
-													   </div>
-												</div>
-												<div class="form-group">
-													   <label class="control-label col-md-3">Keterangan</label>
-													   <div class="col-md-4">
-													   <textarea name="keterangan" data-provide="markdown" rows="5" cols="60" ><?php echo $data['ket'];?></textarea>
-														<span class="error-span"></span>
-													   </div>
-												</div>
-												</div>
-												 <div class="tab-pane" id="confirm">
+												 <div class="tab-pane" id="submit">
 													<h3 class="block">Submit account details</h3>
 													<h4 class="form-section">Account Information</h4>
 													<div class="well">
@@ -1824,7 +719,7 @@ echo "<option value=\"$p[id_kabupaten]\">$p[nama_kabupaten]</option>\n";
 														Continue <i class="fa fa-arrow-circle-right"></i>
 													   </a>
 
-													   
+													   <input type="hidden" name="id_kandidat" value="1">
 														<input class="btn btn-success submitBtn" type="submit" name="submit" value="Simpan" /> 
 													                            
 													</div>
@@ -1888,150 +783,54 @@ echo "<option value=\"$p[id_kabupaten]\">$p[nama_kabupaten]</option>\n";
 	<!-- CUSTOM SCRIPT -->
 	<script src="js/script.js"></script>
 	<script src="js/bootstrap-wizard/form-wizard.min.js"></script>
-	<script>
-  $(function() {
-    $( "#datep1" ).datepicker({
-    	altField: "#datep1",
-      altFormat: "MM yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#datep2" ).datepicker({
-    	altField: "#datep2",
-      altFormat: "MM yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#datep1_2" ).datepicker({
-    	altField: "#datep1_2",
-      altFormat: "MM yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#datep2_2" ).datepicker({
-    	altField: "#datep2_2",
-      altFormat: "MM yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#datep1_3" ).datepicker({
-    	altField: "#datep1_3",
-      altFormat: "MM yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#datep2_3" ).datepicker({
-    	altField: "#datep2_3",
-      altFormat: "MM yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_periksa" ).datepicker({
-    dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_periksa" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_interview" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_interview" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_psikotes" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_psikotes" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_pengiriman" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  $(function() {
-    $( "#tgl_pengiriman" ).datepicker({
-    	dateFormat: "dd/mm/yy",
-      changeMonth: true,
-      changeYear: true
-    });
-    
-  });
-  </script>
-  <script>
+	
+    <script>
         $(function() {
             $( "#datelhr" ).datepicker({
-     numberOfMonths: 2,
       showButtonPanel: true,
       changeMonth: true,
       changeYear: true,
       yearRange: '1950:2026',
-      dateFormat: "yy-mm-dd"
+      dateFormat: "dd-M-yy"
+    });
+          $( "#hire_date" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
+    });
+          $( "#spouse_birthdate" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
+    });
+          $( "#chile1_birthdate" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
+    });
+          $( "#chile2_birthdate" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
+    });
+          $( "#chile3_birthdate" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
+    });
+          $( "#join_date" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
+    });
+           $( "#end_date" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-M-yy"
     });
         });
- 
-        window.onload=function(){
-            $('#datelhr').on('change', function() {
-                var dob = new Date(this.value);
-                var today = new Date();
-                var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
-                $('#usia').val(age);
-            });
-        }
- 
     </script>
-  
-	<script>
+    <script>
 		jQuery(document).ready(function() {		
 			App.setPage("wizards_validations");  //Set current page
 			App.init(); //Initialise plugins and elements
@@ -2050,273 +849,114 @@ echo "<option value=\"$p[id_kabupaten]\">$p[nama_kabupaten]</option>\n";
 	<!-- /JAVASCRIPTS -->
 	 <script type="text/javascript">
 	$(function(){
-  // cache these!
- 
-  var radioButton = $("#jenkel"),
-      hijab = $("#hijab");
-      nohijab = $("#nohijab");
-      lb = $("#lb");
-      sp = $("#sp");
-      lbb = $("#lbb");
-  radioButton.change(function () { // listen for change - not click
+  var ktp = $("#ktp"),
+      sim = $("#sim"),
+      lbl_num = $("#lbl_num"),
+      id_num = $("#id_num");
+     
+  ktp.change(function () { // listen for change - not click
     if( this.checked ) { // use the "raw" DOM property `checked`
-      hijab.show();
-  	  lb.show();
-  	  sp.show();
-  	  nohijab.show();
-  	   lbb.show();
+      lbl_num.html("ID Number (KTP)");
+  	  id_num.attr("placeholder", "Isikan ID Number (KTP)");
+  	 
   }
       });
-  var radioButtonm = $("#jenkelm"),
-      hijab = $("#hijab");
-      nohijab = $("#nohijab");
-      lb = $("#lb");
-      sp = $("#sp");
-      lbb = $("#lbb");
-  radioButtonm.change(function () { // listen for change - not click
+  sim.change(function () { // listen for change - not click
     if( this.checked ) { // use the "raw" DOM property `checked`
-      hijab.hide();
-  	  lb.hide();
-  	  sp.hide();
-  	  nohijab.hide();
-  	   lbb.hide();
+      lbl_num.html("ID Number (SIM)");
+  	  id_num.attr("placeholder", "Isikan ID Number (SIM)");
+  	 
   }
       });
-  var lainnya = $("#lainnya"),
-      lain = $("#lain");
+
+  var jamin = $("#jamin"),
+      ijazah = $("#ijazah"),
+      bpkb = $("#bpkb");
+  jamin.change(function () { // listen for change - not click
+   var jaminan = jamin.val();
+    if(jaminan == "1"){
+    	ijazah.fadeIn();
+    	bpkb.fadeOut();
+    	
+    }
+    if(jaminan == "2"){
+    	ijazah.fadeOut();
+    	bpkb.fadeIn();
+    	
+    }
+    if(jaminan == "3"){
+    	ijazah.fadeIn();
+    	bpkb.fadeIn();
+    }
+    
+    });
+  var marital = $("#marital"),
+      spouse = $("#spouse"),
+      spouse_birth = $("#spouse_birth"),
+      child1 = $("#child1"),
+      child1_birth = $("#child1_birth"),
+      child2 = $("#child2"),
+      child2_birth = $("#child2_birth"),
+      child3 = $("#child3"),
+      child3_birth = $("#child3_birth");
      
-  lainnya.change(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      lain.show();
-  	  
+  marital.change(function () { // listen for change - not click
+      var kawin = marital.val();
+    if(kawin == "TK"){
+    	spouse.fadeOut();
+    	spouse_birth.fadeOut();
+    	child1.fadeOut();
+    	child1_birth.fadeOut();
+    	child2.fadeOut();
+    	child2_birth.fadeOut();
+    	child3.fadeOut();
+    	child3_birth.fadeOut();
+    }
+    if(kawin == "K0"){
+    	spouse.fadeIn();
+    	spouse_birth.fadeIn();
+    	child1.fadeOut();
+    	child1_birth.fadeOut();
+    	child2.fadeOut();
+    	child2_birth.fadeOut();
+    	child3.fadeOut();
+    	child3_birth.fadeOut();
+    }
+    if(kawin == "K1"){
+    	spouse.fadeIn();
+    	spouse_birth.fadeIn();
+    	child1.fadeIn();
+    	child1_birth.fadeIn();
+    	child2.fadeOut();
+    	child2_birth.fadeOut();
+    	child3.fadeOut();
+    	child3_birth.fadeOut();
+    }
+    if(kawin == "K2"){
+    	spouse.fadeIn();
+    	spouse_birth.fadeIn();
+    	child1.fadeIn();
+    	child1_birth.fadeIn();
+    	child2.fadeIn();
+    	child2_birth.fadeIn();
+    	child3.fadeOut();
+    	child3_birth.fadeOut();
+    }
+    if(kawin == "K3"){
+    	spouse.fadeIn();
+    	spouse_birth.fadeIn();
+    	child1.fadeIn();
+    	child1_birth.fadeIn();
+    	child2.fadeIn();
+    	child2_birth.fadeIn();
+    	child3.fadeIn();
+    	child3_birth.fadeIn();
+    }
+      });
   
-      });
-  var cbg = $("#cbg"),
-      cabang = $("#cabang");
-     
-  cbg.change(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      cabang.show();
-  	  
-  
-      });
-
-  var lainnya2 = $("#lainnya2"),
-      lain2 = $("#lain2");
-      
-     
-  lainnya2.change(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      lain2.show();
-  	  
-  
-      });
-  var lainnya3 = $("#lainnya3"),
-      lain3 = $("#lain3");
-      
-     
-  lainnya3.change(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      lain3.show();
-  	  
-  
-      });
-  var btnplus = $("#btnplus"),
-      pengalaman2 = $("#pengalaman2");
-     
-  btnplus.click(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      pengalaman2.show();
-  	  
-  
-      });
-
-
-
-  var fresh = $("#fresh"),
-  	  lblfresh = $("#lblfresh"),
-  	  lblpershn = $("#lblpershn"),
-      jns = $("#jns"),
-      posisi = $("#posisi"),
-      periode = $("#periode"),
-      d1 = $("#d1"),
-      d2 = $("#d2"),
-      d3 = $("#d3"),
-      pengalaman2 = $("#pengalaman2"),
-      pengalaman3 = $("#pengalaman3"),
-      gaji = $("#gaji");
-      btnplus = $("#btnplus");
-
-     
-  fresh.change(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      lblpershn.hide();
-      pengalaman2.hide();
-      pengalaman3.hide();
-      jns.hide();
-      posisi.hide();
-  	  periode.hide();
-  	  gaji.hide();
-  	  d1.hide();
-  	  d2.hide();
-  	  d3.hide();
-  	  btnplus.hide();
-  	  lblfresh.show();
-
-
-      });
-
-var 
-      perusahaan = $("#perusahaan"),
-      lblfresh = $("#lblfresh"),
-      datep1 = $("#datep1"),
-      datep2 = $("#datep2"),
-      v_periode = $("#v_periode"),
-      btnplus = $("#btnplus"),
-      pernah = $("#pernah");
-
-     
-  pernah.change(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      perusahaan.show();
-      lblpershn.show();
-      jns.show();
-      posisi.show();
-  	  periode.show();
-  	  datep1.show();
-  	  datep2.show();
-  	  v_periode.show();
-  	  gaji.show();
-  	  d1.show();
-  	  d2.show();
-  	  d3.show();
-  	  btnplus.show();
-      lblfresh.hide();
-
-      });
- 
-
-  var btnplus = $("#btnplus"),
-      pengalaman2 = $("#pengalaman2");
-     
-  btnplus.click(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      pengalaman2.show();
-  	  
-  
-      });
-
-   var btnplus2 = $("#btnplus2"),
-      pengalaman3 = $("#pengalaman3");
-     
-  btnplus2.click(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      pengalaman3.show();
-  	  
-  
-      });
-
-  var btnminus1 = $("#btnminus1"),
-      pengalaman2 = $("#pengalaman2");
-     
-  btnminus1.click(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      pengalaman2.hide();
-  	  
-  
-      });
-  var btnminus2 = $("#btnminus2"),
-      pengalaman3 = $("#pengalaman3");
-     
-  btnminus2.click(function () { // listen for change - not click
-    // use the "raw" DOM property `checked`
-      pengalaman3.hide();
-      });
-
- 
+	
     });
 	 </script>
 
-
-<script>
-function myFunction() {
-    var x = document.getElementById("mySelect");
-    var y = document.getElementById("lain").value;
-    var option = document.createElement("option");
-    option.text = y;
-    x.add(option);
-}
-function myGaji() {
-    var a = document.getElementById("gaji_hrp");
-    var b = document.getElementById("lain2").value;
-    var option = document.createElement("option");
-    option.text = b;
-    a.add(option);
-}
-function mySumber() {
-    var c = document.getElementById("sumber");
-    var d = document.getElementById("lain3").value;
-    var option = document.createElement("option");
-    option.text = d;
-    c.add(option);
-}
-function myFungsi() {
-    
-    var fresh = document.getElementById("fresh").value;
-    document.getElementById("nm_perusahaan").value = fresh;
-}
-function myMethod() {
-    
-    var pernah = document.getElementById("pernah").value;
-
-    document.getElementById("nm_perusahaan").value = pernah;
-}
-function myPeriod() {
-    
-    var datep2 = document.getElementById("datep2").value;
-    var datep1 = document.getElementById("datep1").value;
-    var pl = " - ";
-    document.getElementById("v_periode").value = datep1+pl+datep2;
-}
-function myPeriod2() {
-    
-    var datep2_2 = document.getElementById("datep2_2").value;
-    var datep1_2 = document.getElementById("datep1_2").value;
-    var p = " - ";
-    document.getElementById("v_periode_2").value = datep1_2+p+datep2_2;
-}
-function myPeriod3() {
-    
-    var datep2_3 = document.getElementById("datep2_3").value;
-    var datep1_3 = document.getElementById("datep1_3").value;
-    var l = " - ";
-    document.getElementById("v_periode_3").value = datep1_3+l+datep2_3;
-}
-function f_cabang() {
-    
-    var cb = document.getElementById("cabang").value;
-    document.getElementById("cbn").value = cb;
-}
-
-</script>
-
-
-<script language="javascript">
-function toggle() {
-var ele = document.getElementById("sembunyi");
-var gmbr = document.getElementById("gmbr");
-var text = document.getElementById("tampil");
-if(ele.style.display == "block") {
-ele.style.display = "none";
-gmbr.style.display = "block";
-text.innerHTML = "Change Image";
-}
-else {
-ele.style.display = "block";
-gmbr.style.display = "none";
-text.innerHTML = "Cancel";
-}
-}
-</script> 
 </body>
 </html>

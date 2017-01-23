@@ -126,7 +126,6 @@ unset($_SESSION['id_bu']);
 													<th class="center">BU</th>
 													<th>NAMA CABANG</th>
 													<th class="center">Aksi</th>
-													
 												</tr>
 											</thead>
 											<tbody>
@@ -224,12 +223,10 @@ unset($_SESSION['id_bu']);
 	
 	<script src="js/script.js"></script>
 	<script type="text/javascript">
-            $(document).ready(function() {
-    var table = $('#example1').DataTable();
-} );
-
-    
-        </script>
+    $(document).ready(function() {
+    	$('#example1').DataTable();
+	});
+    </script>
 	<script>
 		jQuery(document).ready(function() {		
 			App.setPage("dynamic_table");  //Set current page

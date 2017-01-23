@@ -109,12 +109,12 @@ $(document).ready(function(){
 											<a href="index.php">Home</a>
 										</li>
 										<li>
-											<a href="#">Tambah Data Kandidat</a>
+											<a href="#">Tambah Data Karyawan</a>
 										</li>
 									</ul>
 									<!-- /BREADCRUMBS -->
 									<div class="clearfix">
-										<h3 class="content-title pull-left">Form Tambah Data Kandidat</h3>
+										<h3 class="content-title pull-left">Form Tambah Data Karyawan</h3>
 									</div>
 									<div class="description">Form Wizard and Validations</div>
 								</div>
