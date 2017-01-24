@@ -32,23 +32,17 @@ include('cek-login.php');
 	  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	  <!-- select bootstrap -->
-	  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+	 <!--  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
       <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
 	  <link rel="stylesheet" href="bootstrap-dist/css/bootstrap-select.min.css" />
-      <script src="bootstrap-dist/js/bootstrap-select.min.js"></script>
-
-		
+      <script src="bootstrap-dist/js/bootstrap-select.min.js"></script> -->
 	  <script type="text/javascript" src="jquery.js"></script>
-      
 </head>
-
 <body>
-
 	<!-- HEADER -->
 	<?php include 'header.php'; ?>
 	<!--/HEADER -->
-	
 	<!-- PAGE -->
 	<section id="page">
 				<?php include 'menu.php'; ?>
@@ -80,10 +74,6 @@ include('cek-login.php');
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="page-header">
-									<!-- STYLER -->
-									
-									<!-- /STYLER -->
-									<!-- BREADCRUMBS -->
 									<ul class="breadcrumb">
 										<li>
 											<i class="fa fa-home"></i>
@@ -163,7 +153,8 @@ include('cek-login.php');
 												 $id_karyawan = $_GET['id_karyawan'];
 											$query_tampil=mysql_query("SELECT */*karyawan.nama_karyawan, data_karyawan.position, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.hire_date, contract.join_date, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, karyawan.education, karyawan.gender, data_karyawan.status*/
 										    FROM karyawan 
-										    inner join data_karyawan on karyawan.id_karyawan=data_karyawan.id_karyawan
+										    inner join data_karyawan on karyawan.id_karyawan = data_karyawan.id_karyawan
+										    inner join bu on bu.id_bu = data_karyawan.id_bu
 										    inner join keluarga on keluarga.id_karyawan = karyawan.id_karyawan
 										    inner join rekening on rekening.id_karyawan = karyawan.id_karyawan
 										   where karyawan.id_karyawan = $id_karyawan");
@@ -383,23 +374,21 @@ include('cek-login.php');
 											    die(mysql_error());
 											}
 											while($d = mysql_fetch_array($que)) {
-
 											?>
 															 <option value="" disabled="" selected="" style="display:none" ;=""><?php echo "BU ".$d['bu']; ?></option>
 															 <option value="<?php echo $d['bu']; ?>"><?php echo "BU ".$d['bu']; ?></option>
 											<?php } ?>
-															</select>
-
-
-													   
-													   	<input type="hidden" class="form-control" name="id_bu" value="<?php echo $d['id_bu']; ?>" >
+														</select>
+													   	<input type="hidden" class="form-control" id="id_bu" name="id_bu" value="<?php echo $d['id_bu']; ?>" >
 														  <span class="error-span"></span>
 													   </div>
 													</div>
 													<div class="form-group">
 													   <label class="control-label col-md-3">Cabang</label>
 													   <div class="col-md-4">
-													   	<input type="text" class="form-control" value="<?php echo $d['nama_cabang'];?>" disabled>
+													   	<select id="cabang" class="form-control" required>
+													   <option><?php echo $data['nama_cabang']; ?></option>
+													   	</select>
 														  <span class="error-span"></span>
 													   </div>
 													</div>
@@ -430,7 +419,7 @@ include('cek-login.php');
 													   <label class="control-label col-md-3">Jaminan<span class="required">*</span></label>
 													   <div class="col-md-4">
 														  <select id="jamin" name="jaminan" class="form-control" required>
-															 <option value="<?php echo $data['jaminan']; ?>" ><?php if($data['jaminan']=="1"){echo"Ijazah";}elseif ($data['jaminan']=="2") {echo"BPKB";}elseif ($data['jaminan']=="3") {echo"Ijazah+BPKB";} ?> ></option>
+															 <option value="<?php echo $data['jaminan']; ?>" ><?php if($data['jaminan']=="1"){echo"Ijazah";}elseif ($data['jaminan']=="2") {echo"BPKB";}elseif ($data['jaminan']=="3") {echo"Ijazah+BPKB";} ?> </option>
 															 <option value="1">Ijazah</option>
 															 <option value="2">BPKB</option>
 															 <option value="3">Ijazah+BPKB</option>
@@ -753,11 +742,8 @@ include('cek-login.php');
 	<script src="js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
 	<!-- BOOTSTRAP -->
 	<script src="bootstrap-dist/js/bootstrap.min.js"></script>
-	
-	
 	<!-- DATE RANGE PICKER -->
 	<script src="js/bootstrap-daterangepicker/moment.min.js"></script>
-	
 	<script src="js/bootstrap-daterangepicker/daterangepicker.min.js"></script>
 	<!-- SLIMSCROLL -->
 	<script type="text/javascript" src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script><script type="text/javascript" src="js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
@@ -783,7 +769,24 @@ include('cek-login.php');
 	<!-- CUSTOM SCRIPT -->
 	<script src="js/script.js"></script>
 	<script src="js/bootstrap-wizard/form-wizard.min.js"></script>
-	
+	 <script type="text/javascript">
+var htmlobjek;
+$(document).ready(function(){
+  //apabila terjadi event onchange terhadap object <select id=propinsi>
+  $("#bu").change(function(){
+    var bu = $("#bu").val();
+    $.ajax({
+        url: "ambilcabang.php",
+        data: "bu="+bu,
+        cache: false,
+        success: function(msg){
+            $("#cabang").html(msg);
+        }
+    });
+  });
+ 
+});
+</script>
     <script>
         $(function() {
             $( "#datelhr" ).datepicker({
@@ -839,7 +842,6 @@ include('cek-login.php');
 	</script>
 	<!-- DROPZONE -->
 	<script type="text/javascript" src="js/dropzone/dropzone.min.js"></script>
-	
 	<script>
 		jQuery(document).ready(function() {		
 			App.setPage("dropzone_file_upload");  //Set current page
@@ -858,14 +860,12 @@ include('cek-login.php');
     if( this.checked ) { // use the "raw" DOM property `checked`
       lbl_num.html("ID Number (KTP)");
   	  id_num.attr("placeholder", "Isikan ID Number (KTP)");
-  	 
   }
       });
   sim.change(function () { // listen for change - not click
     if( this.checked ) { // use the "raw" DOM property `checked`
       lbl_num.html("ID Number (SIM)");
   	  id_num.attr("placeholder", "Isikan ID Number (SIM)");
-  	 
   }
       });
 
@@ -877,18 +877,15 @@ include('cek-login.php');
     if(jaminan == "1"){
     	ijazah.fadeIn();
     	bpkb.fadeOut();
-    	
     }
     if(jaminan == "2"){
     	ijazah.fadeOut();
     	bpkb.fadeIn();
-    	
     }
     if(jaminan == "3"){
     	ijazah.fadeIn();
     	bpkb.fadeIn();
     }
-    
     });
   var marital = $("#marital"),
       spouse = $("#spouse"),
@@ -953,8 +950,12 @@ include('cek-login.php');
     	child3_birth.fadeIn();
     }
       });
-  
-	
+  var cabang = $("#cabang"),
+  	  id_bu = $("#id_bu");
+  cabang.change(function () { 
+      var nm_cbg = cabang.val();
+      id_bu.val(nm_cbg);
+  });
     });
 	 </script>
 

@@ -71,9 +71,6 @@ unset($_SESSION['id_bu']);
 				</div>
 				<!-- /SIDEBAR -->
 		<div id="main-content">
-			<!-- SAMPLE BOX CONFIGURATION MODAL FORM-->
-			  <!-- Modal for Edit button -->
-    
 			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
 			<div class="container">
 				<div class="row">
@@ -82,9 +79,6 @@ unset($_SESSION['id_bu']);
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="page-header">
-									<!-- STYLER -->
-									
-									<!-- /STYLER -->
 									<!-- BREADCRUMBS -->
 									<ul class="breadcrumb">
 										<li>
@@ -99,9 +93,6 @@ unset($_SESSION['id_bu']);
 								</div>
 							</div>
 						</div>
-						<!-- /PAGE HEADER -->
-						<!-- DATA TABLES -->
-						
 						<!-- EXPORT TABLES -->
 						<div class="row">
 							<div class="col-md-12">
@@ -114,7 +105,6 @@ unset($_SESSION['id_bu']);
 										<div class="tabbable header-tabs">
 										  <ul class="nav nav-tabs">
 											 <li><a href="#box_tab2" data-toggle="tab"><i class="fa fa-home"></i> <span class="hidden-inline-home">Data BU</span></a></li>
-											 
 										  </ul>
 								<div class="tab-content">
 								<div class="tab-pane fade in active" id="box_tab1">
@@ -149,19 +139,10 @@ unset($_SESSION['id_bu']);
 												$no++;
 												} 
 												?>
-												
 											</tbody>
-										
-											<tfoot>
-												
-											</tfoot>
 										</table>
 									</div>
-				
 								</div>
-								
-								<!-- /BOX -->
-											
 								<!-- /BOX -->
 											 </div>
 										  </div>
@@ -169,7 +150,6 @@ unset($_SESSION['id_bu']);
 									</div>
 								</div>
 								<!-- /Tabs -->
-								
 							</div>
 						</div>
 						<!-- /EXPORT TABLES -->
@@ -183,13 +163,6 @@ unset($_SESSION['id_bu']);
 			</div>
 		</div>
 	</section>
-
-	
-						
-	<!--/PAGE -->
-
-	<!-- JAVASCRIPTS -->
-	<!-- Placed at the end of the document so the pages load faster -->
 	<!-- JQUERY -->
 	<script src="js/jquery/jquery-2.0.3.min.js"></script>
 	<!-- JQUERY UI-->

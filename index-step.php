@@ -602,14 +602,14 @@ $(document).ready(function(){
 												</div>
 												<div class="form-group">
 													   <label class="control-label col-md-4">Join Date<span class="required">*</span></label>
-													   <div class="col-md-8">
+													   <div class="col-md-5">
 														  <input type="text" class="form-control" name="join_date" id="join_date" placeholder="Isikan Tgl Awal Kontrak" required/>
 														  <span class="error-span"></span>
 													   </div>
 												</div>
 												<div class="form-group">
 													   <label class="control-label col-md-4">End Date<span class="required">*</span></label>
-													   <div class="col-md-4">
+													   <div class="col-md-5">
 														  <input type="text" class="form-control" name="end_date" id="end_date" placeholder="Isikan Tgl Akhir Kontrak" required/>
 														  <span class="error-span"></span>
 													   </div>

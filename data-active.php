@@ -38,7 +38,6 @@ if (!isset($_SESSION['id_bu']) ) {
    <style type="text/css">
      th, td { white-space: nowrap; }
     div.dataTables_wrapper {
-      
         margin: 0 auto;
     }
    li.hov a:hover {background-color: #fbcc42 !important;}
@@ -219,7 +218,7 @@ if (!isset($_SESSION['id_bu']) ) {
 									<div class="box-body">
 										<div class="tabbable header-tabs">
 										  <ul class="nav nav-tabs">
-											 <li><a href="#box_tab2" data-toggle="tab"><i class="fa fa-users"></i> <span class="hidden-inline-mobile">Data resign</span></a></li>
+											 <li id="boxs-resign"><a href="#box_tab2" data-toggle="tab"><i class="fa fa-users"></i> <span class="hidden-inline-mobile">Data resign</span></a></li>
 											 <li class="active"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-laptop"></i> <span class="hidden-inline-mobile">Data active</span></a></li>
 										  </ul>
 								<div class="tab-content">
@@ -252,7 +251,7 @@ if (!isset($_SESSION['id_bu']) ) {
 													<th>TINGKAT</th>
 													<th>JENIS</th>
 													<th>STATUS</th>
-													<th width="80px">Aksi</th>
+													<th>Aksi</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -271,7 +270,7 @@ if (!isset($_SESSION['id_bu']) ) {
 											$no=1;
 											while ($data = mysql_fetch_array($query_tampil)) {
 											?>
-												<tr class="gradeX">
+												<tr class="gradeX" id="karyawan_<?php echo $data['id_karyawan']; ?>">
 													<td><?php echo $no; ?></td>
 													<td><?php echo $data['nama_karyawan']; ?></td>
 													<td><?php echo $data['position']; ?></td>
@@ -292,7 +291,7 @@ if (!isset($_SESSION['id_bu']) ) {
 													<td><?php echo $data['education']; ?></td>
 													<td><?php echo $data['gender']; ?></td>
 													<td><?php if($data['status']=="1"){echo"Active";}if($data['status']=="2"){echo"Non Active";}?></td>
-													<td><a href="edit-step.php?id_karyawan=<?php echo $data['id_karyawan']; ?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | <a href="delete-step.php?id_karyawan=<?php echo $data['id_karyawan']; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></a></td>
+													<td><button id="setting" data-target="#open" data-toggle="modal" data-id="<?php echo $data['id_karyawan']; ?>" data-nama="<?php echo $data['nama_karyawan']; ?>" data-nik="<?php echo $data['nik']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gear"></i></button></td>
 												</tr>
 												<?php 
 												$no++;
@@ -323,111 +322,14 @@ if (!isset($_SESSION['id_bu']) ) {
 													<th>TINGKAT</th>
 													<th>JENIS</th>
 													<th>STATUS</th>
-													<th width="80px">Aksi</th>
+													<th>Aksi</th>
 												</tr>
 											</tfoot>
 										</table>
 									</div>
 								<!-- /BOX -->
-									<div class="tab-pane fade" id="box_tab2">
-									<table id="example2" class="table table-striped table-bordered table-hover">
-											<thead>
-												<tr>
-													<th>NO.</th>
-													<th>NAMA KARYAWAN</th>
-													<th>POSISI</th>
-													<th class="hidden-xs">CABANG</th>
-													<th>LOKASI</th>
-													<th class="hidden-xs">NIK</th>
-													<th>VIRTUAL NIK</th>
-													<th>BU</th>
-													<th>HIRE DATE</th>
-													<th>JOIN DATE</th>
-													<th>GAJI POKOK</th>
-													<th>TUNJANGAN MAINTENANCE</th>
-													<th>TUNJANGAN JABATAN</th>
-													<th>TUNJANGAN JAGA MALAM</th>
-													<th>TUNJANGAN LAIN</th>
-													<th>THP</th>
-													<th>VENDOR</th>
-													<th>TINGKAT</th>
-													<th>JENIS</th>
-													<th>STATUS</th>
-													<th>Aksi</th>
-												</tr>
-											</thead>
-											<tbody>
-											<?php 
-											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.hire_date, contract.join_date, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, karyawan.education, karyawan.gender, data_karyawan.status, data_karyawan.id_bu
-										    FROM karyawan 
-										    inner join data_karyawan on karyawan.id_karyawan=data_karyawan.id_karyawan
-										    inner join bu on bu.id_bu = data_karyawan.id_bu
-										    inner join contract on contract.update_contract = karyawan.update_contract
-										    inner join gaji on gaji.update_gaji = karyawan.update_gaji
-										   where data_karyawan.status = '2' && data_karyawan.id_bu=".$_SESSION['id_bu']."
-										    Order by karyawan.id_karyawan DESC");
-											if ($query_tampil === FALSE) {
-											    die(mysql_error());
-											}
-											$no=1;
-											while ($data = mysql_fetch_array($query_tampil)) {
-											?>
-												<tr class="gradeX">
-													<td><?php echo $no; ?></td>
-													<td><?php echo $data['nama_karyawan']; ?></td>
-													<td><?php echo $data['position']; ?></td>
-													<td class="hidden-xs"><?php echo $data['nama_cabang']; ?></td>
-													<td class="center"><?php echo $data['location']; ?></td>
-													<td class="center hidden-xs"><?php echo $data['nik']; ?></td>
-													<td><?php echo $data['virtual_nik']; ?></td>
-													<td><?php echo "BU ".$data['bu']; ?></td>
-													<td><?php echo $data['hire_date']; ?></td>
-													<td><?php echo $data['join_date']; ?></td>
-													<td><?php echo $data['gaji_pokok']; ?></td>
-													<td><?php echo $data['tun_maintenance']; ?></td>
-													<td><?php echo $data['tun_jabatan']; ?></td>
-													<td><?php echo $data['tun_jaga_malam']; ?></td>
-													<td><?php echo $data['tun_lain']; ?></td>
-													<td><?php echo ($data['gaji_pokok']+$data['tun_maintenance']+$data['tun_jabatan']+$data['tun_jaga_malam']+$data['tun_lain']); ?></td>
-													<td>PT SINAR JERNIH SUKSESINDO</td>
-													<td><?php echo $data['education']; ?></td>
-													<td><?php echo $data['gender']; ?></td>
-													<td><?php if($data['status']=="1"){echo"Active";}if($data['status']=="2"){echo"Non Active";}?></td>
-													<td><a href="edit-step.php?id_karyawan=<?php echo $data['id_karyawan']; ?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | <a href="delete-step.php?id_karyawan=<?php echo $data['id_karyawan']; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></a></td>
-												</tr>
-												<?php 
-												$no++;
-												} 
-												?>
-												
-											</tbody>
-										
-											<tfoot>
-												<tr>
-													<th>NO.</th>
-													<th>NAMA KARYAWAN</th>
-													<th>POSISI</th>
-													<th class="hidden-xs">CABANG</th>
-													<th>LOKASI</th>
-													<th class="hidden-xs">NIK</th>
-													<th>VIRTUAL NIK</th>
-													<th>BU</th>
-													<th>HIRE DATE</th>
-													<th>JOIN DATE</th>
-													<th>GAJI POKOK</th>
-													<th>TUNJANGAN MAINTENANCE</th>
-													<th>TUNJANGAN JABATAN</th>
-													<th>TUNJANGAN JAGA MALAM</th>
-													<th>TUNJANGAN LAIN</th>
-													<th>THP</th>
-													<th>VENDOR</th>
-													<th>TINGKAT</th>
-													<th>JENIS</th>
-													<th>STATUS</th>
-													<th>Aksi</th>
-												</tr>
-											</tfoot>
-										</table>
+									<div class="tab-pane fade box-resign" id="box_tab2">
+									
 									</div>
 									</div>
 								<!-- /BOX -->
@@ -453,138 +355,44 @@ if (!isset($_SESSION['id_bu']) ) {
 	</section>
 
 	<div class="modal fade" id="open" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-							  <div class="modal-content open">
-								<div class="modal-header">
-								  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								  <h4 class="modal-title"></h4>
-								</div>
-								<div class="modal-body">
-								 <div class="box border primary">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Search Data</h4>
-												<div class="tools hidden-xs">
-													<a href="#box-config" data-toggle="modal" class="config">
-														<i class="fa fa-cog"></i>
-													</a>
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													<a href="javascript:;" class="collapse">
-														<i class="fa fa-chevron-up"></i>
-													</a>
-													
-												</div>
-											</div>
-											<div class="box-body big">
-												
-												<form action="result.php" method="post" class="form-horizontal" role="form">
-												  
+				<div class="modal-dialog">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					  <h4 class="modal-title">Form Resign, Edit & Delete</h4>
+					</div>
+					<div class="modal-body">
+					<div class="form-horizontal">
 												   <div class="form-group">
-													<label class="col-sm-4 control-label">Jenis Kelamin</label>
+													<label class="col-sm-4 control-label">Nama Karyawan</label>
 													<div class="col-sm-8">
-													  <select class="form-control" name="jenkel" required>
-													  <option></option>
-													  <option value="Pria">Pria</option>
-													  <option value="Wanita">Wanita</option>
-													  </select>
-													</div>
-												  </div>
-												  
-												  <div class="form-group"> 
-													<label class="col-sm-4 control-label">Posisi yang dilamar</label>
-													<div class="col-sm-8">
-													   <select name="dilamar1" class="form-control" required>
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Posisi</option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM posisi order by nama_posisi asc");
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_posisi']; ?>"><?php echo $cs['nama_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-													 <select name="sub_posisi" class="form-control">
-													   <option value="" disabled="" selected="" style="display:none" ;="">Pilih Sub Posisi</option>
-													   <?php
-													   $query = mysql_query("
-										        SELECT * 
-										        FROM sub_posisi order by nama_sub_posisi asc");
-											
-											
-											while ($cs = mysql_fetch_array($query)) {
-											?>
-													   <option value="<?php echo $cs['nama_sub_posisi']; ?>"><?php echo $cs['nama_sub_posisi']; ?>
-													   
-											<?php } ?>		   
-													</select>	
-													</div>
-													</div>
-													
-												  <div class="form-group">
-													<label class="col-sm-4 control-label">Pendidikan</label>
-													<div class="col-sm-8">
-													   <select class="form-control" name="pendidikan" required>
-															   <option value="" disabled="" selected="" style="display:none" ;=""></option>
-															   <option value="S3">S3</option>
-															   <option value="S2">S2</option>
-															   <option value="S1">S1</option>
-															   <option value="D3">D3</option>
-															   <option value="D1">D1</option>
-															   <option value="SMK">SMK</option>
-															   <option value="SMA">SMA</option>
-															   <option value="SMP">SMP</option>
-															  
-														   </select>
+													  <input type="text" id="nama_karyawan" class="form-control" disabled>
 													</div>
 												  </div>
 												  <div class="form-group">
-													<label class="col-sm-4 control-label">Kabupaten/Kota</label>
+													<label class="col-sm-4 control-label">Tgl Resign</label>
 													<div class="col-sm-8">
-													   <input type="text" name="kota" class="form-control">
+													  <input type="text" id="tgl_metu" class="form-control" placeholder="dd-M-yyyy" required>
 													</div>
 												  </div>
 												  <div class="form-group">
-													<label class="col-sm-4 control-label">Usia</label>
+													<label class="col-sm-4 control-label"></label>
 													<div class="col-sm-8">
-													   <select class="form-control" name="usia" required>
-															<option value="" disabled="" selected="" style="display:none" ;=""></option>
-															<option value="19-25">19-25</option>
-															<option value="26-30">26-30</option>
-															<option value="30-40">30-40</option>
-															<option value="40-99">>= 40</option>
-															<option value="10-99">Semua Umur</option>
-														</select>
-													</div>
-				
-												  </div>
-												   <div class="form-group">
-													<label class="col-sm-4 control-label">Data Bulan</label>
-													<div class="col-sm-8">
-													  <input type="text" id="from" name="from" class="form-control" required>
-														<label for="to">to</label>
-														<input type="text" id="to" name="to" class="form-control" required>
+													<input type="hidden" id="input-res-id">
+													<button type="submit" id="sbt-resign" class="btn btn-info">Submit</button>
 													</div>
 												  </div>
-											</div> 
+										</div>
 								</div>
 								<div class="modal-footer">
-								<input type="submit" value="Search" class="btn btn-info">
-								<input type="reset" value="Reset" class="btn btn-warning">
-								  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+								<button id="btn-resign" type="button" class="btn btn-warning">Resign</button>
+								<a id="btn-edit" class="btn btn-info" onclick="return confirm('Yakin Anda ingin Mengubah data ini ?')">Edit</a>
+								<a id="btn-hapus" class="btn btn-danger">Delete</a>
+								<button type="button" class="btn " data-dismiss="modal">Close</button>
 								</div>
-								</form>
 							  </div>
 							</div>
 						  </div>
-						<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
-						
-	<!--/PAGE -->
-
-	<!-- JAVASCRIPTS -->
-	<!-- Placed at the end of the document so the pages load faster -->
 	<!-- JQUERY -->
 	<script src="js/jquery/jquery-2.0.3.min.js"></script>
 	<!-- JQUERY UI-->
@@ -615,122 +423,14 @@ if (!isset($_SESSION['id_bu']) ) {
 	<!-- CUSTOM SCRIPT -->
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger.min.css" />
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger-theme-flat.min.css" />
-	
+	<script src="js/aplikasi.js"></script>
 	<script src="js/script.js"></script>
-	<script type="text/javascript">
-   $(document).ready(function() {
-    var table = $('#example1').DataTable( {
-        scrollX:        true,
-        scrollCollapse: true,
-        paging:         true,
-        fixedColumns:   {
-            leftColumns: 4,
-            rightColumns: 1
-        }
-    });
-    
-	});
-	</script>
-	<script>
-$(document).ready(function() {
-    var table2 = $('#example2').DataTable( {
-        scrollX:        true,
-        scrollCollapse: true,
-        paging:         true,
-        fixedColumns:   {
-            leftColumns: 4,
-            rightColumns: 1
-        }
-    });
-    
-	});
-        </script>
 	<script>
 		jQuery(document).ready(function() {		
 			App.setPage("dynamic_table");  //Set current page
 			App.init(); //Initialise plugins and elements
 		});
 	</script>
-	<script type="text/javascript">
-//    validasi form (hanya file .xls yang diijinkan)
-    function validateForm()
-    {
-        function hasExtension(inputID, exts) {
-            var fileName = document.getElementById(inputID).value;
-            return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
-        }
-
-        if(!hasExtension('filepegawaiall', ['.xls'])){
-            alert("Hanya file XLS (Excel 2003) yang diijinkan.");
-            return false;
-        }
-    }
-</script>
-	<script>
-  $( function() {
-    var dateFormat = "yy-mm-dd",
-      from = $( "#from" )
-        .datepicker({
-          dateFormat: "yy-mm-dd",
-          changeMonth: true,
-          changeYear: true,
-          numberOfMonths: 3
-        })
-        .on( "change", function() {
-          to.datepicker( "option", "minDate", getDate( this ) );
-        }),
-      to = $( "#to" ).datepicker({
-      	dateFormat: "yy-mm-dd",
-        changeMonth: true,
-        changeYear: true,
-        numberOfMonths: 3
-      })
-      .on( "change", function() {
-        from.datepicker( "option", "maxDate", getDate( this ) );
-      });
- 
-    
-  } );
-  </script>
-  <script>
-  $( function() {
-    var dateFormat = "yy-mm-dd",
-      from = $( "#dari" )
-        .datepicker({
-          dateFormat: "yy-mm-dd",
-          changeMonth: true,
-          changeYear: true,
-          numberOfMonths: 3
-        })
-        .on( "change", function() {
-          to.datepicker( "option", "minDate", getDate( this ) );
-        }),
-      to = $( "#ke" ).datepicker({
-      	dateFormat: "yy-mm-dd",
-        changeMonth: true,
-        changeYear: true,
-        numberOfMonths: 3
-      })
-      .on( "change", function() {
-        from.datepicker( "option", "maxDate", getDate( this ) );
-      });
- 
-    
-  } );
-  </script>
- <!-- <script>
-  $(document).on("click", ".open", function () {
-     var id_karyawan = $(this).data('id');
-     var myPerusahaan = $(this).data('perusahaan');
-     var myDeskripsi = $(this).data('deskripsi');
-     var value = myBookId.split(";");
-     var get = value.join("<br>")
-     $(".modal-body #bookId").html( get );
-     $(".modal-body #perusahaan").html( myPerusahaan );
-     $(".modal-body #deskripsi").html( myDeskripsi );
-});
-
-</script> -->
+	 
 </body>
 </html>
- 

@@ -209,8 +209,6 @@ include('cek-login.php');
 	<!-- CUSTOM SCRIPT -->
 	<script src="js/script.js"></script>
 	<script src="js/bootstrap-wizard/form-wizard.min.js"></script>
-
-	
 	<script>
 		jQuery(document).ready(function() {		
 			App.setPage("wizards_validations");  //Set current page
@@ -218,11 +216,9 @@ include('cek-login.php');
 			FormWizard.init();
 		});
 	</script>
-
 	<script>
 	 $( function() {
     $( "#datep1" ).datepicker({
-    	
         changeMonth: true
     });
   });
@@ -234,16 +230,7 @@ include('cek-login.php');
     });
   } );
 	</script>
-	<script>
-
-		function myPeriod() {
-    
-    var datep2 = document.getElementById("datep2").value;
-    var datep1 = document.getElementById("datep1").value;
-    var pl = " - ";
-    document.getElementById("v_periode").value = datep1+pl+datep2;
-}
-	</script>
+	
 	<!-- /JAVASCRIPTS 
 
 <script>
