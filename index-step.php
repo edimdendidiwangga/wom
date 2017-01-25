@@ -32,11 +32,11 @@ include('cek-login.php');
 	  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	  <!-- select bootstrap -->
-	  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+	 <!--  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
       <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
 	  <link rel="stylesheet" href="bootstrap-dist/css/bootstrap-select.min.css" />
-      <script src="bootstrap-dist/js/bootstrap-select.min.js"></script>
+      <script src="bootstrap-dist/js/bootstrap-select.min.js"></script> -->
 
 		
 	  <script type="text/javascript" src="jquery.js"></script>

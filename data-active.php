@@ -18,15 +18,16 @@ if (!isset($_SESSION['id_bu']) ) {
 	<link rel="stylesheet" type="text/css" href="css/cloud-admin.css" >
 	<link rel="stylesheet" type="text/css"  href="css/themes/default.css" id="skin-switcher" >
 	<link rel="stylesheet" type="text/css"  href="css/responsive.css" >
-	
 	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
 	<!-- JQUERY UI-->
 	<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.min.css" />
 	<!-- ANIMATE -->
 	<link rel="stylesheet" type="text/css" href="css/animatecss/animate.min.css" />
 	<!-- DATE RANGE PICKER -->
-	<link rel="stylesheet" type="text/css" href="js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
-	
+	<!-- <link rel="stylesheet" type="text/css" href="js/bootstrap-daterangepicker/daterangepicker-bs3.css" /> -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<!-- DATA TABLES -->
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.2.2/css/fixedColumns.dataTables.min.css" />
@@ -213,13 +214,13 @@ if (!isset($_SESSION['id_bu']) ) {
 							<!-- Tabs -->
 								<div class="box border purple">
 									<div class="box-title">
-										<h4><i class="fa "></i><span class="hidden-inline-mobile"></span></h4>
+										<h4 id="tbl_jdl"><i class="fa "></i><span class="hidden-inline-mobile"></span>Data Karyawan Active</h4>
 									</div>
 									<div class="box-body">
 										<div class="tabbable header-tabs">
 										  <ul class="nav nav-tabs">
 											 <li id="boxs-resign"><a href="#box_tab2" data-toggle="tab"><i class="fa fa-users"></i> <span class="hidden-inline-mobile">Data resign</span></a></li>
-											 <li class="active"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-laptop"></i> <span class="hidden-inline-mobile">Data active</span></a></li>
+											 <li class="active" id="boxs-active"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-laptop"></i> <span class="hidden-inline-mobile">Data active</span></a></li>
 										  </ul>
 								<div class="tab-content">
 								<div class="tab-pane fade in active" id="box_tab1">
@@ -372,7 +373,8 @@ if (!isset($_SESSION['id_bu']) ) {
 												  <div class="form-group">
 													<label class="col-sm-4 control-label">Tgl Resign</label>
 													<div class="col-sm-8">
-													  <input type="text" id="tgl_metu" class="form-control" placeholder="dd-M-yyyy" required>
+													  <input type="text" id="tgl_metu" class="form-control" placeholder="dd-mm-yyyy" required>
+													  <div class="error-msg" style="opacity:0; color: red; ">Tgl Resign Tidak boleh kosong</div>
 													</div>
 												  </div>
 												  <div class="form-group">
@@ -400,14 +402,13 @@ if (!isset($_SESSION['id_bu']) ) {
 	<!-- BOOTSTRAP -->
 	<script src="bootstrap-dist/js/bootstrap.min.js"></script>
 	<!-- DATE RANGE PICKER -->
-	<script src="js/bootstrap-daterangepicker/moment.min.js"></script>
+	<!-- <script src="js/bootstrap-daterangepicker/moment.min.js"></script>
 	
-	<script src="js/bootstrap-daterangepicker/daterangepicker.min.js"></script>
+	<script src="js/bootstrap-daterangepicker/daterangepicker.min.js"></script> -->
 	<!-- FULL CALENDAR -->
-	<script type="text/javascript" src="js/fullcalendar/fullcalendar.min.js"></script>
+	<!-- <script type="text/javascript" src="js/fullcalendar/fullcalendar.min.js"></script> -->
 	<!-- TIMEAGO -->
-	<script type="text/javascript" src="js/timeago/jquery.timeago.min.js"></script>
-	
+	<!-- <script type="text/javascript" src="js/timeago/jquery.timeago.min.js"></script> -->
 	<!-- SLIMSCROLL -->
 	<script type="text/javascript" src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script><script type="text/javascript" src="js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
 	<!-- BLOCK UI -->
@@ -430,7 +431,8 @@ if (!isset($_SESSION['id_bu']) ) {
 			App.setPage("dynamic_table");  //Set current page
 			App.init(); //Initialise plugins and elements
 		});
+
 	</script>
-	 
+	
 </body>
 </html>

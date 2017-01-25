@@ -1,5 +1,6 @@
 $(document).ready(function(){
   $("#boxs-resign").click(function(){
+    $('#tbl_jdl').html("Data Karyawan Resign");
     $.ajax({
         url: "ambilresign.php",
         cache: false,
@@ -7,6 +8,9 @@ $(document).ready(function(){
             $(".box-resign").html(msg);
         }
     });
+  });
+  $("#boxs-active").click(function(){
+    $('#tbl_jdl').html("Data Karyawan Active");
   });
 
   $("#btn-hapus").click(function(){
@@ -45,6 +49,10 @@ $(document).ready(function(){
   	var tgl_res = $('#tgl_metu').val();
   	var tableA = $("#example1").DataTable();
   	var tableB = $("#example2").DataTable();
+    if(tgl_res == null || tgl_res == '' || tgl_res == undefined) {
+       $(".error-msg").animate({opacity: "1"}, 400);
+            return false;
+    }else{
   	 $.ajax({
     	type: "POST",
         url: "update-resign.php",
@@ -62,21 +70,21 @@ $(document).ready(function(){
 		        scrollX:        true,
 		        scrollCollapse: true,
 		        paging:         true
-		    });
+		        });
         		tableB.destroy();
         		tableB = $('#example2').DataTable( {
 		        scrollX:        true,
 		        scrollCollapse: true,
 		        paging:         true
-		    });
+		        });
        		}
         	
         }
     });
+    }
    });
 
 
-});
 
     var table = $('#example1').DataTable( {
         scrollX:        true,
@@ -88,7 +96,6 @@ $(document).ready(function(){
         }
     });
 
-	
 	
     function validateForm()
     {
@@ -102,27 +109,7 @@ $(document).ready(function(){
         }
     }
 	
-  $( function() {
-    var dateFormat = "dd-M-yy",
-      tgl_out = $( "#tgl_out" )
-        .datepicker({
-          dateFormat: "dd-M-yy",
-          changeMonth: true,
-          changeYear: true
-        })
-        .on( "change", function() {
-          to.datepicker( "option", "minDate", getDate( this ) );
-        }),
-      to = $( "#to" ).datepicker({
-      	dateFormat: "yy-mm-dd",
-        changeMonth: true,
-        changeYear: true,
-        numberOfMonths: 3
-      })
-      .on( "change", function() {
-        from.datepicker( "option", "maxDate", getDate( this ) );
-      });
-  } );
+   
   
   $(document).on("click", "#setting", function () {
      var id_karyawan = $(this).data('id');
@@ -133,4 +120,19 @@ $(document).ready(function(){
      $("#btn-edit").attr( "href", "edit-step.php?id_karyawan="+id_karyawan );
      $("#btn-hapus").attr( "data-id", id_karyawan );
      $("#input-res-id").attr( "value", id_karyawan );
+});
+
+  $( "#dari" ).datepicker({
+      showButtonPanel: true,
+      changeMonth: true,
+      changeYear: true,
+      yearRange: '1950:2026',
+      dateFormat: "M-yy"
+    });
+          $( "#tgl_metu" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-mm-yy"
+    });
+
 });

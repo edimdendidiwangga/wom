@@ -20,12 +20,18 @@
 								<span class="selected"></span>
 								</a>					
 							</li>
-							<li>
-								<a href="gaji-history.php">
-								<i class="fa fa-dollar fa-fw"></i> <span class="menu-text">Payroll</span>
-								<span class="selected"></span>
-								</a>					
+							<li class="has-sub">
+								<a href="javascript:;" class="">
+								<i class="fa  fa-dollar fa-fw"></i> <span class="menu-text">Payroll</span>
+								<span class="arrow"></span>
+								</a>
+								<ul class="sub">
+									<li><a class="" href="payroll.php"><span class="sub-menu-text">Payroll Terbaru</span></a></li>
+									<li><a class="" href="gaji-history.php"><span class="sub-menu-text">Payroll Per Periode</span></a></li>
+									
+								</ul>
 							</li>
+							
 							<li>
 								<a href="contract.php">
 								<i class="fa fa-suitcase fa-fw"></i> <span class="menu-text">Contract</span>
