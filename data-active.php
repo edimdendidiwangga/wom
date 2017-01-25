@@ -228,7 +228,7 @@ if (!isset($_SESSION['id_bu']) ) {
 									<a href="index-step.php" class="btn btn-info"><i class="fa fa-plus-circle"></i> Tambah Data</a>
 									<a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="fa fa-upload"></i> Import</a>
 									<a href="#export-database" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Export</a>
-									
+									<div id="content-karyawan">
 									<table id="example1" class="table table-striped table-bordered table-hover">
 											<thead>
 												<tr>
@@ -298,9 +298,7 @@ if (!isset($_SESSION['id_bu']) ) {
 												$no++;
 												} 
 												?>
-												
 											</tbody>
-										
 											<tfoot>
 												<tr>
 													<th>NO.</th>
@@ -327,6 +325,7 @@ if (!isset($_SESSION['id_bu']) ) {
 												</tr>
 											</tfoot>
 										</table>
+										</div>
 									</div>
 								<!-- /BOX -->
 									<div class="tab-pane fade box-resign" id="box_tab2">

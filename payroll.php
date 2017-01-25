@@ -140,14 +140,14 @@ if (!isset($_SESSION['id_bu']) ) {
 									<div class="box-body">
 										<div class="tabbable header-tabs">
 										  <ul class="nav nav-tabs">
-											 <li id="boxs-result"><a href="#box_tab3" data-toggle="tab"><i class="fa fa-laptop"></i> <span class="hidden-inline-mobile">Data Gaji Bulan</span></a></li>
+											 
 											 <li id="boxs-periode"><a href="#box_tab2" data-toggle="tab"><i class="fa fa-laptop"></i> <span class="hidden-inline-mobile">Data Gaji Per Periode</span></a></li>
 											 <li class="active" id="boxs-terbaru"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-laptop"></i> <span class="hidden-inline-mobile">Data Gaji Terbaru</span></a></li>
 										  </ul>
 								<div class="tab-content">
 								<div class="tab-pane fade in active" id="box_tab1">
 									<a href="#export-database" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Export</a>
-									
+									<div id="content_gaji">
 									<table id="example1" class="table table-striped table-bordered table-hover">
 											<thead>
 												<tr>
@@ -178,6 +178,7 @@ if (!isset($_SESSION['id_bu']) ) {
 													<th>CABANG INDUK</th>
 													<th>NO BPJS TK</th>
 													<th>NO BPJS KES</th>
+													<th>PERIODE</th>
 													<th>AKSI</th>
 												</tr>
 											</thead>
@@ -189,7 +190,7 @@ if (!isset($_SESSION['id_bu']) ) {
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
 										    inner join karyawan on gaji.update_gaji = karyawan.update_gaji
 										    inner join contract on contract.update_contract = karyawan.update_contract
-										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']."
+										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." 
 										    Order by karyawan.id_karyawan DESC");
 											if ($query_tampil === FALSE) {
 											    die(mysql_error());
@@ -197,6 +198,7 @@ if (!isset($_SESSION['id_bu']) ) {
 											$no=1;
 											while ($data = mysql_fetch_array($query_tampil)) {
 											?>
+											
 												<tr class="gradeX" id="karyawan_<?php echo $data['id_karyawan']; ?>">
 													<td><?php echo $no; ?></td>
 													<td><?php echo $data['nama_karyawan']; ?></td>
@@ -225,13 +227,14 @@ if (!isset($_SESSION['id_bu']) ) {
 													<td><?php echo $data['cabang_induk']; ?></td>
 													<td><?php echo $data['bpjs_ketenagakerjaan']; ?></td>
 													<td><?php echo $data['bpjs_kesehatan']; ?></td>
+													<td><?php echo $data['periode_gaji']; ?></td>
 													<td><button id="setting" data-target="#open" data-toggle="modal" data-id="<?php echo $data['id_karyawan']; ?>" data-nama="<?php echo $data['nama_karyawan']; ?>" data-nik="<?php echo $data['nik']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gear"></i></button></td>
 												</tr>
 												<?php 
 												$no++;
 												} 
 												?>
-											</tbody>
+												</tbody>
 											<tfoot>
 												<tr>
 													<th>NO.</th>
@@ -261,10 +264,13 @@ if (!isset($_SESSION['id_bu']) ) {
 													<th>CABANG INDUK</th>
 													<th>NO BPJS TK</th>
 													<th>NO BPJS KES</th>
+													<th>PERIODE</th>
 													<th>AKSI</th>
 												</tr>
 											</tfoot>
 										</table>
+											
+										</div>
 									</div>
 									<div class="tab-pane fade box-periode" id="box_tab2">
 									
@@ -303,7 +309,7 @@ if (!isset($_SESSION['id_bu']) ) {
 					  <h4 class="modal-title">Form Tambah Gaji, Edit & Delete</h4>
 					</div>
 					<div class="modal-body">
-					<div class="form-horizontal add-gaji">
+					<div class="form-horizontal form_add_gaji">
 												   <div class="form-group">
 													<label class="col-sm-4 control-label">Nama Karyawan</label>
 													<div class="col-sm-5">
@@ -394,110 +400,17 @@ if (!isset($_SESSION['id_bu']) ) {
 													<label class="col-sm-4 control-label"></label>
 													<div class="col-sm-8">
 													<input type="hidden" id="input-res-id">
-													<button type="submit" id="sbt-resign" class="btn btn-info">Simpan</button>
+													<button type="submit" id="sbt-gaji" class="btn btn-success">Simpan</button>
 													</div>
 												  </div>
-										</div>
 								</div>
-								<div class="form-horizontal edit-gaji">
-												   <div class="form-group">
-													<label class="col-sm-4 control-label">Nama Karyawan</label>
-													<div class="col-sm-5">
-													  <input type="text" id="nama_karyawan" class="form-control" disabled>
-													</div>
-													<div class="col-sm-3">
-													  <input type="text" id="enik" class="form-control" disabled>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label">Hari Kerja</label>
-													<div class="col-sm-5">
-													  <input type="text" class="form-control" id="kehadiran" name="kehadiran" placeholder="Isikan hari kerja" required>
-													  <span class="error_kehadiran" style="opacity:1; color: red; display: none;">Hari Kerja Tidak Boleh Kosong!</span>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label">UMP <?php echo date("Y");?></label>
-													<div class="col-sm-8">
-													  <input type="text" class="form-control" id="ump" name="ump" placeholder="Isikan UMP Terbaru" required>
-													  <span class="error_ump" style="opacity:1; color: red; display: none;">UMP Tidak Boleh Kosong!</span>
-													</div>
-												  </div>
-												   <div class="form-group">
-													<label class="col-sm-4 control-label">Gaji Pokok</label>
-													<div class="col-sm-8">
-													  <input type="text" class="form-control" id="gaji_pokok" name="gaji_pokok" placeholder="Rp" required>
-													  <span class="error_gaji_pokok" style="opacity:1; color: red; display: none;">Gaji Pokok Tidak Boleh Kosong!</span>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label">Tunjangan Maintenance</label>
-													<div class="col-sm-8">
-													  <input type="text" class="form-control" id="tun_maintenance" name="tun_maintenance" placeholder="Rp" required>
-													  <span class="error_tun_maintenance" style="opacity:1; color: red; display: none;">Tunjangan Maintenance Tidak Boleh Kosong!</span>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label">Tunjangan Jabatan</label>
-													<div class="col-sm-8">
-													  <input type="text" class="form-control" id="tun_jabatan" name="tun_jabatan" placeholder="Rp" required>
-													  <span class="error_tun_jabatan" style="opacity:1; color: red; display: none;">Tunjangan Jabatan Tidak Boleh Kosong!</span>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label">Tunjangan Jaga Malam</label>
-													<div class="col-sm-8">
-													  <input type="text" class="form-control" id="tun_jaga_malam" name="tun_jaga_malam" placeholder="Rp" required>
-													  <span class="error_tun_jaga_malam" style="opacity:1; color: red; display: none;">Tunjangan Jaga Malam Tidak Boleh Kosong!</span>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label">Tunjangan Lain</label>
-													<div class="col-sm-8">
-													  <input type="text" class="form-control" id="tun_lain" name="tun_lain" placeholder="Rp" required>
-													  <span class="error_tun_lain" style="opacity:1; color: red; display: none;">Tunjangan Lain Tidak Boleh Kosong!</span>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label"> Insentive</label>
-													<div class="col-sm-8">
-													  <input type="text" class="form-control" id="insentive" name="insentive" placeholder="Rp" required>
-													   <span class="error_insentive" style="opacity:1; color: red; display: none;">Insentive Tidak Boleh Kosong!</span>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label">Overtime </label>
-													<div class="col-sm-8">
-													  <input type="text" class="form-control" id="overtime" name="overtime" placeholder="Rp" required>
-													  <span class="error_overtime" style="opacity:1; color: red; display: none;">Overtime Tidak Boleh Kosong!</span>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label"> Rapel</label>
-													<div class="col-sm-8">
-													  <input type="text" class="form-control" id="rapel" name="rapel" placeholder="Rp" required>
-													  <span class="error_rapel" style="opacity:1; color: red; display: none;">Rapel Tidak Boleh Kosong!</span>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label"> Periode Gaji</label>
-													<div class="col-sm-8">
-													  <input type="text" class="form-control" name="periode_gaji" id="periode_gaji" placeholder="Isikan Periode Gaji" required>
-													  <span class="error_periode_gaji" style="opacity:1; color: red; display: none;">Periode Gaji Tidak Boleh Kosong!</span>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label"></label>
-													<div class="col-sm-8">
-													<input type="hidden" id="input-res-id">
-													<button type="submit" id="sbt-resign" class="btn btn-info">Simpan</button>
-													</div>
-												  </div>
+								<div class="form-horizontal form_edit_gaji" style="display: none;">
+												  
 										</div>
 								</div>
 								<div class="modal-footer">
-								<button id="btn-resign" type="button" class="btn btn-success">Tambah Gaji</button>
-								<a id="btn-edit" class="btn btn-info" onclick="return confirm('Yakin Anda ingin Mengubah data ini ?')">Edit</a>
+								<button id="btn-gaji" type="button" class="btn btn-success">Tambah Gaji</button>
+								<button id="btn-edit" type="button" class="btn btn-info">Edit</button>
 								<a id="btn-hapus" class="btn btn-danger">Delete</a>
 								<button type="button" class="btn " data-dismiss="modal">Close</button>
 								</div>
@@ -538,11 +451,12 @@ if (!isset($_SESSION['id_bu']) ) {
 	<script src="js/script.js"></script>
 	<script>
 		jQuery(document).ready(function() {		
-			App.setPage("dynamic_table");  //Set current page
-			App.init(); //Initialise plugins and elements
+			App.setPage("dynamic_table");  
+			App.init();
 		});
 
   $(document).ready(function(){
+
   $("#boxs-periode").click(function(){
     $('#tbl_jdl').html("Data Gaji Per Periode");
     $.ajax({
@@ -560,7 +474,7 @@ if (!isset($_SESSION['id_bu']) ) {
     $('#tbl_jdl').html("Data Gaji Bulan");
   });
 
-  $("#sbt-resign").click(function(){
+  $("#sbt-gaji").click(function(){
   	var id_kw = $('#input-res-id').val();
     var kehadiran_val = $('#kehadiran').val();
   	var ump_val = $('#ump').val();
@@ -621,7 +535,6 @@ if (!isset($_SESSION['id_bu']) ) {
        $(".error_periode_gaji").fadeIn();
        return false;
     }else{
-
     	$.ajax({
     	type: "POST",
         url: "add-gaji.php",
@@ -631,27 +544,29 @@ if (!isset($_SESSION['id_bu']) ) {
             if(msg == '0'){
         		alert("Gagal Menambah Data Gaji!");
         	}else{
-	            $("#karyawan_"+id_kw).fadeIn();
+        		$('#content_gaji').html(msg);
 	            $('#open').modal('toggle');
-            	/*tableA.destroy();
-        		tableA = $('#example1').DataTable( {
-		        scrollX:        true,
-		        scrollCollapse: true,
-		        paging:         true
-		        });
-        		tableB.destroy();
-        		tableB = $('#example2').DataTable( {
-		        scrollX:        true,
-		        scrollCollapse: true,
-		        paging:         true
-		        });*/
        		}
-        	
         }
     	});
     }
     
    });
+
+  var btn_gaji = $("#btn-gaji"),
+      btn_edit = $("#btn-edit"),
+      form_add_gaji = $(".form_add_gaji"),
+      form_edit_gaji = $(".form_edit_gaji");
+     
+  btn_gaji.click(function () { 
+      form_add_gaji.fadeIn();
+      form_edit_gaji.fadeOut();
+  });
+  btn_edit.click(function () { 
+  	  form_add_gaji.fadeOut();
+      form_edit_gaji.fadeIn();
+  });
+  
   var table = $('#example1').DataTable( {
         scrollX:        true,
         scrollCollapse: true,
@@ -661,16 +576,7 @@ if (!isset($_SESSION['id_bu']) ) {
             rightColumns: 1
         }
     });
-  var table3 = $('#example3').DataTable( {
-        scrollX:        true,
-        scrollCollapse: true,
-        paging:         true,
-        fixedColumns:   {
-            leftColumns: 3,
-            rightColumns: 1
-        }
-    });
-
+  
 $(document).on("click", "#setting", function () {
      var id_karyawan = $(this).data('id');
      var nama_karyawan = $(this).data('nama');
@@ -678,9 +584,10 @@ $(document).on("click", "#setting", function () {
      $("#id_karyawan").html( id_karyawan );
      $("#enik").val( nik );
      $("#nama_karyawan").val( nama_karyawan);
+     $("#input-res-id").attr( "value", id_karyawan );
     /* $("#btn-edit").attr( "href", "edit-step.php?id_karyawan="+id_karyawan );
      $("#btn-hapus").attr( "data-id", id_karyawan );
-     $("#input-res-id").attr( "value", id_karyawan );*/
+     */
 });
 
             $( "#periode_gajdi" ).datepicker({

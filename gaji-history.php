@@ -15,8 +15,8 @@ if (!isset($_SESSION['id_bu']) ) {
 											</thead>
 											<tbody>
 											<?php 
-											$query_tampil=mysql_query("SELECT distinct periode_gaji FROM gaji 
-										    Order by periode_gaji ASC");
+											$query_tampil=mysql_query("SELECT distinct periode_gaji FROM gaji where periode_gaji != ''
+										    Order by id_gaji DESC");
 											if ($query_tampil === FALSE) {
 											    die(mysql_error());
 											}
@@ -27,8 +27,7 @@ if (!isset($_SESSION['id_bu']) ) {
 													<td><?php echo $no; ?></td>
 													
 													<td><?php echo $data['periode_gaji']; ?></td>
-													<td class="center"><a href="cek-bu.php?id_bu=<?php echo $data['periode_gaji'];?>" class="btn btn-info btn-xs"> VIEW</a></td>
-													
+													<td class="center"><a id="btn-view" data-periode="<?php echo $data['periode_gaji']; ?>" class="btn btn-info btn-xs"> VIEW</a></td>
 												</tr>
 												<?php 
 												$no++;
@@ -39,5 +38,19 @@ if (!isset($_SESSION['id_bu']) ) {
 <script type="text/javascript">
 $(document).ready(function(){
 	var table2 = $('#example2').DataTable();
+
+	$("#btn-view").click(function(){
+		var periode = $(this).data('periode');
+		$('#tbl_jdl').html("Data Gaji Bulan "+periode);
+	    $.ajax({
+	    	type: "POST",
+	        url: "gaji_periode.php",
+	        data: {periode_gaji:periode},
+	        cache: false,
+	        success: function(msg){
+	            $(".box-periode").html(msg);
+	        }
+	    });
+	});
 });
 </script>

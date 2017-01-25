@@ -16,7 +16,6 @@ $(document).ready(function(){
   $("#btn-hapus").click(function(){
   	var id_krywn = $(this).data('id');
     var r = confirm("Yakin Anda ingin Menghapus data ini ?");
-    var table = $("#example1").DataTable();
     if (r) {
         $.ajax({
         type: "POST",
@@ -27,14 +26,8 @@ $(document).ready(function(){
         	if(msg == '0'){
         		alert("Gagal Menghapus Data!");
         	}else{
-            	$("#karyawan_"+id_krywn).fadeOut();
+            	$('#content_karyawan').html(msg);
             	$('#open').modal('toggle');
-            	table.destroy();
-        		table = $('#example1').DataTable( {
-		        scrollX:        true,
-		        scrollCollapse: true,
-		        paging:         true
-		    });
        		}
         }
     });
@@ -47,7 +40,6 @@ $(document).ready(function(){
   $("#sbt-resign").click(function(){
     var id_kw = $('#input-res-id').val();
   	var tgl_res = $('#tgl_metu').val();
-  	var tableA = $("#example1").DataTable();
   	var tableB = $("#example2").DataTable();
     if(tgl_res == null || tgl_res == '' || tgl_res == undefined) {
        $(".error-msg").animate({opacity: "1"}, 400);
@@ -62,15 +54,9 @@ $(document).ready(function(){
         	if(msg == '0'){
         		alert("Gagal Memindahkan ke Data Resign!");
         	}else{
-	            $("#karyawan_"+id_kw).fadeOut();
+	            $('#content_karyawan').html(msg);
 	            $("#employee_"+id_kw).fadeIn();
 	            $('#open').modal('toggle');
-            	tableA.destroy();
-        		tableA = $('#example1').DataTable( {
-		        scrollX:        true,
-		        scrollCollapse: true,
-		        paging:         true
-		        });
         		tableB.destroy();
         		tableB = $('#example2').DataTable( {
 		        scrollX:        true,
