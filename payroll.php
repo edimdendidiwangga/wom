@@ -501,8 +501,8 @@ if (!isset($_SESSION['id_bu']) ) {
 								<div class="modal-footer">
 								<button id="btn-gaji" type="button" class="btn btn-success">Tambah Gaji</button>
 								<button id="btn-edit" type="button" class="btn btn-info">Edit</button>
-								<a id="btn-hapus" class="btn btn-danger">Delete</a>
-								<button type="button" class="btn " data-dismiss="modal">Close</button>
+								<a id="btn-hapus" class="btn btn-danger" style="display: none;">Delete</a>
+								<button type="button" class="btn default" data-dismiss="modal">Close</button>
 								</div>
 							  </div>
 							</div>
@@ -557,6 +557,32 @@ if (!isset($_SESSION['id_bu']) ) {
         }
     });
   });
+
+  $("#btn-hapus").click(function(){
+  	var id_krywn = $(this).data('id');
+  	var ga_pok = $(this).data('gapok');
+  	var peri_ode = $(this).data('periode');
+    var r = confirm("Yakin Anda ingin Menghapus data ini ?");
+    if (r) {
+        $.ajax({
+        type: "POST",
+        url: "delete-payroll.php",
+        data: {id_karyawan:id_krywn, gaji_pokok:ga_pok, periode_gaji:peri_ode},
+        cache: false,
+        success: function(msg){
+        	if(msg == '0'){
+        		alert("Gagal Menghapus Data!");
+        	}else{
+        		alert("Data Berhasil di hapus!");
+            	$('#open').modal('toggle');
+       		}
+        }
+    });
+    } else {
+       $('#open').modal('toggle');
+    }
+ });
+
   $("#boxs-terbaru").click(function(){
     $('#tbl_jdl').html("Data Gaji Terbaru");
   });
@@ -777,8 +803,12 @@ $(document).on("click", "#setting", function () {
      $(".enik").val( nik );
      $(".nama").val( nama_karyawan);
      $("#input-res-id").attr( "value", id_karyawan );
+      $("#btn-hapus").attr( "data-id", id_karyawan );
+      $("#btn-hapus").attr( "data-gapok", gapok );
+      $("#btn-hapus").attr( "data-periode", periode );
+      $("#btn-hapus").attr( "data-periode", periode );
     /* $("#btn-edit").attr( "href", "edit-step.php?id_karyawan="+id_karyawan );
-     $("#btn-hapus").attr( "data-id", id_karyawan );
+    
      */
 });
 
