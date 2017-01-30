@@ -39,7 +39,7 @@
 								</a>					
 							</li>
 							<li>
-								<a href="resign.php">
+								<a href="data-resign.php">
 								<i class="fa fa-minus-square fa-fw"></i> <span class="menu-text">Resign</span>
 								<span class="selected"></span>
 								</a>					

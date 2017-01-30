@@ -184,7 +184,7 @@ if (!isset($_SESSION['id_bu']) ) {
 									</ul>
 									<!-- /BREADCRUMBS -->
 									<div class="clearfix">
-										<h3 class="content-title pull-left">Data Karyawan WOM Cab 
+										<h3 class="content-title pull-left">Data Contract Karyawan WOM Cab 
 										<?php 
 											$que=mysql_query("SELECT nama_cabang
 										    FROM bu 
@@ -209,55 +209,102 @@ if (!isset($_SESSION['id_bu']) ) {
 							<!-- Tabs -->
 								<div class="box border purple">
 									<div class="box-title">
-										<h4 id="tbl_jdl"><i class="fa "></i><span class="hidden-inline-mobile"></span>Data Karyawan Active</h4>
+										<h4 id="tbl_jdl"><i class="fa "></i><span class="hidden-inline-mobile"></span>Data Contract Karyawan</h4>
 									</div>
 									<div class="box-body">
 										<div class="tabbable header-tabs">
 										  <ul class="nav nav-tabs">
-											 <li id="boxs-resign"><a href="#box_tab2" data-toggle="tab"><i class="fa fa-users"></i> <span class="hidden-inline-mobile">Data resign</span></a></li>
-											 <li class="active" id="boxs-active"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-laptop"></i> <span class="hidden-inline-mobile">Data active</span></a></li>
+											 <li id="boxs-resign"><a href="#box_tab2" data-toggle="tab"><i class="fa fa-users"></i> <span class="hidden-inline-mobile">Data Contract Resign</span></a></li>
+											 <li class="active" id="boxs-active"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-laptop"></i> <span class="hidden-inline-mobile">Data Contract Active</span></a></li>
 										  </ul>
 								<div class="tab-content">
 								<div class="tab-pane fade in active" id="box_tab1">
-											
-									<a href="index-step.php" class="btn btn-info"><i class="fa fa-plus-circle"></i> Tambah Data</a>
-									<a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="fa fa-upload"></i> Import</a>
 									<a href="#export-database" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Export</a>
 									<div id="content-karyawan">
 									<table id="example1" class="table table-striped table-bordered table-hover">
 											<thead>
 												<tr>
-													<th>NO.</th>
-													<th>NAMA KARYAWAN</th>
-													<th>POSISI</th>
-													<th class="hidden-xs">CABANG</th>
-													<th>LOKASI</th>
-													<th class="hidden-xs">NIK</th>
-													<th>VIRTUAL NIK</th>
-													<th>BU</th>
-													<th>HIRE DATE</th>
-													<th>JOIN DATE</th>
-													<th>GAJI POKOK</th>
-													<th>TUNJANGAN MAINTENANCE</th>
-													<th>TUNJANGAN JABATAN</th>
-													<th>TUNJANGAN JAGA MALAM</th>
-													<th>TUNJANGAN LAIN</th>
-													<th>THP</th>
-													<th>VENDOR</th>
-													<th>TINGKAT</th>
-													<th>JENIS</th>
-													<th>STATUS</th>
-													<th>Aksi</th>
+													<th rowspan="2">NO.</th>
+													<th rowspan="2">NAMA KARYAWAN</th>
+													<th rowspan="2">POSISI</th>
+													<th rowspan="2" class="hidden-xs">CABANG</th>
+													<th rowspan="2">LOKASI</th>
+													<th rowspan="2" class="hidden-xs">NIK</th>
+													<th rowspan="2">VIRTUAL NIK</th>
+													<th rowspan="2">BU</th>
+													<th colspan="3" class="center">PMK 1</th>
+													<th colspan="3" class="center">PMK 2</th>
+													<th colspan="3" class="center">PMK 3</th>
+													<th colspan="3" class="center">PMK 4</th>
+													<th colspan="3" class="center">PMK 5</th>
+													<th colspan="3" class="center">PMK 6</th>
+													<th colspan="3" class="center">PMK 7</th>
+													<th colspan="3" class="center">PMK 8</th>
+													<th colspan="3" class="center">PMK 9</th>
+													<th colspan="3" class="center">PMK 10</th>
+													<th colspan="3" class="center">PMK 11</th>
+													<th colspan="3" class="center">PMK 12</th>
+													<th colspan="3" class="center">PMK 13</th>
+													<th colspan="3" class="center">PMK 14</th>
+													<th colspan="3" class="center">PMK 15</th>
+													<th rowspan="2">Aksi</th>
+												</tr>
+												<tr>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+
 												</tr>
 											</thead>
 											<tbody>
 											<?php 
-											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.hire_date, contract.join_date, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, karyawan.education, karyawan.gender, data_karyawan.status, data_karyawan.id_bu
+											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, contract.join_date, contract.end_date, contract.no_pkwt, data_karyawan.status, data_karyawan.id_bu
 										    FROM karyawan 
 										    inner join data_karyawan on karyawan.id_karyawan=data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
 										    inner join contract on contract.update_contract = karyawan.update_contract
-										    inner join gaji on gaji.update_gaji = karyawan.update_gaji
 										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']."
 										    Order by karyawan.id_karyawan DESC");
 											if ($query_tampil === FALSE) {
@@ -275,18 +322,52 @@ if (!isset($_SESSION['id_bu']) ) {
 													<td class="center hidden-xs"><?php echo $data['nik']; ?></td>
 													<td><?php echo $data['virtual_nik']; ?></td>
 													<td><?php echo "BU ".$data['bu']; ?></td>
-													<td><?php echo $data['hire_date']; ?></td>
 													<td><?php echo $data['join_date']; ?></td>
-													<td><?php echo $data['gaji_pokok']; ?></td>
-													<td><?php echo $data['tun_maintenance']; ?></td>
-													<td><?php echo $data['tun_jabatan']; ?></td>
-													<td><?php echo $data['tun_jaga_malam']; ?></td>
-													<td><?php echo $data['tun_lain']; ?></td>
-													<td><?php echo ($data['gaji_pokok']+$data['tun_maintenance']+$data['tun_jabatan']+$data['tun_jaga_malam']+$data['tun_lain']); ?></td>
-													<td>PT SINAR JERNIH SUKSESINDO</td>
-													<td><?php echo $data['education']; ?></td>
-													<td><?php echo $data['gender']; ?></td>
-													<td><?php if($data['status']=="1"){echo"Active";}if($data['status']=="2"){echo"Non Active";}?></td>
+													<td><?php echo $data['end_date']; ?></td>
+													<td><?php echo $data['no_pkwt']; ?></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													
 													<td><button id="setting" data-target="#open" data-toggle="modal" data-id="<?php echo $data['id_karyawan']; ?>" data-nama="<?php echo $data['nama_karyawan']; ?>" data-nik="<?php echo $data['nik']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gear"></i></button></td>
 												</tr>
 												<?php 
@@ -296,27 +377,78 @@ if (!isset($_SESSION['id_bu']) ) {
 											</tbody>
 											<tfoot>
 												<tr>
-													<th>NO.</th>
-													<th>NAMA KARYAWAN</th>
-													<th>POSISI</th>
-													<th class="hidden-xs">CABANG</th>
-													<th>LOKASI</th>
-													<th class="hidden-xs">NIK</th>
-													<th>VIRTUAL NIK</th>
-													<th>BU</th>
-													<th>HIRE DATE</th>
-													<th>JOIN DATE</th>
-													<th>GAJI POKOK</th>
-													<th>TUNJANGAN MAINTENANCE</th>
-													<th>TUNJANGAN JABATAN</th>
-													<th>TUNJANGAN JAGA MALAM</th>
-													<th>TUNJANGAN LAIN</th>
-													<th>THP</th>
-													<th>VENDOR</th>
-													<th>TINGKAT</th>
-													<th>JENIS</th>
-													<th>STATUS</th>
-													<th>Aksi</th>
+													<th rowspan="2">NO.</th>
+													<th rowspan="2">NAMA KARYAWAN</th>
+													<th rowspan="2">POSISI</th>
+													<th rowspan="2" class="hidden-xs">CABANG</th>
+													<th rowspan="2">LOKASI</th>
+													<th rowspan="2" class="hidden-xs">NIK</th>
+													<th rowspan="2">VIRTUAL NIK</th>
+													<th rowspan="2">BU</th>
+													<th colspan="3" class="center">PMK 1</th>
+													<th colspan="3" class="center">PMK 2</th>
+													<th colspan="3" class="center">PMK 3</th>
+													<th colspan="3" class="center">PMK 4</th>
+													<th colspan="3" class="center">PMK 5</th>
+													<th colspan="3" class="center">PMK 6</th>
+													<th colspan="3" class="center">PMK 7</th>
+													<th colspan="3" class="center">PMK 8</th>
+													<th colspan="3" class="center">PMK 9</th>
+													<th colspan="3" class="center">PMK 10</th>
+													<th colspan="3" class="center">PMK 11</th>
+													<th colspan="3" class="center">PMK 12</th>
+													<th colspan="3" class="center">PMK 13</th>
+													<th colspan="3" class="center">PMK 14</th>
+													<th colspan="3" class="center">PMK 15</th>
+													<th rowspan="2">Aksi</th>
+												</tr>
+												<tr>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+													<th>Start </th>
+													<th>END </th>
+													<th>NO PKWT</th>
+
 												</tr>
 											</tfoot>
 										</table>

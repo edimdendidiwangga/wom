@@ -184,7 +184,7 @@ if (!isset($_SESSION['id_bu']) ) {
 									</ul>
 									<!-- /BREADCRUMBS -->
 									<div class="clearfix">
-										<h3 class="content-title pull-left">Data Karyawan WOM Cab 
+										<h3 class="content-title pull-left">Data Resign Karyawan WOM Cab 
 										<?php 
 											$que=mysql_query("SELECT nama_cabang
 										    FROM bu 
@@ -209,19 +209,16 @@ if (!isset($_SESSION['id_bu']) ) {
 							<!-- Tabs -->
 								<div class="box border purple">
 									<div class="box-title">
-										<h4 id="tbl_jdl"><i class="fa "></i><span class="hidden-inline-mobile"></span>Data Karyawan Active</h4>
+										<h4 id="tbl_jdl"><i class="fa "></i><span class="hidden-inline-mobile"></span>Data Karyawan Resign</h4>
 									</div>
 									<div class="box-body">
 										<div class="tabbable header-tabs">
 										  <ul class="nav nav-tabs">
-											 <li id="boxs-resign"><a href="#box_tab2" data-toggle="tab"><i class="fa fa-users"></i> <span class="hidden-inline-mobile">Data resign</span></a></li>
-											 <li class="active" id="boxs-active"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-laptop"></i> <span class="hidden-inline-mobile">Data active</span></a></li>
+											 <li class="active" id="boxs-active"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-laptop"></i> <span class="hidden-inline-mobile">Data Resign</span></a></li>
 										  </ul>
 								<div class="tab-content">
 								<div class="tab-pane fade in active" id="box_tab1">
-											
-									<a href="index-step.php" class="btn btn-info"><i class="fa fa-plus-circle"></i> Tambah Data</a>
-									<a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="fa fa-upload"></i> Import</a>
+									
 									<a href="#export-database" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Export</a>
 									<div id="content-karyawan">
 									<table id="example1" class="table table-striped table-bordered table-hover">
@@ -258,7 +255,7 @@ if (!isset($_SESSION['id_bu']) ) {
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
 										    inner join contract on contract.update_contract = karyawan.update_contract
 										    inner join gaji on gaji.update_gaji = karyawan.update_gaji
-										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']."
+										   where data_karyawan.status = '2' && data_karyawan.id_bu=".$_SESSION['id_bu']."
 										    Order by karyawan.id_karyawan DESC");
 											if ($query_tampil === FALSE) {
 											    die(mysql_error());
@@ -354,34 +351,12 @@ if (!isset($_SESSION['id_bu']) ) {
 				  <div class="modal-content">
 					<div class="modal-header">
 					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title">Form Resign, Edit & Delete</h4>
+					  <h4 class="modal-title">Form  Edit & Delete</h4>
 					</div>
 					<div class="modal-body">
-					<div class="form-horizontal">
-												   <div class="form-group">
-													<label class="col-sm-4 control-label">Nama Karyawan</label>
-													<div class="col-sm-8">
-													  <input type="text" id="nama_karyawan" class="form-control" disabled>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label">Tgl Resign</label>
-													<div class="col-sm-8">
-													  <input type="text" id="tgl_metu" class="form-control" placeholder="dd-mm-yyyy" required>
-													  <div class="error-msg" style="opacity:0; color: red;">Tgl Resign Tidak boleh kosong</div>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label"></label>
-													<div class="col-sm-8">
-													<input type="hidden" id="input-res-id">
-													<button type="submit" id="sbt-resign" class="btn btn-info">Submit</button>
-													</div>
-												  </div>
-										</div>
+					
 								</div>
 								<div class="modal-footer">
-								<button id="btn-resign" type="button" class="btn btn-warning">Resign</button>
 								<a id="btn-edit" class="btn btn-info" onclick="return confirm('Yakin Anda ingin Mengubah data ini ?')">Edit</a>
 								<a id="btn-hapus" class="btn btn-danger">Delete</a>
 								<button type="button" class="btn " data-dismiss="modal">Close</button>

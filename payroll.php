@@ -183,7 +183,7 @@ if (!isset($_SESSION['id_bu']) ) {
 											</thead>
 											<tbody>
 											<?php 
-											$query_tampil=mysql_query("SELECT */*karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.hire_date, contract.join_date, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, karyawan.education, karyawan.gender, data_karyawan.status, data_karyawan.id_bu*/
+											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, data_karyawan.job_class, bu.nama_cabang, karyawan.marital_status, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, contract.join_date, gaji.kehadiran, gaji.ump, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, gaji.rapel, gaji.insentive, gaji.overtime, data_karyawan.org_name, karyawan.gender, data_karyawan.hire_date, data_karyawan.cabang_induk, data_karyawan.bpjs_ketenagakerjaan, data_karyawan.bpjs_kesehatan, gaji.periode_gaji, data_karyawan.id_bu
 										    FROM gaji 
 										    inner join data_karyawan on gaji.id_karyawan = data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
@@ -493,7 +493,7 @@ if (!isset($_SESSION['id_bu']) ) {
 													<label class="col-sm-4 control-label"></label>
 													<div class="col-sm-8">
 													<input type="hidden" id="input-gaj-id">
-													<button type="submit" id="sbt_edit_gaji" class="btn btn-success">Simpan</button>
+													<button type="submit" id="sbt_edit_gaji" class="btn btn-info">Simpan</button>
 													</div>
 												  </div>				  
 										</div>
@@ -546,6 +546,9 @@ if (!isset($_SESSION['id_bu']) ) {
 		});
 
   $(document).ready(function(){
+  	$('#open').on('hidden.bs.modal', function () {
+    $(this).find('.form_add_gaji').trigger('reset');
+})
 
   $("#boxs-periode").click(function(){
     $('#tbl_jdl').html("Data Gaji Per Periode");
@@ -558,30 +561,7 @@ if (!isset($_SESSION['id_bu']) ) {
     });
   });
 
-  $("#btn-hapus").click(function(){
-  	var id_krywn = $(this).data('id');
-  	var ga_pok = $(this).data('gapok');
-  	var peri_ode = $(this).data('periode');
-    var r = confirm("Yakin Anda ingin Menghapus data ini ?");
-    if (r) {
-        $.ajax({
-        type: "POST",
-        url: "delete-payroll.php",
-        data: {id_karyawan:id_krywn, gaji_pokok:ga_pok, periode_gaji:peri_ode},
-        cache: false,
-        success: function(msg){
-        	if(msg == '0'){
-        		alert("Gagal Menghapus Data!");
-        	}else{
-        		alert("Data Berhasil di hapus!");
-            	$('#open').modal('toggle');
-       		}
-        }
-    });
-    } else {
-       $('#open').modal('toggle');
-    }
- });
+  
 
   $("#boxs-terbaru").click(function(){
     $('#tbl_jdl').html("Data Gaji Terbaru");
@@ -807,6 +787,19 @@ $(document).on("click", "#setting", function () {
       $("#btn-hapus").attr( "data-gapok", gapok );
       $("#btn-hapus").attr( "data-periode", periode );
       $("#btn-hapus").attr( "data-periode", periode );
+
+      //reset form_add_gaji
+    $('#kehadiran').val('');
+  	$('#ump').val('');
+  	$('#gaji_pokok').val('');
+  	$('#tun_maintenance').val('');
+  	$('#tun_jabatan').val('');
+  	$('#tun_jaga_malam').val('');
+  	$('#tun_lain').val('');
+  	$('#insentive').val('');
+  	$('#overtime').val('');
+  	$('#rapel').val('');
+  	$('#periode_gaji').val('');
     /* $("#btn-edit").attr( "href", "edit-step.php?id_karyawan="+id_karyawan );
     
      */

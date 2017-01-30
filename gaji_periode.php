@@ -42,7 +42,7 @@ $periode_gaji = $_POST['periode_gaji'];
 											</thead>
 											<tbody>
 												<?php 
-											$query_tampil=mysql_query("SELECT */*karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.hire_date, contract.join_date, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, karyawan.education, karyawan.gender, data_karyawan.status, data_karyawan.id_bu*/
+											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, data_karyawan.job_class, bu.nama_cabang, karyawan.marital_status, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, contract.join_date, gaji.kehadiran, gaji.ump, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, gaji.rapel, gaji.insentive, gaji.overtime, data_karyawan.org_name, karyawan.gender, data_karyawan.hire_date, data_karyawan.cabang_induk, data_karyawan.bpjs_ketenagakerjaan, data_karyawan.bpjs_kesehatan, gaji.periode_gaji, data_karyawan.id_bu
 										    FROM gaji 
 										    inner join data_karyawan on gaji.id_karyawan = data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
@@ -85,7 +85,7 @@ $periode_gaji = $_POST['periode_gaji'];
 													<td><?php echo $data['bpjs_ketenagakerjaan']; ?></td>
 													<td><?php echo $data['bpjs_kesehatan']; ?></td>
 													<td><?php echo $data['periode_gaji']; ?></td>
-													<td><button id="pengaturan" data-target="#get_modal" data-toggle="modal" data-id="<?php echo $data['id_karyawan']; ?>" data-nama="<?php echo $data['nama_karyawan']; ?>" data-nik="<?php echo $data['nik']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gear"></i></button></td>
+													<td><button id="pengaturan" data-target="#get_modal" data-toggle="modal" data-idgaji="<?php echo $data['id_gaji']; ?>" data-id="<?php echo $data['id_karyawan']; ?>" data-nama="<?php echo $data['nama_karyawan']; ?>" data-nik="<?php echo $data['nik']; ?>" data-kehadiran="<?php echo $data['kehadiran']; ?>" data-ump="<?php echo $data['ump']; ?>" data-gapok="<?php echo $data['gaji_pokok']; ?>" data-maintenance="<?php echo $data['tun_maintenance']; ?>" data-jabatan="<?php echo $data['tun_jabatan']; ?>" data-jalam="<?php echo $data['tun_jaga_malam']; ?>" data-lain="<?php echo $data['tun_lain']; ?>" data-insentive="<?php echo $data['insentive']; ?>" data-overtime="<?php echo $data['overtime']; ?>" data-rapel="<?php echo $data['rapel']; ?>" data-periode="<?php echo $data['periode_gaji']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gear"></i></button></td>
 												</tr>
 												<?php 
 												$no++;
@@ -320,7 +320,7 @@ $periode_gaji = $_POST['periode_gaji'];
 													<label class="col-sm-4 control-label"></label>
 													<div class="col-sm-8">
 													<input type="hidden" id="input-gaj-id">
-													<button type="submit" id="sbt_edit_gaji" class="btn btn-success">Simpan</button>
+													<button type="submit" id="sbt_edit_gaji" class="btn btn-info">Simpan</button>
 													</div>
 												  </div>				  
 										</div>
@@ -328,7 +328,7 @@ $periode_gaji = $_POST['periode_gaji'];
 								<div class="modal-footer">
 								<button id="btn-gaji" type="button" class="btn btn-success">Tambah Gaji</button>
 								<button id="btn-edit" type="button" class="btn btn-info">Edit</button>
-								<a id="btn-hapus" class="btn btn-danger">Delete</a>
+								<a id="btn-hapus" class="btn btn-danger" onclick="return confirm('Yakin Anda ingin Menghapus data ini ?');">Delete</a>
 								<button type="button" class="btn default" data-dismiss="modal">Close</button>
 								</div>
 							  </div>
@@ -346,8 +346,47 @@ var table3 = $('#example3').DataTable( {
             rightColumns: 1
         }
     });
+/*$("#btn-hapus").click(function(){
+  	var idgaji = $(this).data('idgaji');
+  	var ga_pok = $(this).data('gapok');
+  	var peri_ode = $(this).data('periode');
+    var r = confirm("Yakin Anda ingin Menghapus data ini ?");
+    if (r) {
+        $.ajax({
+        type: "POST",
+        url: "delete-payroll.php",
+        data: {id_gaji:idgaji, gaji_pokok:ga_pok, periode_gaji:peri_ode},
+        cache: false,
+        success: function(msg){
+        	if(msg == '0'){
+        		alert("Gagal Menghapus Data!");
+        	}else{
+        		alert("Data Berhasil di hapus!");
+        		$('#content-gaji').fadeIn();
+            	$('#get_modal').modal('toggle');
+       		}
+        }
+    });
+    } else {
+       $('#pengaturan').modal('toggle');
+    }
+ });*/
 
+var btn_gaji = $("#btn-gaji"),
+      btn_edit = $("#btn-edit"),
+      form_add_gaji = $(".form_add_gaji"),
+      form_edit_gaji = $(".form_edit_gaji");
+     
+  btn_gaji.click(function () { 
+      form_add_gaji.fadeIn();
+      form_edit_gaji.fadeOut();
+  });
+  btn_edit.click(function () { 
+  	  form_add_gaji.fadeOut();
+      form_edit_gaji.fadeIn();
+  });
 $(document).on("click", "#pengaturan", function () {
+     var id_gaji = $(this).data('idgaji');
      var id_karyawan = $(this).data('id');
      var nama_karyawan = $(this).data('nama');
      var nik = $(this).data('nik');
@@ -378,13 +417,19 @@ $(document).on("click", "#pengaturan", function () {
      $(".enik").val( nik );
      $(".nama").val( nama_karyawan);
      $("#input-res-id").attr( "value", id_karyawan );
-      $("#btn-hapus").attr( "data-id", id_karyawan );
-      $("#btn-hapus").attr( "data-gapok", gapok );
-      $("#btn-hapus").attr( "data-periode", periode );
-      $("#btn-hapus").attr( "data-periode", periode );
-    /* $("#btn-edit").attr( "href", "edit-step.php?id_karyawan="+id_karyawan );
-    
-     */
+      $("#btn-hapus").attr( "href", "delete-payroll.php?id_gaji="+id_gaji+"&id_karyawan="+id_karyawan );
+     //reset form_add_gaji
+    $('#kehadiran').val('');
+  	$('#ump').val('');
+  	$('#gaji_pokok').val('');
+  	$('#tun_maintenance').val('');
+  	$('#tun_jabatan').val('');
+  	$('#tun_jaga_malam').val('');
+  	$('#tun_lain').val('');
+  	$('#insentive').val('');
+  	$('#overtime').val('');
+  	$('#rapel').val('');
+  	$('#periode_gaji').val('');
 });
 
 });

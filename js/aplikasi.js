@@ -70,8 +70,6 @@ $(document).ready(function(){
     }
    });
 
-
-
     var table = $('#example1').DataTable( {
         scrollX:        true,
         scrollCollapse: true,
@@ -81,7 +79,6 @@ $(document).ready(function(){
             rightColumns: 1
         }
     });
-
 	
     function validateForm()
     {
@@ -94,7 +91,7 @@ $(document).ready(function(){
             return false;
         }
     }
-	
+
    
   
   $(document).on("click", "#setting", function () {
