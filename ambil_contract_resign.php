@@ -85,7 +85,7 @@ if (!isset($_SESSION['id_bu']) ) {
 											</thead>
 											<tbody>
 											<?php 
-											$query=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, data_karyawan.id_bu, contract.join_date, contract.*
+											$query=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, data_karyawan.id_bu, contract.join1, contract.*
 										    FROM contract 
 										    inner join karyawan on karyawan.id_karyawan = contract.id_karyawan
 										    inner join data_karyawan on karyawan.id_karyawan = data_karyawan.id_karyawan

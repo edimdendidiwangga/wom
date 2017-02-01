@@ -67,12 +67,9 @@ $atas_nama = trim(addslashes(strtoupper($_POST['atas_nama'])));
 $nama_bank = trim(addslashes(strtoupper($_POST['nama_bank'])));
 $no_rek = trim(addslashes($_POST['no_rek']));
 //mutasi&sp
-$mutasi = trim(addslashes(strtoupper($_POST['mutasi'])));
-$mutasi_dari = trim(addslashes(strtoupper($_POST['mutasi_dari'])));
-$mutasi_ke = trim(addslashes(strtoupper($_POST['mutasi_ke'])));
-$sp = $_POST['sp'];
-$tgl_sp = trim($_POST['tgl_sp']);
-$masa_berlaku = trim(addslashes($_POST['masa_berlaku']));
+$mutasi1_dari = trim(addslashes(strtoupper($_POST['mutasi_dari'])));
+$mutasi1_ke = trim(addslashes(strtoupper($_POST['mutasi_ke'])));
+
 $date = date("d-m-y h:i:s");
 //simpan data ke database
 $query = mysql_query("insert into karyawan(id_karyawan, nama_karyawan, religion, birthplace, birthdate, id_type, id_number, education, gender, marital_status, permanent_address, domisili_address, home_phone, mobile_phone, freshgraduate, financial) 
@@ -92,11 +89,11 @@ $query = mysql_query("insert into keluarga (id_keluarga, id_karyawan, mother_nam
 $query = mysql_query("insert into rekening (id_rekening, id_karyawan, atas_nama, nama_bank, no_rek) 
 	values('', '$last_id', '$atas_nama', '$nama_bank', '$no_rek')") or die(mysql_error());
 
-$query = mysql_query("insert into mutasi (id_mutasi, id_karyawan, mutasi, mutasi_dari, mutasi_ke, sp, tgl_sp, masa_berlaku) 
-	values('', '$last_id', '$mutasi', '$mutasi_dari', '$mutasi_ke', '$sp', '$tgl_sp', '$masa_berlaku')") or die(mysql_error());
+$query = mysql_query("insert into mutasi (id_mutasi, id_karyawan, mutasi1_dari, mutasi1_ke) 
+	values('', '$last_id', '$mutasi1_dari', '$mutasi1_ke')") or die(mysql_error());
 //simpan data ke contract
-$query = mysql_query("insert into contract (id_contract, id_karyawan, pkwt1, no_pkwt1, join1, end1, update_contract) 
-	values('', '$last_id', '1', '$no_pkwt', '$join_date', '$end_date', '$date')") or die(mysql_error());
+$query = mysql_query("insert into contract (id_contract, id_karyawan, no_pkwt1, join1, end1, update_contract) 
+	values('', '$last_id', '$no_pkwt', '$join_date', '$end_date', '$date')") or die(mysql_error());
 //simpan data ke gaji
 $query = mysql_query("insert into gaji (id_gaji, id_karyawan, ump, gaji_pokok, tun_maintenance, tun_jabatan, tun_jaga_malam, tun_lain, insentive, overtime, kehadiran, rapel, update_gaji) 
 	values('', '$last_id', '$ump', '$gaji_pokok', '$tun_maintenance', '$tun_jabatan', '$tun_jaga_malam', '$tun_lain', '$insentive', '$overtime', '$kehadiran', '$rapel', '$date')") or die(mysql_error());

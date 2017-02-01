@@ -20,16 +20,11 @@
 								<span class="selected"></span>
 								</a>					
 							</li>
-							<li class="has-sub">
-								<a href="javascript:;" class="">
-								<i class="fa  fa-dollar fa-fw"></i> <span class="menu-text">Payroll</span>
-								<span class="arrow"></span>
-								</a>
-								<ul class="sub">
-									<li><a class="" href="payroll.php"><span class="sub-menu-text">Payroll Terbaru</span></a></li>
-									<li><a class="" href="gaji-history.php"><span class="sub-menu-text">Payroll Per Periode</span></a></li>
-									
-								</ul>
+							<li>
+								<a href="payroll.php">
+								<i class="fa fa-dollar fa-fw"></i> <span class="menu-text">Payroll</span>
+								<span class="selected"></span>
+								</a>					
 							</li>
 							
 							<li>
@@ -45,8 +40,14 @@
 								</a>					
 							</li>
 							<li>
-								<a href="mutasi-sp.php">
-								<i class="fa fa-shield fa-fw"></i> <span class="menu-text">Mutasi & SP</span>
+								<a href="mutasi.php">
+								<i class="fa fa-plane fa-fw"></i> <span class="menu-text">Mutasi</span>
+								<span class="selected"></span>
+								</a>					
+							</li>
+							<li>
+								<a href="sp.php">
+								<i class="fa fa-shield fa-fw"></i> <span class="menu-text">SP</span>
 								<span class="selected"></span>
 								</a>					
 							</li>
