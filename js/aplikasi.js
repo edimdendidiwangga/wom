@@ -1,4 +1,14 @@
 $(document).ready(function(){
+  var table = $('#example1').DataTable( {
+        scrollX:        true,
+        scrollCollapse: true,
+        paging:         true,
+        fixedColumns:   {
+            leftColumns: 3,
+            rightColumns: 1
+        }
+    });
+  
   $("#boxs-resign").click(function(){
     $('#tbl_jdl').html("Data Karyawan Resign");
     $.ajax({
@@ -9,77 +19,77 @@ $(document).ready(function(){
         }
     });
   });
+
   $("#boxs-active").click(function(){
     $('#tbl_jdl').html("Data Karyawan Active");
   });
 
   $("#btn-hapus").click(function(){
-  	var id_krywn = $(this).data('id');
+    var id_krywn = $(this).data('id');
+    var tableA = $("#example1").DataTable();
     var r = confirm("Yakin Anda ingin Menghapus data ini ?");
     if (r) {
-        $.ajax({
-        type: "POST",
-        url: "delete-step.php",
-        data: "id_karyawan="+id_krywn,
-        cache: false,
-        success: function(msg){
-        	if(msg == '0'){
-        		alert("Gagal Menghapus Data!");
-        	}else{
-            	$('#content_karyawan').html(msg);
-            	$('#open').modal('toggle');
-       		}
-        }
-    });
+      $.ajax({
+          type: "POST",
+          url: "delete-step.php",
+          data: "id_karyawan="+id_krywn,
+          cache: false,
+          success: function(msg){
+            if(msg == '0'){
+              alert("Gagal Menghapus Data!");
+            }else{
+                $('.box-resign').html(msg);
+                $("#karyawan_"+id_krywn).fadeOut();
+                $('#open').modal('toggle');
+              tableA.destroy();
+              tableA = $('#example1').DataTable( {
+              scrollX:        true,
+              scrollCollapse: true,
+              paging:         true
+              });
+            }
+          }
+      });
+       
     } else {
        $('#open').modal('toggle');
     }
- });
 
+ });
 
   $("#sbt-resign").click(function(){
     var id_kw = $('#input-res-id').val();
-  	var tgl_res = $('#tgl_metu').val();
-  	var tableB = $("#example2").DataTable();
+    var tgl_res = $('#tgl_metu').val();
+    var tableB = $("#example1").DataTable();
     if(tgl_res == null || tgl_res == '' || tgl_res == undefined) {
        $(".error-msg").animate({opacity: "1"}, 400);
             return false;
     }else{
-  	 $.ajax({
-    	type: "POST",
+     $.ajax({
+      type: "POST",
         url: "update-resign.php",
         data: { id_karyawan: id_kw, quit_date : tgl_res },
         cache: false,
         success: function(msg){
-        	if(msg == '0'){
-        		alert("Gagal Memindahkan ke Data Resign!");
-        	}else{
-	            $('#content_karyawan').html(msg);
-	            $("#employee_"+id_kw).fadeIn();
-	            $('#open').modal('toggle');
-        		tableB.destroy();
-        		tableB = $('#example2').DataTable( {
-		        scrollX:        true,
-		        scrollCollapse: true,
-		        paging:         true
-		        });
-       		}
-        	
+          if(msg == '0'){
+            alert("Gagal Memindahkan ke Data Resign!");
+          }else{
+              $('.box-resign').html(msg);
+              $("#karyawan_"+id_kw).fadeOut();
+              $('#open').modal('toggle');
+            tableB.destroy();
+            tableB = $('#example1').DataTable( {
+            scrollX:        true,
+            scrollCollapse: true,
+            paging:         true
+            });
+          }
+          
         }
     });
     }
    });
 
-    var table = $('#example1').DataTable( {
-        scrollX:        true,
-        scrollCollapse: true,
-        paging:         true,
-        fixedColumns:   {
-            leftColumns: 3,
-            rightColumns: 1
-        }
-    });
-	
     function validateForm()
     {
         function hasExtension(inputID, exts) {
@@ -91,8 +101,6 @@ $(document).ready(function(){
             return false;
         }
     }
-
-   
   
   $(document).on("click", "#setting", function () {
      var id_karyawan = $(this).data('id');

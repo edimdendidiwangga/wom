@@ -60,14 +60,14 @@ $query = mysql_query("update karyawan set update_gaji='$last_update_gaji' where 
 												</tr>
 											</thead>
 											<tbody>
-												<?php 
-											$query_tampil=mysql_query("SELECT */*karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.hire_date, contract.join_date, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, karyawan.education, karyawan.gender, data_karyawan.status, data_karyawan.id_bu*/
+											<?php 
+											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, data_karyawan.job_class, bu.nama_cabang, karyawan.marital_status, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, gaji.kehadiran, gaji.ump, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, gaji.rapel, gaji.insentive, gaji.overtime, data_karyawan.org_name, karyawan.gender, data_karyawan.hire_date, data_karyawan.cabang_induk, data_karyawan.bpjs_ketenagakerjaan, data_karyawan.bpjs_kesehatan, gaji.periode_gaji, data_karyawan.id_bu, contract.join1
 										    FROM gaji 
 										    inner join data_karyawan on gaji.id_karyawan = data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
 										    inner join karyawan on gaji.update_gaji = karyawan.update_gaji
-										    inner join contract on contract.update_contract = karyawan.update_contract
-										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']."
+										    inner join contract on contract.id_karyawan = contract.id_karyawan
+										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." 
 										    Order by karyawan.id_karyawan DESC");
 											if ($query_tampil === FALSE) {
 											    die(mysql_error());
@@ -86,7 +86,7 @@ $query = mysql_query("update karyawan set update_gaji='$last_update_gaji' where 
 													<td><?php echo $data['virtual_nik']; ?></td>
 													<td><?php echo "BU ".$data['bu']; ?></td>
 													<td><?php if($data['status']=="1"){echo"Active";}if($data['status']=="2"){echo"Non Active";}?></td>
-													<td><?php echo $data['join_date']; ?></td>
+													<td><?php echo $data['join1']; ?></td>
 													<td><?php echo $data['kehadiran']; ?></td>
 													<td><?php echo $data['ump']; ?></td>
 													<td><?php echo $data['gaji_pokok']; ?></td>
@@ -110,7 +110,7 @@ $query = mysql_query("update karyawan set update_gaji='$last_update_gaji' where 
 												$no++;
 												} 
 												?>
-											</tbody>
+												</tbody>
 											<tfoot>
 												<tr>
 													<th>NO.</th>

@@ -183,12 +183,12 @@ if (!isset($_SESSION['id_bu']) ) {
 											</thead>
 											<tbody>
 											<?php 
-											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, data_karyawan.job_class, bu.nama_cabang, karyawan.marital_status, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, contract.join_date, gaji.kehadiran, gaji.ump, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, gaji.rapel, gaji.insentive, gaji.overtime, data_karyawan.org_name, karyawan.gender, data_karyawan.hire_date, data_karyawan.cabang_induk, data_karyawan.bpjs_ketenagakerjaan, data_karyawan.bpjs_kesehatan, gaji.periode_gaji, data_karyawan.id_bu
+											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, data_karyawan.job_class, bu.nama_cabang, karyawan.marital_status, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, gaji.kehadiran, gaji.ump, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, gaji.rapel, gaji.insentive, gaji.overtime, data_karyawan.org_name, karyawan.gender, data_karyawan.hire_date, data_karyawan.cabang_induk, data_karyawan.bpjs_ketenagakerjaan, data_karyawan.bpjs_kesehatan, gaji.periode_gaji, data_karyawan.id_bu, contract.join1
 										    FROM gaji 
 										    inner join data_karyawan on gaji.id_karyawan = data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
 										    inner join karyawan on gaji.update_gaji = karyawan.update_gaji
-										    inner join contract on contract.update_contract = karyawan.update_contract
+										    inner join contract on contract.id_karyawan = contract.id_karyawan
 										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." 
 										    Order by karyawan.id_karyawan DESC");
 											if ($query_tampil === FALSE) {
@@ -208,7 +208,7 @@ if (!isset($_SESSION['id_bu']) ) {
 													<td><?php echo $data['virtual_nik']; ?></td>
 													<td><?php echo "BU ".$data['bu']; ?></td>
 													<td><?php if($data['status']=="1"){echo"Active";}if($data['status']=="2"){echo"Non Active";}?></td>
-													<td><?php echo $data['join_date']; ?></td>
+													<td><?php echo $data['join1']; ?></td>
 													<td><?php echo $data['kehadiran']; ?></td>
 													<td><?php echo $data['ump']; ?></td>
 													<td><?php echo $data['gaji_pokok']; ?></td>
@@ -304,7 +304,7 @@ if (!isset($_SESSION['id_bu']) ) {
 				  <div class="modal-content">
 					<div class="modal-header">
 					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title">Form Tambah Gaji, Edit & Delete</h4>
+					  <h4 class="modal-title">Form Tambah Gaji</h4>
 					</div>
 					<div class="modal-body">
 					<div class="form-horizontal form_add_gaji">
@@ -546,9 +546,6 @@ if (!isset($_SESSION['id_bu']) ) {
 		});
 
   $(document).ready(function(){
-  	$('#open').on('hidden.bs.modal', function () {
-    $(this).find('.form_add_gaji').trigger('reset');
-})
 
   $("#boxs-periode").click(function(){
     $('#tbl_jdl').html("Data Gaji Per Periode");
@@ -560,8 +557,6 @@ if (!isset($_SESSION['id_bu']) ) {
         }
     });
   });
-
-  
 
   $("#boxs-terbaru").click(function(){
     $('#tbl_jdl').html("Data Gaji Terbaru");
@@ -730,16 +725,19 @@ if (!isset($_SESSION['id_bu']) ) {
 
   var btn_gaji = $("#btn-gaji"),
       btn_edit = $("#btn-edit"),
+      modal_title = $(".modal-title"),
       form_add_gaji = $(".form_add_gaji"),
       form_edit_gaji = $(".form_edit_gaji");
      
   btn_gaji.click(function () { 
       form_add_gaji.fadeIn();
       form_edit_gaji.fadeOut();
+      modal_title.html("Form Tambah Gaji");
   });
   btn_edit.click(function () { 
   	  form_add_gaji.fadeOut();
       form_edit_gaji.fadeIn();
+      modal_title.html("Form Edit Gaji");
   });
   
   var table = $('#example1').DataTable( {

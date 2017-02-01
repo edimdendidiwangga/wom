@@ -47,41 +47,10 @@ if (!isset($_SESSION['id_bu']) ) {
 </head>
 <body>
 	<?php include 'header.php';?>
-	
 	<!-- PAGE -->
 	<section id="page">
 				<?php include 'menu.php';?>
 		<div id="main-content">
-			<!-- SAMPLE BOX CONFIGURATION MODAL FORM-->
-			  <!-- Modal for Edit button -->
-    
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				  <div class="modal-content">
-					<div class="modal-header">
-					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title">Import Database</h4>
-					</div>
-					<div class="modal-body">
-					  <div class="form-group">
-               <form class="form-control" name="myForm" id="myForm" onSubmit="return validateForm()" action="index.php" method="post" enctype="multipart/form-data">
-    			<input type="file" id="filepegawaiall" name="filepegawaiall" />
-  	
-			<!--  <input type="checkbox" name="drop" value="1" />  -->
-			<br>
-			<p>File Harus Berekstensi .xls</p> 
-              </div>
-          
-					</div>
-					<div class="modal-footer">
-					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					 <input class="btn btn-warning" type="submit" name="submit" value="Import" />
-					 </form>
-
-					</div>
-				  </div>
-				</div>
-			  </div> 
 			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
 			<div class="modal fade" id="export-database" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
@@ -300,18 +269,23 @@ if (!isset($_SESSION['id_bu']) ) {
 											</thead>
 											<tbody>
 											<?php 
-											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, contract.join_date, contract.end_date, contract.no_pkwt, data_karyawan.status, data_karyawan.id_bu
-										    FROM karyawan 
-										    inner join data_karyawan on karyawan.id_karyawan=data_karyawan.id_karyawan
+											$query=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, data_karyawan.id_bu, contract.*
+										    FROM contract 
+										    inner join karyawan on karyawan.id_karyawan = contract.id_karyawan
+										    inner join data_karyawan on karyawan.id_karyawan = data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
-										    inner join contract on contract.update_contract = karyawan.update_contract
-										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']."
+										    
+										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." 
+										   group by karyawan.nama_karyawan, data_karyawan.nik, data_karyawan.virtual_nik
 										    Order by karyawan.id_karyawan DESC");
-											if ($query_tampil === FALSE) {
+
+											if ($query === FALSE) {
 											    die(mysql_error());
 											}
+											
 											$no=1;
-											while ($data = mysql_fetch_array($query_tampil)) {
+											while ($data = mysql_fetch_array($query)) {
+												
 											?>
 												<tr class="gradeX" id="karyawan_<?php echo $data['id_karyawan']; ?>">
 													<td><?php echo $no; ?></td>
@@ -321,52 +295,52 @@ if (!isset($_SESSION['id_bu']) ) {
 													<td class="center"><?php echo $data['location']; ?></td>
 													<td class="center hidden-xs"><?php echo $data['nik']; ?></td>
 													<td><?php echo $data['virtual_nik']; ?></td>
-													<td><?php echo "BU ".$data['bu']; ?></td>
-													<td><?php echo $data['join_date']; ?></td>
-													<td><?php echo $data['end_date']; ?></td>
-													<td><?php echo $data['no_pkwt']; ?></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
+													<td><?php echo "BU ".$data['bu']; ?></td>         
+													<td><?php echo $data['join1']; ?></td>
+													<td><?php echo $data['end1']; ?></td>
+													<td><?php echo $data['no_pkwt1']; ?></td> 
+													<td><?php echo $data['join2']; ?></td>
+													<td><?php echo $data['end2']; ?></td>
+													<td><?php echo $data['no_pkwt2']; ?></td> 
+													<td><?php echo $data['join3']; ?></td>
+													<td><?php echo $data['end3']; ?></td>
+													<td><?php echo $data['no_pkwt3']; ?></td>
+													<td><?php echo $data['join4']; ?></td>
+													<td><?php echo $data['end4']; ?></td>
+													<td><?php echo $data['no_pkwt4']; ?></td>
+													<td><?php echo $data['join5']; ?></td>
+													<td><?php echo $data['end5']; ?></td>
+													<td><?php echo $data['no_pkwt5']; ?></td>
+													<td><?php echo $data['join6']; ?></td>
+													<td><?php echo $data['end6']; ?></td>
+													<td><?php echo $data['no_pkwt6']; ?></td>
+													<td><?php echo $data['join7']; ?></td>
+													<td><?php echo $data['end7']; ?></td>
+													<td><?php echo $data['no_pkwt7']; ?></td>
+													<td><?php echo $data['join8']; ?></td>
+													<td><?php echo $data['end8']; ?></td>
+													<td><?php echo $data['no_pkwt8']; ?></td>
+													<td><?php echo $data['join9']; ?></td>
+													<td><?php echo $data['end9']; ?></td>
+													<td><?php echo $data['no_pkwt9']; ?></td>
+													<td><?php echo $data['join10']; ?></td>
+													<td><?php echo $data['end10']; ?></td>
+													<td><?php echo $data['no_pkwt10']; ?></td>
+													<td><?php echo $data['join11']; ?></td>
+													<td><?php echo $data['end11']; ?></td>
+													<td><?php echo $data['no_pkwt11']; ?></td>
+													<td><?php echo $data['join12']; ?></td>
+													<td><?php echo $data['end12']; ?></td>
+													<td><?php echo $data['no_pkwt12']; ?></td>
+													<td><?php echo $data['join13']; ?></td>
+													<td><?php echo $data['end13']; ?></td>
+													<td><?php echo $data['no_pkwt13']; ?></td>
+													<td><?php echo $data['join14']; ?></td>
+													<td><?php echo $data['end14']; ?></td>
+													<td><?php echo $data['no_pkwt14']; ?></td>
+													<td><?php echo $data['join15']; ?></td>
+													<td><?php echo $data['end15']; ?></td>
+													<td><?php echo $data['no_pkwt15']; ?></td>
 													
 													<td><button id="setting" data-target="#open" data-toggle="modal" data-id="<?php echo $data['id_karyawan']; ?>" data-nama="<?php echo $data['nama_karyawan']; ?>" data-nik="<?php echo $data['nik']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gear"></i></button></td>
 												</tr>
@@ -466,7 +440,6 @@ if (!isset($_SESSION['id_bu']) ) {
 									</div>
 								</div>
 								<!-- /Tabs -->
-								
 							</div>
 						</div>
 						<!-- /EXPORT TABLES -->
@@ -486,7 +459,7 @@ if (!isset($_SESSION['id_bu']) ) {
 				  <div class="modal-content">
 					<div class="modal-header">
 					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title">Form Resign, Edit & Delete</h4>
+					  <h4 class="modal-title">Form Update Contract</h4>
 					</div>
 					<div class="modal-body">
 					<div class="form-horizontal">
@@ -497,26 +470,50 @@ if (!isset($_SESSION['id_bu']) ) {
 													</div>
 												  </div>
 												  <div class="form-group">
-													<label class="col-sm-4 control-label">Tgl Resign</label>
+													<label class="col-sm-4 control-label">PKWT</label>
 													<div class="col-sm-8">
-													  <input type="text" id="tgl_metu" class="form-control" placeholder="dd-mm-yyyy" required>
-													  <div class="error-msg" style="opacity:0; color: red;">Tgl Resign Tidak boleh kosong</div>
+													  <select name="pkwt" id="pkwt" class="form-control" required>
+															 <option value="" disabled="" selected="" style="display:none" ;="">Pilih PKWT</option>
+															 <?php
+															 for($i=1;$i<=15;$i++){ ?>
+															 	<option value="<?php echo $i; ?>"><?php echo "PKWT ".$i; ?></option>
+															 <?php } ?>
+														</select>
+													  <div class="error-pkwt" style="opacity:1; color: red;display: none;">PKWT Tidak boleh kosong</div>
+													</div>
+												  </div>
+												  <div class="form-group">
+													<label class="col-sm-4 control-label">NO PKWT</label>
+													<div class="col-sm-8">
+													  <input type="text" id="no_pkwt" name="no_pkwt" class="form-control" placeholder="Isikan NO PKWT">
+													  <div class="error-nopkwt" style="opacity:1; color: red; display: none;">No PKWT Harus Diisi</div>
+													</div>
+												  </div>
+												  <div class="form-group">
+													<label class="col-sm-4 control-label">Start Date</label>
+													<div class="col-sm-8">
+													  <input type="text" name="start_date" id="start_date" class="form-control" placeholder="Isikan Tgl Awal Kontrak">
+													  <div class="error-start" style="opacity:1; color: red; display: none;">Tgl Awal Kontrak Harus Diisi</div>
+													</div>
+												  </div>
+												  <div class="form-group">
+													<label class="col-sm-4 control-label">End Date</label>
+													<div class="col-sm-8">
+													  <input type="text" name="start_date" id="end_date" class="form-control" placeholder="Isikan Tgl Awal Kontrak">
+													  <div class="error-end" style="opacity:1; color: red; display: none;">Tgl Akhir Kontrak Harus Diisi</div>
 													</div>
 												  </div>
 												  <div class="form-group">
 													<label class="col-sm-4 control-label"></label>
 													<div class="col-sm-8">
 													<input type="hidden" id="input-res-id">
-													<button type="submit" id="sbt-resign" class="btn btn-info">Submit</button>
+													<button type="submit" id="sbt-contract" class="btn btn-info">UPDATE</button>
 													</div>
 												  </div>
 										</div>
 								</div>
 								<div class="modal-footer">
-								<button id="btn-resign" type="button" class="btn btn-warning">Resign</button>
-								<a id="btn-edit" class="btn btn-info" onclick="return confirm('Yakin Anda ingin Mengubah data ini ?')">Edit</a>
-								<a id="btn-hapus" class="btn btn-danger">Delete</a>
-								<button type="button" class="btn " data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 								</div>
 							  </div>
 							</div>
@@ -549,7 +546,7 @@ if (!isset($_SESSION['id_bu']) ) {
 	<!-- CUSTOM SCRIPT -->
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger.min.css" />
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger-theme-flat.min.css" />
-	<script src="js/aplikasi.js"></script>
+	<script src="js/app_contract.js"></script>
 	<script src="js/script.js"></script>
 	<script>
 		jQuery(document).ready(function() {		

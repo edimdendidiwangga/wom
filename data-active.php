@@ -219,7 +219,6 @@ if (!isset($_SESSION['id_bu']) ) {
 										  </ul>
 								<div class="tab-content">
 								<div class="tab-pane fade in active" id="box_tab1">
-											
 									<a href="index-step.php" class="btn btn-info"><i class="fa fa-plus-circle"></i> Tambah Data</a>
 									<a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="fa fa-upload"></i> Import</a>
 									<a href="#export-database" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Export</a>
@@ -252,11 +251,11 @@ if (!isset($_SESSION['id_bu']) ) {
 											</thead>
 											<tbody>
 											<?php 
-											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.hire_date, contract.join_date, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, karyawan.education, karyawan.gender, data_karyawan.status, data_karyawan.id_bu
+											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.hire_date, contract.join1, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, karyawan.education, karyawan.gender, data_karyawan.status, data_karyawan.id_bu
 										    FROM karyawan 
 										    inner join data_karyawan on karyawan.id_karyawan=data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
-										    inner join contract on contract.update_contract = karyawan.update_contract
+										    inner join contract on contract.id_karyawan = karyawan.id_karyawan
 										    inner join gaji on gaji.update_gaji = karyawan.update_gaji
 										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']."
 										    Order by karyawan.id_karyawan DESC");
@@ -276,7 +275,7 @@ if (!isset($_SESSION['id_bu']) ) {
 													<td><?php echo $data['virtual_nik']; ?></td>
 													<td><?php echo "BU ".$data['bu']; ?></td>
 													<td><?php echo $data['hire_date']; ?></td>
-													<td><?php echo $data['join_date']; ?></td>
+													<td><?php echo $data['join1']; ?></td>
 													<td><?php echo $data['gaji_pokok']; ?></td>
 													<td><?php echo $data['tun_maintenance']; ?></td>
 													<td><?php echo $data['tun_jabatan']; ?></td>
@@ -417,15 +416,13 @@ if (!isset($_SESSION['id_bu']) ) {
 	<!-- CUSTOM SCRIPT -->
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger.min.css" />
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger-theme-flat.min.css" />
-	<script src="js/aplikasi.js"></script>
+	 <script src="js/aplikasi.js"></script> 
 	<script src="js/script.js"></script>
 	<script>
 		jQuery(document).ready(function() {		
 			App.setPage("dynamic_table");  //Set current page
 			App.init(); //Initialise plugins and elements
 		});
-
 	</script>
-	
-</body>
+	</body>
 </html>

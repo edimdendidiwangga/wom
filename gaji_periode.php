@@ -42,12 +42,12 @@ $periode_gaji = $_POST['periode_gaji'];
 											</thead>
 											<tbody>
 												<?php 
-											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, data_karyawan.job_class, bu.nama_cabang, karyawan.marital_status, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, contract.join_date, gaji.kehadiran, gaji.ump, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, gaji.rapel, gaji.insentive, gaji.overtime, data_karyawan.org_name, karyawan.gender, data_karyawan.hire_date, data_karyawan.cabang_induk, data_karyawan.bpjs_ketenagakerjaan, data_karyawan.bpjs_kesehatan, gaji.periode_gaji, data_karyawan.id_bu
+											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, data_karyawan.job_class, bu.nama_cabang, karyawan.marital_status, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, gaji.kehadiran, gaji.id_gaji, gaji.ump, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, gaji.rapel, gaji.insentive, gaji.overtime, data_karyawan.org_name, karyawan.gender, data_karyawan.hire_date, data_karyawan.cabang_induk, data_karyawan.bpjs_ketenagakerjaan, data_karyawan.bpjs_kesehatan, gaji.periode_gaji, data_karyawan.id_bu, contract.join1
 										    FROM gaji 
 										    inner join data_karyawan on gaji.id_karyawan = data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
 										    inner join karyawan on gaji.id_karyawan = karyawan.id_karyawan
-										    inner join contract on contract.id_karyawan = karyawan.id_karyawan
+										    inner join contract on contract.id_karyawan = contract.id_karyawan
 										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." && gaji.periode_gaji = '".$periode_gaji."'
 										    Order by karyawan.id_karyawan DESC");
 											if ($query_tampil === FALSE) {
@@ -67,7 +67,7 @@ $periode_gaji = $_POST['periode_gaji'];
 													<td><?php echo $data['virtual_nik']; ?></td>
 													<td><?php echo "BU ".$data['bu']; ?></td>
 													<td><?php if($data['status']=="1"){echo"Active";}if($data['status']=="2"){echo"Non Active";}?></td>
-													<td><?php echo $data['join_date']; ?></td>
+													<td><?php echo $data['join1']; ?></td>
 													<td><?php echo $data['kehadiran']; ?></td>
 													<td><?php echo $data['ump']; ?></td>
 													<td><?php echo $data['gaji_pokok']; ?></td>
@@ -131,7 +131,7 @@ $periode_gaji = $_POST['periode_gaji'];
 				  <div class="modal-content">
 					<div class="modal-header">
 					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title">Form Tambah Gaji, Edit & Delete</h4>
+					  <h4 class="modal-title">Form Tambah Gaji</h4>
 					</div>
 					<div class="modal-body">
 					<div class="form-horizontal form_add_gaji">
@@ -346,45 +346,24 @@ var table3 = $('#example3').DataTable( {
             rightColumns: 1
         }
     });
-/*$("#btn-hapus").click(function(){
-  	var idgaji = $(this).data('idgaji');
-  	var ga_pok = $(this).data('gapok');
-  	var peri_ode = $(this).data('periode');
-    var r = confirm("Yakin Anda ingin Menghapus data ini ?");
-    if (r) {
-        $.ajax({
-        type: "POST",
-        url: "delete-payroll.php",
-        data: {id_gaji:idgaji, gaji_pokok:ga_pok, periode_gaji:peri_ode},
-        cache: false,
-        success: function(msg){
-        	if(msg == '0'){
-        		alert("Gagal Menghapus Data!");
-        	}else{
-        		alert("Data Berhasil di hapus!");
-        		$('#content-gaji').fadeIn();
-            	$('#get_modal').modal('toggle');
-       		}
-        }
-    });
-    } else {
-       $('#pengaturan').modal('toggle');
-    }
- });*/
 
 var btn_gaji = $("#btn-gaji"),
       btn_edit = $("#btn-edit"),
+      modal_title = $(".modal-title"),
       form_add_gaji = $(".form_add_gaji"),
       form_edit_gaji = $(".form_edit_gaji");
      
   btn_gaji.click(function () { 
       form_add_gaji.fadeIn();
       form_edit_gaji.fadeOut();
+      modal_title.html("Form Tambah Gaji");
   });
   btn_edit.click(function () { 
   	  form_add_gaji.fadeOut();
       form_edit_gaji.fadeIn();
+      modal_title.html("Form Edit Gaji");
   });
+
 $(document).on("click", "#pengaturan", function () {
      var id_gaji = $(this).data('idgaji');
      var id_karyawan = $(this).data('id');
@@ -417,7 +396,7 @@ $(document).on("click", "#pengaturan", function () {
      $(".enik").val( nik );
      $(".nama").val( nama_karyawan);
      $("#input-res-id").attr( "value", id_karyawan );
-      $("#btn-hapus").attr( "href", "delete-payroll.php?id_gaji="+id_gaji+"&id_karyawan="+id_karyawan );
+      $("#btn-hapus").attr( "href", "delete-payroll.php?id_gaji="+id_gaji );
      //reset form_add_gaji
     $('#kehadiran').val('');
   	$('#ump').val('');

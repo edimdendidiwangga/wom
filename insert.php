@@ -58,7 +58,7 @@ $chile2_birthdate = trim($_POST['chile2_birthdate']);
 $chile3_name = trim(addslashes(ucwords($_POST['chile3_name'])));
 $chile3_birthdate = trim($_POST['chile3_birthdate']);
 //contract
-$pkwt = $_POST['pkwt'];
+/*$pkwt = $_POST['pkwt'];*/
 $no_pkwt = trim(addslashes(strtoupper($_POST['no_pkwt'])));
 $join_date = trim($_POST['join_date']);
 $end_date = trim($_POST['end_date']);
@@ -95,8 +95,8 @@ $query = mysql_query("insert into rekening (id_rekening, id_karyawan, atas_nama,
 $query = mysql_query("insert into mutasi (id_mutasi, id_karyawan, mutasi, mutasi_dari, mutasi_ke, sp, tgl_sp, masa_berlaku) 
 	values('', '$last_id', '$mutasi', '$mutasi_dari', '$mutasi_ke', '$sp', '$tgl_sp', '$masa_berlaku')") or die(mysql_error());
 //simpan data ke contract
-$query = mysql_query("insert into contract (id_contract, id_karyawan, pkwt, no_pkwt, join_date, end_date, update_contract) 
-	values('', '$last_id', '$pkwt', '$no_pkwt', '$join_date', '$end_date', '$date')") or die(mysql_error());
+$query = mysql_query("insert into contract (id_contract, id_karyawan, pkwt1, no_pkwt1, join1, end1, update_contract) 
+	values('', '$last_id', '1', '$no_pkwt', '$join_date', '$end_date', '$date')") or die(mysql_error());
 //simpan data ke gaji
 $query = mysql_query("insert into gaji (id_gaji, id_karyawan, ump, gaji_pokok, tun_maintenance, tun_jabatan, tun_jaga_malam, tun_lain, insentive, overtime, kehadiran, rapel, update_gaji) 
 	values('', '$last_id', '$ump', '$gaji_pokok', '$tun_maintenance', '$tun_jabatan', '$tun_jaga_malam', '$tun_lain', '$insentive', '$overtime', '$kehadiran', '$rapel', '$date')") or die(mysql_error());
