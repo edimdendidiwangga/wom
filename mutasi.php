@@ -51,49 +51,7 @@ if (!isset($_SESSION['id_bu']) ) {
 	<section id="page">
 				<?php include 'menu.php';?>
 		<div id="main-content">
-			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
-			<div class="modal fade" id="export-database" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				  <div class="modal-content">
-					<div class="modal-header">
-					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title"></h4>
-					</div>
-					<div class="modal-body">
-					<div class="box border primary">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Export Database</h4>
-												<div class="tools hidden-xs">
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													<a href="javascript:;" class="collapse">
-														<i class="fa fa-chevron-up"></i>
-													</a>
-												</div>
-											</div>
-											<div class="box-body big">
-											<form action="laporan-database.php" method="POST" class="form-horizontal" role="form">
-												<div class="row">
-												<label class="col-xs-3">Data Bulan</label>
-												  <div class="col-xs-6">
-													<input type="text" id="dari" name="from" class="form-control" required>
-														<label for="to">to</label>
-														<input type="text" id="ke" name="to" class="form-control" required>
-												  </div>
-												</div>
-											</div>
-										</div>
-					 </div>
-					<div class="modal-footer">
-					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					 <input class="btn btn-primary" type="submit" name="submit" value="Export" />
-					</form>
-					</div>
-				  </div>
-				</div>
-			  </div> 
-			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
+			
 			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
 			<div class="modal fade" id="export-pengiriman" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
@@ -184,7 +142,7 @@ if (!isset($_SESSION['id_bu']) ) {
 										<div class="tabbable header-tabs">
 										  <ul class="nav nav-tabs">
 											 <li id="boxs-resign"><a href="#box_tab2" data-toggle="tab"><i class="fa fa-users"></i> <span class="hidden-inline-mobile">Data Mutasi Resign</span></a></li>
-											 <li class="active" id="boxs-active"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-laptop"></i> <span class="hidden-inline-mobile">Data Contract Active</span></a></li>
+											 <li class="active" id="boxs-active"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-laptop"></i> <span class="hidden-inline-mobile">Data Mutasi Active</span></a></li>
 										  </ul>
 								<div class="tab-content">
 								<div class="tab-pane fade in active" id="box_tab1">
@@ -222,10 +180,8 @@ if (!isset($_SESSION['id_bu']) ) {
 										    inner join karyawan on karyawan.id_karyawan = mutasi.id_karyawan
 										    inner join data_karyawan on karyawan.id_karyawan = data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
-										    
 										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." 
-										   
-										    Order by karyawan.id_karyawan DESC");
+										   Order by karyawan.id_karyawan DESC");
 
 											if ($query === FALSE) {
 											    die(mysql_error());
@@ -316,7 +272,7 @@ if (!isset($_SESSION['id_bu']) ) {
 				  <div class="modal-content">
 					<div class="modal-header">
 					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title">Form Update Contract</h4>
+					  <h4 class="modal-title">Form Update Mutasi</h4>
 					</div>
 					<div class="modal-body">
 					<div class="form-horizontal">
@@ -329,35 +285,28 @@ if (!isset($_SESSION['id_bu']) ) {
 												  <div class="form-group">
 													<label class="col-sm-4 control-label">PKWT</label>
 													<div class="col-sm-8">
-													  <select name="pkwt" id="pkwt" class="form-control" required>
-															 <option value="" disabled="" selected="" style="display:none" ;="">Pilih PKWT</option>
+													  <select name="mutasi" id="mutasi" class="form-control" required>
+															 <option value="" disabled="" selected="" style="display:none" ;="">Pilih Mutasi</option>
 															 <?php
-															 for($i=1;$i<=15;$i++){ ?>
-															 	<option value="<?php echo $i; ?>"><?php echo "PKWT ".$i; ?></option>
+															 for($i=1;$i<=3;$i++){ ?>
+															 	<option value="<?php echo $i; ?>"><?php echo "Muitasi ".$i; ?></option>
 															 <?php } ?>
 														</select>
-													  <div class="error-pkwt" style="opacity:1; color: red;display: none;">PKWT Tidak boleh kosong</div>
+													  <div class="error-mutasi" style="opacity:1; color: red;display: none;">Mutasi Tidak boleh kosong</div>
 													</div>
 												  </div>
 												  <div class="form-group">
-													<label class="col-sm-4 control-label">NO PKWT</label>
+													<label class="col-sm-4 control-label">Mutasi ( Dari )</label>
 													<div class="col-sm-8">
-													  <input type="text" id="no_pkwt" name="no_pkwt" class="form-control" placeholder="Isikan NO PKWT">
-													  <div class="error-nopkwt" style="opacity:1; color: red; display: none;">No PKWT Harus Diisi</div>
+													  <input type="text" name="dari" id="dari" class="form-control" placeholder="Isikan Mutasi Dari">
+													  <div class="error-dari" style="opacity:1; color: red; display: none;">Mutasi Dari Harus Diisi</div>
 													</div>
 												  </div>
 												  <div class="form-group">
-													<label class="col-sm-4 control-label">Start Date</label>
+													<label class="col-sm-4 control-label">Mutasi ( Ke )</label>
 													<div class="col-sm-8">
-													  <input type="text" name="start_date" id="start_date" class="form-control" placeholder="Isikan Tgl Awal Kontrak">
-													  <div class="error-start" style="opacity:1; color: red; display: none;">Tgl Awal Kontrak Harus Diisi</div>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label">End Date</label>
-													<div class="col-sm-8">
-													  <input type="text" name="start_date" id="end_date" class="form-control" placeholder="Isikan Tgl Awal Kontrak">
-													  <div class="error-end" style="opacity:1; color: red; display: none;">Tgl Akhir Kontrak Harus Diisi</div>
+													  <input type="text" name="ke" id="ke" class="form-control" placeholder="Isikan Mutasi Ke">
+													  <div class="error-ke" style="opacity:1; color: red; display: none;">Mutasi Ke Harus Diisi</div>
 													</div>
 												  </div>
 												  <div class="form-group">
@@ -403,14 +352,91 @@ if (!isset($_SESSION['id_bu']) ) {
 	<!-- CUSTOM SCRIPT -->
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger.min.css" />
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger-theme-flat.min.css" />
-	<script src="js/app_contract.js"></script>
+	<!-- <script src="js/app_contract.js"></script> -->
 	<script src="js/script.js"></script>
 	<script>
 		jQuery(document).ready(function() {		
 			App.setPage("dynamic_table");  //Set current page
 			App.init(); //Initialise plugins and elements
 		});
+		$(document).ready(function(){
+  $("#boxs-resign").click(function(){
+    $('#tbl_jdl').html("Data Mutasi Karyawan Resign");
+    $.ajax({
+        url: "ambil_mutasi_resign.php",
+        cache: false,
+        success: function(msg){
+            $(".box-resign").html(msg);
+        }
+    });
+  });
+  $("#boxs-active").click(function(){
+    $('#tbl_jdl').html("Data Mutasi Karyawan Active");
+  });
 
+ 
+  $("#sbt-contract").click(function(){
+    var id_kw = $('#input-res-id').val();
+    var mut = $('#mutasi').val();
+    var from = $('#dari').val();
+    var to = $('#ke').val();
+    var tableB = $("#example1").DataTable();
+    if(mut == null || mut == '' || mut == undefined) {
+       $(".error-mutasi").fadeIn();
+            return false;
+    }else if(from == null || from == '' || from == undefined) {
+       $(".error-dari").fadeIn();
+            return false;
+    }else if(to == null || to == '' || to == undefined) {
+       $(".error-ke").fadeIn();
+            return false;
+    }
+    else{
+     $.ajax({
+      type: "POST",
+        url: "update-mutasi.php",
+        data: {id_karyawan:id_kw, mutasi: mut, dari : from, ke : to},
+        cache: false,
+        success: function(msg){
+          if(msg == '0'){
+            alert("Gagal Memindahkan ke Data !");
+          }else{
+              $('#content-karyawan').html(msg);
+              $('#open').modal('toggle');
+            tableB.destroy();
+            tableB = $('#example1').DataTable( {
+            scrollX:        true,
+            scrollCollapse: true,
+            paging:         true
+            });
+          }        
+        }
+    });
+    }
+    
+   });
+
+    var table = $('#example1').DataTable( {
+        scrollX:        true,
+        scrollCollapse: true,
+        paging:         true
+       
+    });
+  
+  $(document).on("click", "#setting", function () {
+     var id_karyawan = $(this).data('id');
+     var nama_karyawan = $(this).data('nama');
+     var nik = $(this).data('nik');
+     $("#id_karyawan").html( id_karyawan );
+     $("#nama_karyawan").val( nama_karyawan +" ("+nik+")" );
+     $("#input-res-id").attr( "value", id_karyawan );
+     //reset form_add_gaji
+    $('#mutasi').val('');
+    $('#dari').val('');
+    $('#ke').val('');
+});
+
+});
 	</script>
 	
 </body>

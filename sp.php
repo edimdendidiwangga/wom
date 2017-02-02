@@ -94,49 +94,6 @@ if (!isset($_SESSION['id_bu']) ) {
 				</div>
 			  </div> 
 			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
-			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
-			<div class="modal fade" id="export-pengiriman" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				  <div class="modal-content">
-					<div class="modal-header">
-					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title"></h4>
-					</div>
-					<div class="modal-body">
-					<div class="box border green">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Export Database Interview Pengiriman</h4>
-												<div class="tools hidden-xs">
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													<a href="javascript:;" class="collapse">
-														<i class="fa fa-chevron-up"></i>
-													</a>
-												</div>
-											</div>
-											<div class="box-body big">
-											<form action="laporan-menunggu.php" method="POST" class="form-horizontal" role="form">
-												<div class="row">
-												<label class="col-xs-3">Data Bulan</label>
-												  <div class="col-xs-6">
-													<input type="text" id="dari1" name="from" class="form-control" required>
-														<label for="to">to</label>
-														<input type="text" id="ke1" name="to" class="form-control" required>
-												  </div>
-												</div>
-											</div>
-										</div>
-					 </div>
-					<div class="modal-footer">
-					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					 <input class="btn btn-success" type="submit" name="submit" value="Export" />
-					</form>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
 			<div class="container">
 				<div class="row">
 					<div id="content" class="col-lg-12">
@@ -316,7 +273,7 @@ if (!isset($_SESSION['id_bu']) ) {
 				  <div class="modal-content">
 					<div class="modal-header">
 					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title">Form Update Contract</h4>
+					  <h4 class="modal-title">Form Update SP</h4>
 					</div>
 					<div class="modal-body">
 					<div class="form-horizontal">
@@ -329,42 +286,36 @@ if (!isset($_SESSION['id_bu']) ) {
 												  <div class="form-group">
 													<label class="col-sm-4 control-label">PKWT</label>
 													<div class="col-sm-8">
-													  <select name="pkwt" id="pkwt" class="form-control" required>
-															 <option value="" disabled="" selected="" style="display:none" ;="">Pilih PKWT</option>
+													  <select name="sp" id="sp" class="form-control" required>
+															 <option value="" disabled="" selected="" style="display:none" ;="">Pilih SP</option>
 															 <?php
-															 for($i=1;$i<=15;$i++){ ?>
-															 	<option value="<?php echo $i; ?>"><?php echo "PKWT ".$i; ?></option>
+															 for($i=1;$i<=3;$i++){ ?>
+															 	<option value="<?php echo $i; ?>"><?php echo "SP ".$i; ?></option>
 															 <?php } ?>
 														</select>
-													  <div class="error-pkwt" style="opacity:1; color: red;display: none;">PKWT Tidak boleh kosong</div>
+													  <div class="error-sp" style="opacity:1; color: red;display: none;">SP Tidak boleh kosong</div>
+													</div>
+												  </div>
+												  
+												  <div class="form-group">
+													<label class="col-sm-4 control-label">Tgl SP</label>
+													<div class="col-sm-8">
+													  <input type="text" name="tgl_sp" id="tgl_sp" class="form-control" placeholder="Isikan Tgl Awal Kontrak">
+													  <div class="error-tgl-sp" style="opacity:1; color: red; display: none;">Tgl SP Harus Diisi</div>
 													</div>
 												  </div>
 												  <div class="form-group">
-													<label class="col-sm-4 control-label">NO PKWT</label>
+													<label class="col-sm-4 control-label">Masa Berlaku</label>
 													<div class="col-sm-8">
-													  <input type="text" id="no_pkwt" name="no_pkwt" class="form-control" placeholder="Isikan NO PKWT">
-													  <div class="error-nopkwt" style="opacity:1; color: red; display: none;">No PKWT Harus Diisi</div>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label">Start Date</label>
-													<div class="col-sm-8">
-													  <input type="text" name="start_date" id="start_date" class="form-control" placeholder="Isikan Tgl Awal Kontrak">
-													  <div class="error-start" style="opacity:1; color: red; display: none;">Tgl Awal Kontrak Harus Diisi</div>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label class="col-sm-4 control-label">End Date</label>
-													<div class="col-sm-8">
-													  <input type="text" name="start_date" id="end_date" class="form-control" placeholder="Isikan Tgl Awal Kontrak">
-													  <div class="error-end" style="opacity:1; color: red; display: none;">Tgl Akhir Kontrak Harus Diisi</div>
+													  <input type="text" name="berlaku_sp" id="berlaku_sp" class="form-control" placeholder="Isikan Masa Berlaku">
+													  <div class="error-berlaku" style="opacity:1; color: red; display: none;">Masa Berlaku Harus Diisi</div>
 													</div>
 												  </div>
 												  <div class="form-group">
 													<label class="col-sm-4 control-label"></label>
 													<div class="col-sm-8">
 													<input type="hidden" id="input-res-id">
-													<button type="submit" id="sbt-contract" class="btn btn-info">UPDATE</button>
+													<button type="submit" id="sbt-contract" class="btn btn-info">SIMPAN</button>
 													</div>
 												  </div>
 										</div>
@@ -403,14 +354,90 @@ if (!isset($_SESSION['id_bu']) ) {
 	<!-- CUSTOM SCRIPT -->
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger.min.css" />
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger-theme-flat.min.css" />
-	<script src="js/app_contract.js"></script>
+	<!-- <script src="js/app_contract.js"></script> -->
 	<script src="js/script.js"></script>
 	<script>
 		jQuery(document).ready(function() {		
 			App.setPage("dynamic_table");  //Set current page
 			App.init(); //Initialise plugins and elements
 		});
+		$(document).ready(function(){
+  $("#boxs-resign").click(function(){
+    $('#tbl_jdl').html("Data SP Karyawan Resign");
+    $.ajax({
+        url: "ambil_sp_resign.php",
+        cache: false,
+        success: function(msg){
+            $(".box-resign").html(msg);
+        }
+    });
+  });
+  $("#boxs-active").click(function(){
+    $('#tbl_jdl').html("Data SP Karyawan Active");
+  });
 
+  $("#sbt-contract").click(function(){
+    var id_kw = $('#input-res-id').val();
+    var no_sp = $('#sp').val();
+    var tglsp = $('#tgl_sp').val();
+    var berlaku = $('#berlaku_sp').val();
+    var tableB = $("#example1").DataTable();
+    if(no_sp == null || no_sp == '' || no_sp == undefined) {
+       $(".error-sp").fadeIn();
+            return false;
+    }else if(tglsp == null || tglsp == '' || tglsp == undefined) {
+       $(".error-tgl-sp").fadeIn();
+            return false;
+    }else if(berlaku == null || berlaku == '' || berlaku == undefined) {
+       $(".error-ke").fadeIn();
+            return false;
+    }
+    else{
+     $.ajax({
+      type: "POST",
+        url: "update-sp.php",
+        data: {id_karyawan:id_kw, sp: no_sp, tgl_sp : tglsp, berlaku_sp : berlaku},
+        cache: false,
+        success: function(msg){
+          if(msg == '0'){
+            alert("Gagal Menyimpan ke Data !");
+          }else{
+              $('#content-karyawan').html(msg);
+              $('#open').modal('toggle');
+            tableB.destroy();
+            tableB = $('#example1').DataTable( {
+            scrollX:        true,
+            scrollCollapse: true,
+            paging:         true
+            });
+          }        
+        }
+    });
+    }
+    
+   });
+
+    var table = $('#example1').DataTable( {
+        scrollX:        true,
+        scrollCollapse: true,
+        paging:         true
+       
+    });
+  
+  $(document).on("click", "#setting", function () {
+     var id_karyawan = $(this).data('id');
+     var nama_karyawan = $(this).data('nama');
+     var nik = $(this).data('nik');
+     $("#id_karyawan").html( id_karyawan );
+     $("#nama_karyawan").val( nama_karyawan +" ("+nik+")" );
+     $("#input-res-id").attr( "value", id_karyawan );
+     //reset form_add_gaji
+    $('#sp').val('');
+    $('#berlaku_sp').val('');
+    $('#tgl_sp').val('');
+});
+
+});
 	</script>
 	
 </body>

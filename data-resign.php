@@ -16,8 +16,8 @@ if (!isset($_SESSION['id_bu']) ) {
 	<meta name="author" content="">
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/cloud-admin.css" >
-	<link rel="stylesheet" type="text/css"  href="css/themes/default.css" id="skin-switcher" >
-	<link rel="stylesheet" type="text/css"  href="css/responsive.css" >
+	<link rel="stylesheet" type="text/css" href="css/themes/default.css" id="skin-switcher" >
+	<link rel="stylesheet" type="text/css" href="css/responsive.css" >
 	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
 	<!-- JQUERY UI-->
 	<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.min.css" />
@@ -52,79 +52,7 @@ if (!isset($_SESSION['id_bu']) ) {
 	<section id="page">
 				<?php include 'menu.php';?>
 		<div id="main-content">
-			<!-- SAMPLE BOX CONFIGURATION MODAL FORM-->
-			  <!-- Modal for Edit button -->
-    
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				  <div class="modal-content">
-					<div class="modal-header">
-					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title">Import Database</h4>
-					</div>
-					<div class="modal-body">
-					  <div class="form-group">
-               <form class="form-control" name="myForm" id="myForm" onSubmit="return validateForm()" action="index.php" method="post" enctype="multipart/form-data">
-    			<input type="file" id="filepegawaiall" name="filepegawaiall" />
-  	
-			<!--  <input type="checkbox" name="drop" value="1" />  -->
-			<br>
-			<p>File Harus Berekstensi .xls</p> 
-              </div>
-          
-					</div>
-					<div class="modal-footer">
-					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					 <input class="btn btn-warning" type="submit" name="submit" value="Import" />
-					 </form>
-
-					</div>
-				  </div>
-				</div>
-			  </div> 
-			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
-			<div class="modal fade" id="export-database" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				  <div class="modal-content">
-					<div class="modal-header">
-					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title"></h4>
-					</div>
-					<div class="modal-body">
-					<div class="box border primary">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Export Database</h4>
-												<div class="tools hidden-xs">
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													<a href="javascript:;" class="collapse">
-														<i class="fa fa-chevron-up"></i>
-													</a>
-												</div>
-											</div>
-											<div class="box-body big">
-											<form action="laporan-database.php" method="POST" class="form-horizontal" role="form">
-												<div class="row">
-												<label class="col-xs-3">Data Bulan</label>
-												  <div class="col-xs-6">
-													<input type="text" id="dari" name="from" class="form-control" required>
-														<label for="to">to</label>
-														<input type="text" id="ke" name="to" class="form-control" required>
-												  </div>
-												</div>
-											</div>
-										</div>
-					 </div>
-					<div class="modal-footer">
-					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					 <input class="btn btn-primary" type="submit" name="submit" value="Export" />
-					</form>
-					</div>
-				  </div>
-				</div>
-			  </div> 
-			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
+			
 			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
 			<div class="modal fade" id="export-pengiriman" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
