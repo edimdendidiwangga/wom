@@ -153,7 +153,7 @@ if (!isset($_SESSION['id_bu']) ) {
 									</ul>
 									<!-- /BREADCRUMBS -->
 									<div class="clearfix">
-										<h3 class="content-title pull-left">Data SP Karyawan WOM Cab 
+										<h3 class="content-title pull-left">Data SP  Karyawan WOM Cab 
 										<?php 
 											$que=mysql_query("SELECT nama_cabang
 										    FROM bu 

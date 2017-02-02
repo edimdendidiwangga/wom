@@ -27,7 +27,7 @@ if (!isset($_SESSION['id_bu']) ) {
 													<td><?php echo $no; ?></td>
 													
 													<td><?php echo $data['periode_gaji']; ?></td>
-													<td class="center"><a id="btn-view" data-periode="<?php echo $data['periode_gaji']; ?>" class="btn btn-info btn-xs"> VIEW</a> </td>
+													<td class="center"><a data-periode="<?php echo $data['periode_gaji']; ?>" class="btn btn-info btn-xs btn-view"> VIEW</a> </td>
 												</tr>
 												<?php 
 												$no++;
@@ -39,7 +39,7 @@ if (!isset($_SESSION['id_bu']) ) {
 $(document).ready(function(){
 	var table2 = $('#example2').DataTable();
 
-	$("#btn-view").click(function(){
+	$(".btn-view").click(function(){
 		var periode = $(this).data('periode');
 		$('#tbl_jdl').html("Data Gaji Bulan "+periode);
 		$('.span-periode').html("Data Gaji Bulan "+periode);

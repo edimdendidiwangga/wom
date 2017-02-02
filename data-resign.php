@@ -253,7 +253,7 @@ if (!isset($_SESSION['id_bu']) ) {
 										    FROM karyawan 
 										    inner join data_karyawan on karyawan.id_karyawan=data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
-										    inner join contract on contract.update_contract = karyawan.update_contract
+										    inner join contract on contract.id_karyawan = karyawan.id_karyawan
 										    inner join gaji on gaji.update_gaji = karyawan.update_gaji
 										   where data_karyawan.status = '2' && data_karyawan.id_bu=".$_SESSION['id_bu']."
 										    Order by karyawan.id_karyawan DESC");

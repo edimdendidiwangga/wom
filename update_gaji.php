@@ -4,6 +4,7 @@ include('cek-login.php');
 if (!isset($_SESSION['id_bu']) ) {
 	header('location:index.php');
 }
+$id_gaji = $_POST['id_gaji'];
 $id_karyawan = $_POST['id_karyawan'];
 $kehadiran = $_POST['kehadiran'];
 $ump = $_POST['ump'];
@@ -18,7 +19,7 @@ $rapel = $_POST['rapel'];
 $periode_gaji = $_POST['periode_gaji'];
 $update_gaji = date("d-m-y h:i:s");
 //simpan data ke database
-$que = mysql_query("insert into gaji (id_gaji, id_karyawan, ump, gaji_pokok, tun_maintenance, tun_jabatan, tun_jaga_malam, tun_lain, insentive, overtime, kehadiran, rapel, periode_gaji, update_gaji) values('', '$id_karyawan', '$ump', '$gaji_pokok', '$tun_maintenance', '$tun_jabatan', '$tun_jaga_malam', '$tun_lain', '$insentive', '$overtime', '$kehadiran', '$rapel', '$periode_gaji', '$update_gaji' )") or die(mysql_error());
+$que = mysql_query("update gaji set ump = '$ump', gaji_pokok = '$gaji_pokok', tun_maintenance = '$tun_maintenance', tun_jabatan = '$tun_jabatan', tun_jaga_malam = '$tun_jaga_malam', tun_lain = '$tun_lain', insentive = '$insentive', overtime = '$overtime', kehadiran = '$kehadiran', rapel = '$rapel', periode_gaji = '$periode_gaji', update_gaji = '$update_gaji' where id_gaji = '$id_gaji'") or die(mysql_error());
 $sql = "select update_gaji from gaji order by id_gaji desc";
  $hasil = mysql_query($sql);
  $row = mysql_fetch_array($hasil);
@@ -60,14 +61,14 @@ $query = mysql_query("update karyawan set update_gaji='$last_update_gaji' where 
 												</tr>
 											</thead>
 											<tbody>
-												<?php 
-											$query_tampil=mysql_query("SELECT */*karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.hire_date, contract.join_date, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, karyawan.education, karyawan.gender, data_karyawan.status, data_karyawan.id_bu*/
+											<?php 
+											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, data_karyawan.job_class, bu.nama_cabang, karyawan.marital_status, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, gaji.kehadiran, gaji.id_gaji,  gaji.ump, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, gaji.rapel, gaji.insentive, gaji.overtime, data_karyawan.org_name, karyawan.gender, data_karyawan.hire_date, data_karyawan.cabang_induk, data_karyawan.bpjs_ketenagakerjaan, data_karyawan.bpjs_kesehatan, gaji.periode_gaji, data_karyawan.id_bu, contract.join1
 										    FROM gaji 
 										    inner join data_karyawan on gaji.id_karyawan = data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
 										    inner join karyawan on gaji.update_gaji = karyawan.update_gaji
-										    inner join contract on contract.update_contract = karyawan.update_contract
-										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']."
+										    inner join contract on contract.id_karyawan = karyawan.id_karyawan
+										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." 
 										    Order by karyawan.id_karyawan DESC");
 											if ($query_tampil === FALSE) {
 											    die(mysql_error());
@@ -86,7 +87,7 @@ $query = mysql_query("update karyawan set update_gaji='$last_update_gaji' where 
 													<td><?php echo $data['virtual_nik']; ?></td>
 													<td><?php echo "BU ".$data['bu']; ?></td>
 													<td><?php if($data['status']=="1"){echo"Active";}if($data['status']=="2"){echo"Non Active";}?></td>
-													<td><?php echo $data['join_date']; ?></td>
+													<td><?php echo $data['join1']; ?></td>
 													<td><?php echo $data['kehadiran']; ?></td>
 													<td><?php echo $data['ump']; ?></td>
 													<td><?php echo $data['gaji_pokok']; ?></td>
@@ -104,13 +105,13 @@ $query = mysql_query("update karyawan set update_gaji='$last_update_gaji' where 
 													<td><?php echo $data['bpjs_ketenagakerjaan']; ?></td>
 													<td><?php echo $data['bpjs_kesehatan']; ?></td>
 													<td><?php echo $data['periode_gaji']; ?></td>
-													<td><button id="setting" data-target="#open" data-toggle="modal" data-id="<?php echo $data['id_karyawan']; ?>" data-nama="<?php echo $data['nama_karyawan']; ?>" data-nik="<?php echo $data['nik']; ?>" data-kehadiran="<?php echo $data['kehadiran']; ?>" data-ump="<?php echo $data['ump']; ?>" data-gapok="<?php echo $data['gaji_pokok']; ?>" data-maintenance="<?php echo $data['tun_maintenance']; ?>" data-jabatan="<?php echo $data['tun_jabatan']; ?>" data-jalam="<?php echo $data['tun_jaga_malam']; ?>" data-lain="<?php echo $data['tun_lain']; ?>" data-insentive="<?php echo $data['insentive']; ?>" data-overtime="<?php echo $data['overtime']; ?>" data-rapel="<?php echo $data['rapel']; ?>" data-periode="<?php echo $data['periode_gaji']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gear"></i></button></td>
+													<td><button id="setting" data-target="#open" data-toggle="modal" data-idgaji="<?php echo $data['id_gaji']; ?>" data-id="<?php echo $data['id_karyawan']; ?>" data-nama="<?php echo $data['nama_karyawan']; ?>" data-nik="<?php echo $data['nik']; ?>" data-kehadiran="<?php echo $data['kehadiran']; ?>" data-ump="<?php echo $data['ump']; ?>" data-gapok="<?php echo $data['gaji_pokok']; ?>" data-maintenance="<?php echo $data['tun_maintenance']; ?>" data-jabatan="<?php echo $data['tun_jabatan']; ?>" data-jalam="<?php echo $data['tun_jaga_malam']; ?>" data-lain="<?php echo $data['tun_lain']; ?>" data-insentive="<?php echo $data['insentive']; ?>" data-overtime="<?php echo $data['overtime']; ?>" data-rapel="<?php echo $data['rapel']; ?>" data-periode="<?php echo $data['periode_gaji']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gear"></i></button></td>
 												</tr>
 												<?php 
 												$no++;
 												} 
 												?>
-											</tbody>
+												</tbody>
 											<tfoot>
 												<tr>
 													<th>NO.</th>

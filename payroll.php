@@ -44,7 +44,6 @@ if (!isset($_SESSION['id_bu']) ) {
     }
    li.hov a:hover {background-color: #fbcc42 !important;}
    </style>
-
 </head>
 <body>
 	<?php include 'header.php';?>
@@ -94,7 +93,7 @@ if (!isset($_SESSION['id_bu']) ) {
 					</div>
 				  </div>
 				</div>
-			  </div> 			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
+			  </div> 		
 			<div class="container">
 				<div class="row">
 					<div id="content" class="col-lg-12">
@@ -126,9 +125,6 @@ if (!isset($_SESSION['id_bu']) ) {
 								</div>
 							</div>
 						</div>
-						<!-- /PAGE HEADER -->
-						<!-- DATA TABLES -->
-						
 						<!-- EXPORT TABLES -->
 						<div class="row">
 							<div class="col-md-12">
@@ -183,11 +179,11 @@ if (!isset($_SESSION['id_bu']) ) {
 											</thead>
 											<tbody>
 											<?php 
-											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, data_karyawan.job_class, bu.nama_cabang, karyawan.marital_status, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, gaji.kehadiran, gaji.ump, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, gaji.rapel, gaji.insentive, gaji.overtime, data_karyawan.org_name, karyawan.gender, data_karyawan.hire_date, data_karyawan.cabang_induk, data_karyawan.bpjs_ketenagakerjaan, data_karyawan.bpjs_kesehatan, gaji.periode_gaji, data_karyawan.id_bu, contract.join1
+											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, data_karyawan.job_class, bu.nama_cabang, karyawan.marital_status, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, gaji.id_gaji, gaji.kehadiran, gaji.ump, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, gaji.rapel, gaji.insentive, gaji.overtime, data_karyawan.org_name, karyawan.gender, data_karyawan.hire_date, data_karyawan.cabang_induk, data_karyawan.bpjs_ketenagakerjaan, data_karyawan.bpjs_kesehatan, gaji.periode_gaji, data_karyawan.id_bu, contract.join1
 										    FROM gaji 
 										    inner join data_karyawan on gaji.id_karyawan = data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
-										    inner join karyawan on gaji.update_gaji = karyawan.update_gaji
+										    inner join karyawan on gaji.update_gaji= karyawan.update_gaji
 										    inner join contract on contract.id_karyawan = karyawan.id_karyawan
 										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." 
 										    Order by karyawan.id_karyawan DESC");
@@ -226,7 +222,7 @@ if (!isset($_SESSION['id_bu']) ) {
 													<td><?php echo $data['bpjs_ketenagakerjaan']; ?></td>
 													<td><?php echo $data['bpjs_kesehatan']; ?></td>
 													<td><?php echo $data['periode_gaji']; ?></td>
-													<td><button id="setting" data-target="#open" data-toggle="modal" data-id="<?php echo $data['id_karyawan']; ?>" data-nama="<?php echo $data['nama_karyawan']; ?>" data-nik="<?php echo $data['nik']; ?>" data-kehadiran="<?php echo $data['kehadiran']; ?>" data-ump="<?php echo $data['ump']; ?>" data-gapok="<?php echo $data['gaji_pokok']; ?>" data-maintenance="<?php echo $data['tun_maintenance']; ?>" data-jabatan="<?php echo $data['tun_jabatan']; ?>" data-jalam="<?php echo $data['tun_jaga_malam']; ?>" data-lain="<?php echo $data['tun_lain']; ?>" data-insentive="<?php echo $data['insentive']; ?>" data-overtime="<?php echo $data['overtime']; ?>" data-rapel="<?php echo $data['rapel']; ?>" data-periode="<?php echo $data['periode_gaji']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gear"></i></button></td>
+													<td><button id="setting" data-target="#open" data-toggle="modal" data-idgaji="<?php echo $data['id_gaji']; ?>" data-id="<?php echo $data['id_karyawan']; ?>" data-nama="<?php echo $data['nama_karyawan']; ?>" data-nik="<?php echo $data['nik']; ?>" data-kehadiran="<?php echo $data['kehadiran']; ?>" data-ump="<?php echo $data['ump']; ?>" data-gapok="<?php echo $data['gaji_pokok']; ?>" data-maintenance="<?php echo $data['tun_maintenance']; ?>" data-jabatan="<?php echo $data['tun_jabatan']; ?>" data-jalam="<?php echo $data['tun_jaga_malam']; ?>" data-lain="<?php echo $data['tun_lain']; ?>" data-insentive="<?php echo $data['insentive']; ?>" data-overtime="<?php echo $data['overtime']; ?>" data-rapel="<?php echo $data['rapel']; ?>" data-periode="<?php echo $data['periode_gaji']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gear"></i></button></td>
 												</tr>
 												<?php 
 												$no++;
@@ -493,6 +489,7 @@ if (!isset($_SESSION['id_bu']) ) {
 													<label class="col-sm-4 control-label"></label>
 													<div class="col-sm-8">
 													<input type="hidden" id="input-gaj-id">
+													<input type="hidden" id="input-kyn-id">
 													<button type="submit" id="sbt_edit_gaji" class="btn btn-info">Simpan</button>
 													</div>
 												  </div>				  
@@ -501,7 +498,7 @@ if (!isset($_SESSION['id_bu']) ) {
 								<div class="modal-footer">
 								<button id="btn-gaji" type="button" class="btn btn-success">Tambah Gaji</button>
 								<button id="btn-edit" type="button" class="btn btn-info">Edit</button>
-								<a id="btn-hapus" class="btn btn-danger" style="display: none;">Delete</a>
+								<!-- <a id="btn-hapus" class="btn btn-danger" style="display: none;">Delete</a> -->
 								<button type="button" class="btn default" data-dismiss="modal">Close</button>
 								</div>
 							  </div>
@@ -637,6 +634,7 @@ if (!isset($_SESSION['id_bu']) ) {
         	}else{
         		$('#content_gaji').html(msg);
 	            $('#open').modal('toggle');
+	            alert("Data berhasil disimpan!");
        		}
         }
     	});
@@ -645,7 +643,8 @@ if (!isset($_SESSION['id_bu']) ) {
    });
 
   $("#sbt_edit_gaji").click(function(){
-  	var id_kyn = $('#input-gaj-id').val();
+  	var idgaji = $('#input-gaj-id').val();
+  	var id_kyn = $('#input-kyn-id').val();
     var kehadiran_val = $('#kehadiran_ed').val();
   	var ump_val = $('#ump_ed').val();
   	var gaji_pokok_val = $('#gaji_pokok_ed').val();
@@ -658,9 +657,10 @@ if (!isset($_SESSION['id_bu']) ) {
   	var rapel_val = $('#rapel_ed').val();
   	var periode_gaji_val = $('#periode_gaji_ed').val();
   	var data_edit_gaji = {
+		id_gaji : idgaji,
 		id_karyawan : id_kyn, 
 		kehadiran : kehadiran_val,
-		ump :ump_val,
+		ump : ump_val,
 		gaji_pokok : gaji_pokok_val, 
 		tun_maintenance : tun_maintenance_val,
 		tun_jabatan : tun_jabatan_val,
@@ -751,6 +751,7 @@ if (!isset($_SESSION['id_bu']) ) {
     });
 
 $(document).on("click", "#setting", function () {
+	var id_gaji = $(this).data('idgaji');
      var id_karyawan = $(this).data('id');
      var nama_karyawan = $(this).data('nama');
      var nik = $(this).data('nik');
@@ -765,7 +766,8 @@ $(document).on("click", "#setting", function () {
      var overtime = $(this).data('overtime');
      var rapel = $(this).data('rapel');
      var periode = $(this).data('periode');
-    $('#input-gaj-id').attr( "value", id_karyawan );
+    $('#input-gaj-id').attr( "value", id_gaji );
+    $('#input-kyn-id').attr( "value", id_karyawan );
     $('#kehadiran_ed').val(kehadiran);
   	$('#ump_ed').val(ump);
   	$('#gaji_pokok_ed').val(gapok);
@@ -785,7 +787,6 @@ $(document).on("click", "#setting", function () {
       $("#btn-hapus").attr( "data-gapok", gapok );
       $("#btn-hapus").attr( "data-periode", periode );
       $("#btn-hapus").attr( "data-periode", periode );
-
       //reset form_add_gaji
     $('#kehadiran').val('');
   	$('#ump').val('');
@@ -798,9 +799,7 @@ $(document).on("click", "#setting", function () {
   	$('#overtime').val('');
   	$('#rapel').val('');
   	$('#periode_gaji').val('');
-    /* $("#btn-edit").attr( "href", "edit-step.php?id_karyawan="+id_karyawan );
-    
-     */
+    /* $("#btn-edit").attr( "href", "edit-step.php?id_karyawan="+id_karyawan ); */
 });
 
             $( "#periode_gaji_ed" ).datepicker({

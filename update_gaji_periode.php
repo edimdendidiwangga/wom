@@ -1,12 +1,32 @@
-<?php 
+<?php
 include('config.php');
 include('cek-login.php');
 if (!isset($_SESSION['id_bu']) ) {
 	header('location:index.php');
 }
+$id_gaji = $_POST['id_gaji'];
+$id_karyawan = $_POST['id_karyawan'];
+$kehadiran = $_POST['kehadiran'];
+$ump = $_POST['ump'];
+$gaji_pokok = $_POST['gaji_pokok'];
+$tun_maintenance = $_POST['tun_maintenance'];
+$tun_jabatan = $_POST['tun_jabatan'];
+$tun_jaga_malam = $_POST['tun_jaga_malam'];
+$tun_lain = $_POST['tun_lain'];
+$insentive = $_POST['insentive'];
+$overtime = $_POST['overtime'];
+$rapel = $_POST['rapel'];
 $periode_gaji = $_POST['periode_gaji'];
+$update_gaji = date("d-m-y h:i:s");
+//simpan data ke database
+$que = mysql_query("update gaji set ump = '$ump', gaji_pokok = '$gaji_pokok', tun_maintenance = '$tun_maintenance', tun_jabatan = '$tun_jabatan', tun_jaga_malam = '$tun_jaga_malam', tun_lain = '$tun_lain', insentive = '$insentive', overtime = '$overtime', kehadiran = '$kehadiran', rapel = '$rapel', periode_gaji = '$periode_gaji', update_gaji = '$update_gaji' where id_gaji = '$id_gaji'") or die(mysql_error());
+$sql = "select update_gaji from gaji order by id_gaji desc";
+ $hasil = mysql_query($sql);
+ $row = mysql_fetch_array($hasil);
+ $last_update_gaji = $row['update_gaji'];
+$query = mysql_query("update karyawan set update_gaji='$last_update_gaji' where id_karyawan='$id_karyawan'") or die(mysql_error());
 ?>
-<div class="content_gaji">
+	<div class="content_gaji">
 									<table id="example3" class="table table-striped table-bordered table-hover">
 											<thead>
 												<tr>
@@ -49,12 +69,12 @@ $periode_gaji = $_POST['periode_gaji'];
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
 										    inner join karyawan on gaji.id_karyawan = karyawan.id_karyawan
 										    inner join contract on contract.id_karyawan = contract.id_karyawan
-										    where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." && gaji.periode_gaji = '".$periode_gaji."' && gaji.update_gaji = (
+										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." && gaji.periode_gaji = '".$periode_gaji."' && gaji.update_gaji = (
 																							    SELECT max(update_gaji)
 																							    FROM gaji
 																							)
-										    
-										    Order by gaji.id_gaji DESC");
+										   
+										    Order by karyawan.id_karyawan DESC");
 											if ($query_tampil === FALSE) {
 											    die(mysql_error());
 											}
@@ -90,7 +110,7 @@ $periode_gaji = $_POST['periode_gaji'];
 													<td><?php echo $data['bpjs_ketenagakerjaan']; ?></td>
 													<td><?php echo $data['bpjs_kesehatan']; ?></td>
 													<td><?php echo $data['periode_gaji']; ?></td>
-													<td><button id="pengaturan" data-target="#get_modal" data-toggle="modal" data-idgaji="<?php echo $data['id_gaji']; ?>" data-id="<?php echo $data['id_karyawan']; ?>" data-nama="<?php echo $data['nama_karyawan']; ?>" data-nik="<?php echo $data['nik']; ?>" data-kehadiran="<?php echo $data['kehadiran']; ?>" data-ump="<?php echo $data['ump']; ?>" data-gapok="<?php echo $data['gaji_pokok']; ?>" data-maintenance="<?php echo $data['tun_maintenance']; ?>" data-jabatan="<?php echo $data['tun_jabatan']; ?>" data-jalam="<?php echo $data['tun_jaga_malam']; ?>" data-lain="<?php echo $data['tun_lain']; ?>" data-insentive="<?php echo $data['insentive']; ?>" data-overtime="<?php echo $data['overtime']; ?>" data-rapel="<?php echo $data['rapel']; ?>" data-periode="<?php echo $data['periode_gaji']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gear"></i></button></td>
+													<td><button id="pengaturan" data-target="#open_modal" data-toggle="modal" data-idgaji="<?php echo $data['id_gaji']; ?>" data-id="<?php echo $data['id_karyawan']; ?>" data-nama="<?php echo $data['nama_karyawan']; ?>" data-nik="<?php echo $data['nik']; ?>" data-kehadiran="<?php echo $data['kehadiran']; ?>" data-ump="<?php echo $data['ump']; ?>" data-gapok="<?php echo $data['gaji_pokok']; ?>" data-maintenance="<?php echo $data['tun_maintenance']; ?>" data-jabatan="<?php echo $data['tun_jabatan']; ?>" data-jalam="<?php echo $data['tun_jaga_malam']; ?>" data-lain="<?php echo $data['tun_lain']; ?>" data-insentive="<?php echo $data['insentive']; ?>" data-overtime="<?php echo $data['overtime']; ?>" data-rapel="<?php echo $data['rapel']; ?>" data-periode="<?php echo $data['periode_gaji']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gear"></i></button></td>
 												</tr>
 												<?php 
 												$no++;
@@ -132,7 +152,7 @@ $periode_gaji = $_POST['periode_gaji'];
 											</tfoot>
 										</table>
 										</div>
-										<div class="modal fade" id="get_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+										<div class="modal fade" id="open_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 				  <div class="modal-content">
 					<div class="modal-header">
@@ -232,7 +252,6 @@ $periode_gaji = $_POST['periode_gaji'];
 													<label class="col-sm-4 control-label"></label>
 													<div class="col-sm-8">
 													<input type="hidden" id="input-gaj-id">
-													<input type="hidden" id="input-kyn-id">
 													<button type="submit" id="sbt_edit_gaji" class="btn btn-info">Simpan</button>
 													</div>
 												  </div>				  

@@ -111,6 +111,7 @@ $(document).ready(function(){
      $("#btn-edit").attr( "href", "edit-step.php?id_karyawan="+id_karyawan );
      $("#btn-hapus").attr( "data-id", id_karyawan );
      $("#input-res-id").attr( "value", id_karyawan );
+     $('#tgl_metu').val('');
 });
 
   $( "#dari" ).datepicker({
