@@ -13,59 +13,33 @@ $(document).ready(function(){
     $('#tbl_jdl').html("Data Contract Karyawan Active");
   });
 
-  /*$("#btn-hapus").click(function(){
-  	var id_krywn = $(this).data('id');
-    var r = confirm("Yakin Anda ingin Menghapus data ini ?");
-    if (r) {
-        $.ajax({
-        type: "POST",
-        url: "delete-step.php",
-        data: "id_karyawan="+id_krywn,
-        cache: false,
-        success: function(msg){
-        	if(msg == '0'){
-        		alert("Gagal Menghapus Data!");
-        	}else{
-            	$('#content_karyawan').html(msg);
-            	$('#open').modal('toggle');
-       		}
-        }
-    });
-    } else {
-       $('#open').modal('toggle');
-    }
- });*/
+ 
   $("#sbt-contract").click(function(){
     var id_kw = $('#input-res-id').val();
     var pkwt_ke = $('#pkwt').val();
     var noe_pkwt = $('#no_pkwt').val();
-  	var start = $('#start_date').val();
+    var start = $('#start_date').val();
     var end = $('#end_date').val();
     var tableB = $("#example1").DataTable();
-    if(pkwt == null || pkwt == '' || pkwt == undefined) {
+    if(pkwt_ke == null || pkwt_ke == '' || pkwt_ke == undefined) {
        $(".error-pkwt").fadeIn();
             return false;
-    }else if(no_pkwt == null || no_pkwt == '' || no_pkwt == undefined) {
+    }else if(noe_pkwt == null || noe_pkwt == '' || noe_pkwt == undefined) {
        $(".error-nopkwt").fadeIn();
             return false;
-    }else if(start_date == null || start_date == '' || start_date == undefined) {
-       $(".error-start").fadeIn();
-            return false;
-    }else if(end_date == null || end_date == '' || end_date == undefined) {
-       $(".error-end").fadeIn();
-            return false;
-    }else{
-  	 $.ajax({
-    	type: "POST",
+    }
+    else{
+     $.ajax({
+      type: "POST",
         url: "update-contract.php",
         data: {id_karyawan:id_kw, pkwt: pkwt_ke, no_pkwt : noe_pkwt, start_date : start, end_date : end},
         cache: false,
         success: function(msg){
-	        if(msg == '0'){
+          if(msg == '0'){
             alert("Gagal Memindahkan ke Data Resign!");
           }else{
-              $('#content_karyawan').html(msg);
-              $("#employee_"+id_kw).fadeIn();
+              $('#content-karyawan').html(msg);
+              
               $('#open').modal('toggle');
             tableB.destroy();
             tableB = $('#example1').DataTable( {
@@ -77,6 +51,7 @@ $(document).ready(function(){
         }
     });
     }
+    
    });
 
     var table = $('#example1').DataTable( {
@@ -88,18 +63,6 @@ $(document).ready(function(){
             rightColumns: 1
         }
     });
-	
-    function validateForm()
-    {
-        function hasExtension(inputID, exts) {
-            var fileName = document.getElementById(inputID).value;
-            return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
-        }
-        if(!hasExtension('filepegawaiall', ['.xls'])){
-            alert("Hanya file XLS (Excel 2003) yang diijinkan.");
-            return false;
-        }
-    } 
   
   $(document).on("click", "#setting", function () {
      var id_karyawan = $(this).data('id');
@@ -117,13 +80,6 @@ $(document).ready(function(){
     $('#end_date').val('');
 });
 
-  $( "#dari" ).datepicker({
-      showButtonPanel: true,
-      changeMonth: true,
-      changeYear: true,
-      yearRange: '1950:2026',
-      dateFormat: "M-yy"
-    });
           $( "#start_date" ).datepicker({
       changeMonth: true,
       changeYear: true,

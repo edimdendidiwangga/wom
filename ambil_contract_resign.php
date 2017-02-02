@@ -80,12 +80,11 @@ if (!isset($_SESSION['id_bu']) ) {
 													<th>Start </th>
 													<th>END </th>
 													<th>NO PKWT</th>
-
 												</tr>
 											</thead>
 											<tbody>
 											<?php 
-											$query=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, data_karyawan.id_bu, contract.join1, contract.*
+											$query=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.status, data_karyawan.id_bu, contract.*
 										    FROM contract 
 										    inner join karyawan on karyawan.id_karyawan = contract.id_karyawan
 										    inner join data_karyawan on karyawan.id_karyawan = data_karyawan.id_karyawan
@@ -112,9 +111,9 @@ if (!isset($_SESSION['id_bu']) ) {
 													<td class="center hidden-xs"><?php echo $data['nik']; ?></td>
 													<td><?php echo $data['virtual_nik']; ?></td>
 													<td><?php echo "BU ".$data['bu']; ?></td>         
-													<td><?php echo $data['join_date']; ?></td>
-													<td><?php echo $data['end_date']; ?></td>
-													<td><?php echo $data['no_pkwt']; ?></td> 
+													<td><?php echo $data['join1']; ?></td>
+													<td><?php echo $data['end1']; ?></td>
+													<td><?php echo $data['no_pkwt1']; ?></td> 
 													<td><?php echo $data['join2']; ?></td>
 													<td><?php echo $data['end2']; ?></td>
 													<td><?php echo $data['no_pkwt2']; ?></td> 
@@ -238,7 +237,6 @@ if (!isset($_SESSION['id_bu']) ) {
 													<th>Start </th>
 													<th>END </th>
 													<th>NO PKWT</th>
-
 												</tr>
 											</tfoot>
 										</table>
@@ -256,5 +254,4 @@ $(document).ready(function(){
   
 });
 </script>
-
    

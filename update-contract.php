@@ -10,7 +10,7 @@ $no_pkwt = $_POST['no_pkwt'];
 $start_date = $_POST['start_date'];
 $end_date = $_POST['end_date'];
 
-$query = mysql_query("update contract set pkwt".$pkwt."='$pkwt', no_pkwt".$pkwt."='$no_pkwt', join".$pkwt."='$start_date', end".$pkwt."='$end_date' where id_karyawan='$id'") or die(mysql_error());
+$query = mysql_query("update contract set no_pkwt".$pkwt."='$no_pkwt', join".$pkwt."='$start_date', end".$pkwt."='$end_date' where id_karyawan='$id'") or die(mysql_error());
 ?>
 <table id="example2" class="table table-striped table-bordered table-hover">
 											<thead>
