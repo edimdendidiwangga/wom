@@ -361,7 +361,7 @@ if (!isset($_SESSION['id_bu']) ) {
 			App.setPage("dynamic_table");  //Set current page
 			App.init(); //Initialise plugins and elements
 		});
-		$(document).ready(function(){
+	$(document).ready(function(){
   $("#boxs-resign").click(function(){
     $('#tbl_jdl').html("Data SP Karyawan Resign");
     $.ajax({
@@ -420,7 +420,11 @@ if (!isset($_SESSION['id_bu']) ) {
     var table = $('#example1').DataTable( {
         scrollX:        true,
         scrollCollapse: true,
-        paging:         true
+        paging:         true,
+        fixedColumns:   {
+            leftColumns: 2,
+            rightColumns: 1
+        }
        
     });
   
@@ -436,6 +440,12 @@ if (!isset($_SESSION['id_bu']) ) {
     $('#berlaku_sp').val('');
     $('#tgl_sp').val('');
 });
+  
+$( "#tgl_sp" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-mm-yy"
+    });
 
 });
 	</script>

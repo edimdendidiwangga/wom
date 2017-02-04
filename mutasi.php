@@ -419,8 +419,10 @@ if (!isset($_SESSION['id_bu']) ) {
     var table = $('#example1').DataTable( {
         scrollX:        true,
         scrollCollapse: true,
-        paging:         true
-       
+        paging:         true,
+        fixedColumns:   {
+            rightColumns: 1
+       	}
     });
   
   $(document).on("click", "#setting", function () {

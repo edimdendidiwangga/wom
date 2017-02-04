@@ -103,7 +103,6 @@ $(document).ready(function(){
         scrollX:        true,
         scrollCollapse: true,
         fixedColumns:   {
-            leftColumns: 3,
             rightColumns: 1
         }
     });

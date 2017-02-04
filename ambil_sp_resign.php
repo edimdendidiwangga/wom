@@ -1,17 +1,12 @@
-<?php
+<?php 
 include('config.php');
 include('cek-login.php');
 if (!isset($_SESSION['id_bu']) ) {
 	header('location:index.php');
 }
-$id = $_POST['id_karyawan'];
-$sp = $_POST['sp'];
-$tgl_sp = $_POST['tgl_sp'];
-$berlaku_sp = $_POST['berlaku_sp'];
-
-$query = mysql_query("update mutasi set tgl_sp".$sp."='$tgl_sp', berlaku_sp".$sp."='$berlaku_sp' where id_karyawan='$id'") or die(mysql_error());
 ?>
-<table id="example2" class="table table-striped table-bordered table-hover">
+<a href="#export-database" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Export</a>
+									<table id="example2" class="table table-striped table-bordered table-hover">
 											<thead>
 												<tr>
 													<th rowspan="2">NO.</th>
@@ -25,7 +20,6 @@ $query = mysql_query("update mutasi set tgl_sp".$sp."='$tgl_sp', berlaku_sp".$sp
 													<th colspan="2" class="center">SP 1</th>
 													<th colspan="2" class="center">SP 2</th>
 													<th colspan="2" class="center">SP 3</th>
-													<th rowspan="2">Aksi</th>
 												</tr>
 												<tr>
 													<th>Tgl SP </th>
@@ -72,7 +66,6 @@ $query = mysql_query("update mutasi set tgl_sp".$sp."='$tgl_sp', berlaku_sp".$sp
 													<td><?php echo $data['tgl_sp3']; ?></td> 
 													<td><?php echo $data['berlaku_sp3']; ?></td>
 													
-													<td><button id="setting" data-target="#open" data-toggle="modal" data-id="<?php echo $data['id_karyawan']; ?>" data-nama="<?php echo $data['nama_karyawan']; ?>" data-nik="<?php echo $data['nik']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gear"></i></button></td>
 												</tr>
 												<?php 
 												$no++;
@@ -92,7 +85,6 @@ $query = mysql_query("update mutasi set tgl_sp".$sp."='$tgl_sp', berlaku_sp".$sp
 													<th colspan="2" class="center">SP 1</th>
 													<th colspan="2" class="center">SP 2</th>
 													<th colspan="2" class="center">SP 3</th>
-													<th rowspan="2">Aksi</th>
 												</tr>
 												<tr>
 													<th>Tgl SP </th>
@@ -106,13 +98,12 @@ $query = mysql_query("update mutasi set tgl_sp".$sp."='$tgl_sp', berlaku_sp".$sp
 										</table>
 <script type="text/javascript">
 $(document).ready(function(){
-	var table = $('#example2').DataTable( {
+	var table2 = $('#example2').DataTable( {
         scrollX:        true,
-        scrollCollapse: true,
-        paging:         true,
-        fixedColumns:   {
-            rightColumns: 1
-        }
+        scrollCollapse: true
     });
+
+  
 });
 </script>
+   
