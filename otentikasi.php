@@ -5,7 +5,7 @@ session_start();
 
 //tangkap data dari form login
 $username = $_POST['username'];
-$password = $_POST['password'];
+$password = md5($_POST['password']);
 
 //untuk mencegah sql injection
 //kita gunakan mysql_real_escape_string
