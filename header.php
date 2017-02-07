@@ -63,7 +63,7 @@ include('config.php');
 					<!-- BEGIN USER LOGIN DROPDOWN -->
 					<li class="dropdown user" id="header-user">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<img alt="" src="img/img-kandidat/user2.jpg" />
+							<img alt="" src="img/avatars/icon.jpg" />
 							<span class="username"><?php echo $_SESSION['username'];?></span>
 							<i class="fa fa-angle-down"></i>
 						</a>

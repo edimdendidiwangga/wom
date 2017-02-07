@@ -90,17 +90,7 @@ $(document).ready(function(){
     }
    });
 
-    function validateForm()
-    {
-        function hasExtension(inputID, exts) {
-            var fileName = document.getElementById(inputID).value;
-            return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
-        }
-        if(!hasExtension('filepegawaiall', ['.xls'])){
-            alert("Hanya file XLS (Excel 2003) yang diijinkan.");
-            return false;
-        }
-    }
+   
   
   $(document).on("click", "#setting", function () {
      var id_karyawan = $(this).data('id');
@@ -133,6 +123,18 @@ $(document).ready(function(){
       dateFormat: "dd-mm-yy"
     });
     $( "#to" ).datepicker({
+      showButtonPanel: true,
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-mm-yy"
+    });
+    $( "#from2" ).datepicker({
+      showButtonPanel: true,
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-mm-yy"
+    });
+    $( "#to2" ).datepicker({
       showButtonPanel: true,
       changeMonth: true,
       changeYear: true,

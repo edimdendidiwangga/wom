@@ -61,8 +61,8 @@ if (!isset($_SESSION['id_bu']) ) {
 					</div>
 					<div class="modal-body">
 					  <div class="form-group">
-               <form class="form-control" name="myForm" id="myForm" onSubmit="return validateForm()" action="index.php" method="post" enctype="multipart/form-data">
-    			<input type="file" id="filepegawaiall" name="filepegawaiall" />
+               <form class="form-control" name="myForm" id="myForm" onSubmit="return validateForm()" action="import.php" method="post" enctype="multipart/form-data">
+    			<input type="file" id="filepegawaiall" name="filepegawaiall" required />
   	
 			<!--  <input type="checkbox" name="drop" value="1" />  -->
 			<br>
@@ -71,6 +71,7 @@ if (!isset($_SESSION['id_bu']) ) {
           
 					</div>
 					<div class="modal-footer">
+					<a href="contoh_format_import.xls" class="btn btn-success pull-left">Download format import xls</a>
 					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					 <input class="btn btn-warning" type="submit" name="submit" value="Import" />
 					 </form>
@@ -184,6 +185,59 @@ if (!isset($_SESSION['id_bu']) ) {
 				  </div>
 				</div>
 			  </div>
+			  <!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
+			<div class="modal fade" id="export-gabungan-resign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					  <h4 class="modal-title"></h4>
+					</div>
+					<div class="modal-body">
+					<div class="box border blue">
+											<div class="box-title">
+											<?php
+											$que=mysql_query("SELECT nama_cabang
+										    FROM bu 
+										    where id_bu=".$_SESSION['id_bu']."");
+											if ($que === FALSE) {
+											    die(mysql_error());
+											}
+											$data = mysql_fetch_array($que);
+											?>
+												<h4><i class="fa fa-bars"></i>Export Data Resign Gabungan Cab <?php echo $data['nama_cabang'];?> </h4>
+												<div class="tools hidden-xs">
+													<a href="javascript:;" class="reload">
+														<i class="fa fa-refresh"></i>
+													</a>
+													<a href="javascript:;" class="collapse">
+														<i class="fa fa-chevron-up"></i>
+													</a>
+												</div>
+											</div>
+											<div class="box-body big">
+											
+											<form action="laporan_gabungan_resign.php" method="POST" class="form-horizontal" role="form">
+												<div class="row">
+												<label class="col-xs-3">Data Bulan</label>
+												  <div class="col-xs-6">dari
+													<input type="text" id="from2" name="from" class="form-control">
+														<label for="to">ke</label>
+														<input type="text" id="to2" name="to" class="form-control" required>
+														<input type="hidden" id="name_cabang" value="<?php echo $data['nama_cabang'];?>" name="name_cabang">
+												  </div>
+												</div>
+											</div>
+										</div>
+					 </div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					 <input class="btn btn-primary" type="submit" name="submit" value="Export" />
+					</form>
+					</div>
+				  </div>
+				</div>
+			  </div>
 			<div class="container">
 				<div class="row">
 					<div id="content" class="col-lg-12">
@@ -231,7 +285,16 @@ if (!isset($_SESSION['id_bu']) ) {
 									<a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="fa fa-upload"></i> Import</a> ';}?>
 									<a href="#export-database" data-toggle="modal" class="btn btn-success"><i class="fa fa-file-o"></i> Excel Data Active</a>
 									<a href="#" data-toggle="modal" class="btn btn-danger"><i class="fa fa-file-o"></i> PDF Report Daver</a>
-									<a href="#export-gabungan" data-toggle="modal" class="btn btn-primary"><i class="fa fa-file-o"></i> Excel Data Gabungan</a>
+									
+									<div class="btn-group">
+										  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-o"></i>
+										    Excel Data Gabungan <span class="caret"></span>
+										  </button>
+										  <ul class="dropdown-menu">
+										    <li class="hov"><a href="#export-gabungan" data-toggle="modal" class="btn btn-primary">Data Gabungan Active </a></li>
+										    <li class="hov"><a href="#export-gabungan-resign" data-toggle="modal" class="btn btn-primary">Data Gabungan Resign </a></li>
+										  </ul>
+										</div>
 									<div id="content-karyawan">
 									<table id="example1" class="table table-striped table-bordered table-hover">
 											<thead>
@@ -436,6 +499,16 @@ if (!isset($_SESSION['id_bu']) ) {
 			App.init(); //Initialise plugins and elements
 		});
 		
+	 function validateForm(){
+        function hasExtension(inputID, exts) {
+            var fileName = document.getElementById(inputID).value;
+            return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+        }
+        if(!hasExtension('filepegawaiall', ['.xls'])){
+            alert("Hanya file XLS (Excel 2003) yang diijinkan.");
+            return false;
+        }
+    }
 	</script>
 	</body>
 </html>

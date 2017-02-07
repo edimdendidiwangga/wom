@@ -5,7 +5,7 @@ include('config.php');
 <?php
 $name_cabang = $_POST['name_cabang'];
 header("Content-type: application/vnd-ms-excel");
-header("Content-Disposition: attachment; filename=Data Gabungan Cab ".$name_cabang.".xls");
+header("Content-Disposition: attachment; filename=Data Resign Gabungan Cab ".$name_cabang.".xls");
 ?>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -162,7 +162,7 @@ header("Content-Disposition: attachment; filename=Data Gabungan Cab ".$name_caba
 										    inner join mutasi on mutasi.id_karyawan = karyawan.id_karyawan
 										    inner join keluarga on keluarga.id_karyawan = karyawan.id_karyawan
 										    inner join rekening on rekening.id_karyawan = karyawan.id_karyawan
-										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." 
+										   where data_karyawan.status = '2' && data_karyawan.id_bu=".$_SESSION['id_bu']." 
 										    Order by karyawan.id_karyawan ASC");
 											if ($query_tampil === FALSE) {
 											    die(mysql_error());
