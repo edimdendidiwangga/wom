@@ -52,47 +52,7 @@ if (!isset($_SESSION['id_bu']) ) {
 				<?php include 'menu.php';?>
 		<div id="main-content">
 			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
-			<div class="modal fade" id="export-database" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				  <div class="modal-content">
-					<div class="modal-header">
-					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title"></h4>
-					</div>
-					<div class="modal-body">
-					<div class="box border primary">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Export Database</h4>
-												<div class="tools hidden-xs">
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													<a href="javascript:;" class="collapse">
-														<i class="fa fa-chevron-up"></i>
-													</a>
-												</div>
-											</div>
-											<div class="box-body big">
-											<form action="laporan-database.php" method="POST" class="form-horizontal" role="form">
-												<div class="row">
-												<label class="col-xs-3">Data Bulan</label>
-												  <div class="col-xs-6">
-													<input type="text" id="dari" name="from" class="form-control" required>
-														<label for="to">to</label>
-														<input type="text" id="ke" name="to" class="form-control" required>
-												  </div>
-												</div>
-											</div>
-										</div>
-					 </div>
-					<div class="modal-footer">
-					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					 <input class="btn btn-primary" type="submit" name="submit" value="Export" />
-					</form>
-					</div>
-				  </div>
-				</div>
-			  </div> 
+			
 			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
 			<div class="container">
 				<div class="row">
@@ -145,7 +105,7 @@ if (!isset($_SESSION['id_bu']) ) {
 										  </ul>
 								<div class="tab-content">
 								<div class="tab-pane fade in active" id="box_tab1">
-									<a href="#export-database" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Export</a>
+									
 									<div id="content-karyawan">
 									<table id="example1" class="table table-striped table-bordered table-hover">
 											<thead>
@@ -354,100 +314,14 @@ if (!isset($_SESSION['id_bu']) ) {
 	<!-- CUSTOM SCRIPT -->
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger.min.css" />
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger-theme-flat.min.css" />
-	<!-- <script src="js/app_contract.js"></script> -->
+	<script src="js/app_sp.js"></script>
 	<script src="js/script.js"></script>
 	<script>
 		jQuery(document).ready(function() {		
 			App.setPage("dynamic_table");  //Set current page
 			App.init(); //Initialise plugins and elements
 		});
-	$(document).ready(function(){
-  $("#boxs-resign").click(function(){
-    $('#tbl_jdl').html("Data SP Karyawan Resign");
-    $.ajax({
-        url: "ambil_sp_resign.php",
-        cache: false,
-        success: function(msg){
-            $(".box-resign").html(msg);
-        }
-    });
-  });
-  $("#boxs-active").click(function(){
-    $('#tbl_jdl').html("Data SP Karyawan Active");
-  });
-
-  $("#sbt-contract").click(function(){
-    var id_kw = $('#input-res-id').val();
-    var no_sp = $('#sp').val();
-    var tglsp = $('#tgl_sp').val();
-    var berlaku = $('#berlaku_sp').val();
-    var tableB = $("#example1").DataTable();
-    if(no_sp == null || no_sp == '' || no_sp == undefined) {
-       $(".error-sp").fadeIn();
-            return false;
-    }else if(tglsp == null || tglsp == '' || tglsp == undefined) {
-       $(".error-tgl-sp").fadeIn();
-            return false;
-    }else if(berlaku == null || berlaku == '' || berlaku == undefined) {
-       $(".error-ke").fadeIn();
-            return false;
-    }
-    else{
-     $.ajax({
-      type: "POST",
-        url: "update-sp.php",
-        data: {id_karyawan:id_kw, sp: no_sp, tgl_sp : tglsp, berlaku_sp : berlaku},
-        cache: false,
-        success: function(msg){
-          if(msg == '0'){
-            alert("Gagal Menyimpan ke Data !");
-          }else{
-              $('#content-karyawan').html(msg);
-              $('#open').modal('toggle');
-            tableB.destroy();
-            tableB = $('#example1').DataTable( {
-            scrollX:        true,
-            scrollCollapse: true,
-            paging:         true
-            });
-          }        
-        }
-    });
-    }
-    
-   });
-
-    var table = $('#example1').DataTable( {
-        scrollX:        true,
-        scrollCollapse: true,
-        paging:         true,
-        fixedColumns:   {
-            leftColumns: 2,
-            rightColumns: 1
-        }
-       
-    });
-  
-  $(document).on("click", "#setting", function () {
-     var id_karyawan = $(this).data('id');
-     var nama_karyawan = $(this).data('nama');
-     var nik = $(this).data('nik');
-     $("#id_karyawan").html( id_karyawan );
-     $("#nama_karyawan").val( nama_karyawan +" ("+nik+")" );
-     $("#input-res-id").attr( "value", id_karyawan );
-     //reset form_add_gaji
-    $('#sp').val('');
-    $('#berlaku_sp').val('');
-    $('#tgl_sp').val('');
-});
-  
-$( "#tgl_sp" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      dateFormat: "dd-mm-yy"
-    });
-
-});
+	
 	</script>
 	
 </body>

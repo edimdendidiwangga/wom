@@ -45,7 +45,7 @@ $(document).ready(function(){
 		$('.span-periode').html("Data Gaji Bulan "+periode);
 	    $.ajax({
 	    	type: "POST",
-	        url: "gaji_periode.php",
+	        url: "gaji_resign_periode.php",
 	        data: {periode_gaji:periode},
 	        cache: false,
 	        success: function(msg){

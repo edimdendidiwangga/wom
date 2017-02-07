@@ -110,7 +110,7 @@ include('cek-login.php');
 										</div>
 									</div>
 									<div class="box-body form">
-										<form id="wizForm" action="insert.php" class="form-horizontal" method="POST" data-toggle="validator" role="form">
+										<form id="wizForm" action="update-step.php" class="form-horizontal" method="POST" data-toggle="validator" role="form">
 										<input type="hidden" name="approval" value="t1">
 										<div class="wizard-form">
 										   <div class="wizard-content">
@@ -256,7 +256,7 @@ include('cek-login.php');
 														</div>
 														<div class="col-md-2">
 															 <label class="radio">
-																<input type="radio" name="gender" value="P" data-title="Female" class="uniform" <?php if($data['gender']=="L"){echo "checked";}elseif ($data['gender']!="L"){echo "id";}?>/>
+																<input type="radio" name="gender" value="P" data-title="Female" class="uniform" <?php if($data['gender']=="P"){echo "checked";}elseif ($data['gender']!="P"){echo "id";}?>/>
 															 Wanita
 															 </label>	
 													   </div>
@@ -365,7 +365,7 @@ include('cek-login.php');
 													<div class="form-group">
 													   <label class="control-label col-md-3">BU</label>
 													   <div class="col-md-4">
-													   <select id="bu" class="form-control" required>
+													   <select id="bu" class="form-control">
 													   <?php 
 											$que=mysql_query("SELECT distinct bu
 										    FROM bu 
@@ -379,7 +379,7 @@ include('cek-login.php');
 															 <option value="<?php echo $d['bu']; ?>"><?php echo "BU ".$d['bu']; ?></option>
 											<?php } ?>
 														</select>
-													   	<input type="hidden" class="form-control" id="id_bu" name="id_bu" value="<?php echo $d['id_bu']; ?>" >
+													   	<input type="hidden" class="form-control" id="id_bu" name="id_bu" value="<?php echo $data['id_bu']; ?>" >
 														  <span class="error-span"></span>
 													   </div>
 													</div>
@@ -431,18 +431,20 @@ include('cek-login.php');
 													   <label class="control-label col-md-3">No Jaminan<span class="required">*</span></label>
 													   <div class="col-md-4">
 													   <?php 
-														 $no_jam  = $data['no_jaminan'];
-														  $array 	= explode('/', $no_jam);
-														  $no_ijazah =  trim($array[0]);
-														  $no_bpkb =  trim($array[1]);
+														 
 													   if($data['jaminan']=="1"){ ?>
-													  <input type="text" class="form-control" id="ijazah" name="no_ijazah" placeholder="Isikan No Jaminan Ijazah" value="<?php echo $no_ijazah; ?>" required/>
+													  <input type="text" class="form-control" id="ijazah" name="no_ijazah" placeholder="Isikan No Jaminan Ijazah" value="<?php echo $data['no_jaminan']; ?>" required/>
+													   <input type="text" class="form-control" id="bpkb" name="no_bpkb" placeholder="Isikan No Jaminan BPKB" style="display:none;"/>
 
 													  <?php  }else if($data['jaminan']=="2"){ ?>
-													  
-													  <input type="text" class="form-control" id="bpkb" name="no_bpkb" placeholder="Isikan No Jaminan BPKB" value="<?php echo $no_bpkb; ?>" required/>
+													  <input type="text" class="form-control" id="ijazah" name="no_ijazah" placeholder="Isikan No Jaminan Ijazah"  style="display:none;"/>
+													  <input type="text" class="form-control" id="bpkb" name="no_bpkb" placeholder="Isikan No Jaminan BPKB" value="<?php echo $data['no_jaminan']; ?>" required/>
 
-													   <?php  }else if($data['jaminan']=="3"){ ?>
+													   <?php  }else if($data['jaminan']=="3"){ 
+													   $no_jam  = $data['no_jaminan'];
+														  $array 	= explode('/', $no_jam);
+														  $no_ijazah =  trim($array[0]);
+														  $no_bpkb =  trim($array[1]);?>
 													   <input type="text" class="form-control" id="ijazah" name="no_ijazah" placeholder="Isikan No Jaminan Ijazah" value="<?php echo $no_ijazah; ?>" required/>
 													   <input type="text" class="form-control" id="bpkb" name="no_bpkb" placeholder="Isikan No Jaminan BPKB" value="<?php echo $no_bpkb; ?>" required/>
 													   <?php  } ?>
@@ -535,14 +537,14 @@ include('cek-login.php');
 												<div class="form-group" id="spouse">
 													   <label class="control-label col-md-4">Spouse Name<span class="required">*</span></label>
 													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="spouse_name" placeholder="Isikan Nama Pasangan" value="<?php echo $data['spouse_name']; ?>" required/>
+														  <input type="text" class="form-control" name="spouse_name" placeholder="Isikan Nama Pasangan" value="<?php echo $data['spouse_name']; ?>" />
 														  <span class="error-span"></span>
 													   </div>
 												</div>
 												<div class="form-group" id="spouse_birth"> 
 													   <label class="control-label col-md-4">Spouse Birthdate<span class="required">*</span></label>
 													   <div class="col-md-8">
-														  <input type="text" class="form-control" name="spouse_birthdate" id="spouse_birthdate" placeholder="Isikan Tgl Lahir Pasangan" value="<?php echo $data['spouse_birthdate']; ?>" required/>
+														  <input type="text" class="form-control" name="spouse_birthdate" id="spouse_birthdate" placeholder="Isikan Tgl Lahir Pasangan" value="<?php echo $data['spouse_birthdate']; ?>" />
 														  <span class="error-span"></span>
 													   </div>
 												</div>
@@ -876,10 +878,10 @@ $(document).ready(function(){
    var jaminan = jamin.val();
     if(jaminan == "1"){
     	ijazah.fadeIn();
-    	bpkb.fadeOut();
+    	bpkb.remove();
     }
     if(jaminan == "2"){
-    	ijazah.fadeOut();
+    	ijazah.remove();
     	bpkb.fadeIn();
     }
     if(jaminan == "3"){

@@ -4,7 +4,7 @@ include('config.php');
 //tangkap data dari form
 $id = $_POST['user_id'];
 $username = $_POST['username'];
-$password = $_POST['password'];
+$password = md5($_POST['password']);
 
 
 //update data di database sesuai user_id

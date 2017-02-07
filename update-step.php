@@ -34,14 +34,14 @@ $org_name = trim(addslashes(strtoupper($_POST['org_name'])));
 $jaminan = $_POST['jaminan'];
 $no_ijazah = $_POST['no_ijazah'];
 $no_bpkb = $_POST['no_bpkb'];
-if(isset($no_ijazah)){
-	$no_jaminan = $no_ijazah;
-}else if (isset($no_bpkb)) {
-	$no_jaminan = $no_bpkb;
-}else if (isset($no_bpkb) && isset($no_bpkb)) {
+if (isset($no_bpkb) && isset($no_bpkb)) {
 	$no_jaminan = $no_ijazah." / ".$no_bpkb;
+}if(isset($no_ijazah) && !isset($no_bpkb)){
+	$no_jaminan = $no_ijazah;
+}if (isset($no_bpkb) && !isset($no_ijazah)) {
+	$no_jaminan = $no_bpkb;
 }
-$no_jaminan = trim(addslashes(strtoupper($_POST['no_jaminan'])));
+/*$no_jaminan = trim(addslashes(strtoupper($_POST['no_jaminan'])));*/
 $kartu_ketenagakerjaan = $_POST['kartu_ketenagakerjaan'];
 $bpjs_ketenagakerjaan = trim(addslashes(strtoupper($_POST['bpjs_ketenagakerjaan'])));
 $kartu_kesehatan = $_POST['kartu_kesehatan'];
@@ -73,39 +73,22 @@ $mutasi_ke = trim(addslashes(strtoupper($_POST['mutasi_ke'])));
 $sp = $_POST['sp'];
 $tgl_sp = trim($_POST['tgl_sp']);
 $masa_berlaku = trim(addslashes($_POST['masa_berlaku']));
-$date = date("d-m-y h:i:s");
+
 //simpan data ke database karyawan
 $query = mysql_query("update karyawan set nama_karyawan='$nama_karyawan', religion='$religion', birthplace='$birthplace', birthdate='$birthdate', id_type='$id_type', id_number='$id_number', education='$education', gender='$gender', marital_status='$marital_status', permanent_address='$permanent_address', domisili_address='$domisili_address', home_phone='$home_phone', mobile_phone='$mobile_phone', freshgraduate='$freshgraduate', financial='$financial' where id_karyawan='$id_karyawan'") or die(mysql_error());
 //simpan data ke data_karyawan 
-$query = mysql_query("update karyawan set id_bu='$id_bu', nik='$nik', , virtual_nik, npwp, hire_date, quit_date, position, job_class, location, cabang_induk, org_name, jaminan, no_jaminan, kartu_ketenagakerjaan, bpjs_ketenagakerjaan, kartu_kesehatan, bpjs_kesehatan, ket, status) 
-	values('', '$last_id', '$id_bu', '$nik', '$virtual_nik', '$npwp', '$hire_date', '$quit_date', '$position', '$job_class', '$location', '$cabang_induk', '$org_name', '$jaminan', '$no_jaminan', '$kartu_ketenagakerjaan', '$bpjs_ketenagakerjaan', '$kartu_kesehatan', '$bpjs_kesehatan', '$ket', '1')") or die(mysql_error());
+$query = mysql_query("update data_karyawan set id_bu='$id_bu', nik='$nik', virtual_nik='$virtual_nik', npwp='$npwp', hire_date='$hire_date', quit_date='$quit_date', position='$position', job_class='$job_class', location='$location', cabang_induk='$cabang_induk', org_name='$org_name', jaminan='$jaminan', no_jaminan='$no_jaminan', kartu_ketenagakerjaan='$kartu_ketenagakerjaan', bpjs_ketenagakerjaan='$bpjs_ketenagakerjaan', kartu_kesehatan='$kartu_kesehatan', bpjs_kesehatan='$bpjs_kesehatan', ket='$ket' where id_karyawan='$id_karyawan'") or die(mysql_error());
 //simpan data ke keluarga 
-$query = mysql_query("insert into keluarga (id_keluarga, id_karyawan, mother_name, spouse_name, spouse_birthdate, chile1_name, chile1_birthdate, chile2_name, chile2_birthdate, chile3_name, chile3_birthdate) 
-	values('', '$last_id', '$mother_name', '$spouse_name', '$spouse_birthdate', '$chile1_name', '$chile1_birthdate', '$chile2_name', '$chile2_birthdate', '$chile3_name', '$chile3_birthdate')") or die(mysql_error());
+$query = mysql_query("update keluarga set mother_name='$mother_name', spouse_name='$spouse_name', spouse_birthdate='$spouse_birthdate', chile1_name='$chile1_name', chile1_birthdate='$chile1_birthdate', chile2_name='$chile2_name', chile2_birthdate='$chile2_birthdate', chile3_name='$chile3_name', chile3_birthdate='$chile3_birthdate' where id_karyawan='$id_karyawan' ") or die(mysql_error());
 
-$query = mysql_query("insert into rekening (id_rekening, id_karyawan, atas_nama, nama_bank, no_rek) 
-	values('', '$last_id', '$atas_nama', '$nama_bank', '$no_rek')") or die(mysql_error());
+$query = mysql_query("update rekening set atas_nama='$atas_nama', nama_bank='$nama_bank', no_rek='$no_rek' where id_karyawan='$id_karyawan'") or die(mysql_error());
 
-$query = mysql_query("insert into mutasi (id_mutasi, id_karyawan, mutasi, mutasi_dari, mutasi_ke, sp, tgl_sp, masa_berlaku) 
-	values('', '$last_id', '$mutasi', '$mutasi_dari', '$mutasi_ke', '$sp', '$tgl_sp', '$masa_berlaku')") or die(mysql_error());
-//simpan data ke contract
-$query = mysql_query("insert into contract (id_contract, id_karyawan, pkwt, no_pkwt, join_date, end_date, update_contract) 
-	values('', '$last_id', '$pkwt', '$no_pkwt', '$join_date', '$end_date', '$date')") or die(mysql_error());
-//simpan data ke gaji
-$query = mysql_query("insert into gaji (id_gaji, id_karyawan, ump, gaji_pokok, tun_maintenance, tun_jabatan, tun_jaga_malam, tun_lain, insentive, overtime, kehadiran, rapel, update_gaji) 
-	values('', '$last_id', '$ump', '$gaji_pokok', '$tun_maintenance', '$tun_jabatan', '$tun_jaga_malam', '$tun_lain', '$insentive', '$overtime', '$kehadiran', '$rapel', '$date')") or die(mysql_error());
-//simpan data ke karyawan 
-$sql = "select update_contract from contract order by id_contract desc";
- $hasil = mysql_query($sql);
- $row = mysql_fetch_array($hasil);
- $last_update_contract = $row['update_contract'];
- //simpan data ke karyawan 
 $sql = "select update_gaji from gaji order by id_gaji desc";
  $hasil = mysql_query($sql);
  $row = mysql_fetch_array($hasil);
  $last_update_gaji = $row['update_gaji'];
 
-$query = mysql_query("update karyawan set update_contract='$last_update_contract', update_gaji='$last_update_gaji' where id_karyawan='$last_id'") or die(mysql_error());
+$query = mysql_query("update karyawan set update_gaji='$last_update_gaji' where id_karyawan='$last_id'") or die(mysql_error());
 
 if ($query) {
 	echo "<script>

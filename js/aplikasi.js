@@ -113,15 +113,32 @@ $(document).ready(function(){
      $("#input-res-id").attr( "value", id_karyawan );
      $('#tgl_metu').val('');
 });
-
-  $( "#dari" ).datepicker({
+  
+    $( "#seko" ).datepicker({
       showButtonPanel: true,
       changeMonth: true,
       changeYear: true,
-      yearRange: '1950:2026',
-      dateFormat: "M-yy"
+      dateFormat: "dd-mm-yy"
     });
-          $( "#tgl_metu" ).datepicker({
+    $( "#tekan" ).datepicker({
+      showButtonPanel: true,
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-mm-yy"
+    });
+    $( "#from" ).datepicker({
+      showButtonPanel: true,
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-mm-yy"
+    });
+    $( "#to" ).datepicker({
+      showButtonPanel: true,
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-mm-yy"
+    });
+    $( "#tgl_metu" ).datepicker({
       changeMonth: true,
       changeYear: true,
       dateFormat: "dd-mm-yy"

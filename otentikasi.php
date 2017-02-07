@@ -35,6 +35,7 @@ if (mysql_num_rows($q) == 1) {
 	$_SESSION['username'] = $username;
 	$_SESSION['nama_users'] = $data['nama_users'];
 	$_SESSION['id_users'] = $data['id_users'];
+	$_SESSION['level'] = $data['level'];
 	
 	//redirect ke halaman index
 	header('location:index.php');

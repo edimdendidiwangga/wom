@@ -65,6 +65,22 @@ unset($_SESSION['id_bu']);
 								<span class="selected"></span>
 								</a>					
 							</li>
+							<?php if ($_SESSION['level']=="1") { 
+								echo'
+								<li>
+								<a href="bu.php">
+								<i class="fa fa-sitemap fa-fw"></i> <span class="menu-text">Manajemen BU</span>
+								<span class="selected"></span>
+								</a>					
+							</li>
+							<li>
+								<a href="admin.php">
+								<i class="fa fa-users fa-fw"></i> <span class="menu-text">Manajemen User</span>
+								<span class="selected"></span>
+								</a>					
+							</li>
+
+						';}?>
 						</ul>
 						<!-- /SIDEBAR MENU -->
 					</div>

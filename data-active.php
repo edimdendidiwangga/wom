@@ -52,9 +52,6 @@ if (!isset($_SESSION['id_bu']) ) {
 	<section id="page">
 				<?php include 'menu.php';?>
 		<div id="main-content">
-			<!-- SAMPLE BOX CONFIGURATION MODAL FORM-->
-			  <!-- Modal for Edit button -->
-    
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 				  <div class="modal-content">
@@ -82,51 +79,7 @@ if (!isset($_SESSION['id_bu']) ) {
 				  </div>
 				</div>
 			  </div> 
-			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
 			<div class="modal fade" id="export-database" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				  <div class="modal-content">
-					<div class="modal-header">
-					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title"></h4>
-					</div>
-					<div class="modal-body">
-					<div class="box border primary">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Export Database</h4>
-												<div class="tools hidden-xs">
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													<a href="javascript:;" class="collapse">
-														<i class="fa fa-chevron-up"></i>
-													</a>
-												</div>
-											</div>
-											<div class="box-body big">
-											<form action="laporan-database.php" method="POST" class="form-horizontal" role="form">
-												<div class="row">
-												<label class="col-xs-3">Data Bulan</label>
-												  <div class="col-xs-6">
-													<input type="text" id="dari" name="from" class="form-control" required>
-														<label for="to">to</label>
-														<input type="text" id="ke" name="to" class="form-control" required>
-												  </div>
-												</div>
-											</div>
-										</div>
-					 </div>
-					<div class="modal-footer">
-					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					 <input class="btn btn-primary" type="submit" name="submit" value="Export" />
-					</form>
-					</div>
-				  </div>
-				</div>
-			  </div> 
-			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
-			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
-			<div class="modal fade" id="export-pengiriman" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 				  <div class="modal-content">
 					<div class="modal-header">
@@ -136,7 +89,16 @@ if (!isset($_SESSION['id_bu']) ) {
 					<div class="modal-body">
 					<div class="box border green">
 											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Export Database Interview Pengiriman</h4>
+											<?php
+											$que=mysql_query("SELECT nama_cabang
+										    FROM bu 
+										    where id_bu=".$_SESSION['id_bu']."");
+											if ($que === FALSE) {
+											    die(mysql_error());
+											}
+											$data = mysql_fetch_array($que);
+											?>
+												<h4><i class="fa fa-bars"></i>Export Data Active Cab <?php echo $data['nama_cabang'];?> </h4>
 												<div class="tools hidden-xs">
 													<a href="javascript:;" class="reload">
 														<i class="fa fa-refresh"></i>
@@ -147,13 +109,15 @@ if (!isset($_SESSION['id_bu']) ) {
 												</div>
 											</div>
 											<div class="box-body big">
-											<form action="laporan-menunggu.php" method="POST" class="form-horizontal" role="form">
+											
+											<form action="laporan_periode_data_active.php" method="POST" class="form-horizontal" role="form">
 												<div class="row">
 												<label class="col-xs-3">Data Bulan</label>
-												  <div class="col-xs-6">
-													<input type="text" id="dari1" name="from" class="form-control" required>
-														<label for="to">to</label>
-														<input type="text" id="ke1" name="to" class="form-control" required>
+												  <div class="col-xs-6">dari
+													<input type="text" id="seko" name="from" class="form-control">
+														<label for="to">ke</label>
+														<input type="text" id="tekan" name="to" class="form-control" required>
+														<input type="hidden" id="name_cabang" value="<?php echo $data['nama_cabang'];?>" name="name_cabang">
 												  </div>
 												</div>
 											</div>
@@ -168,6 +132,58 @@ if (!isset($_SESSION['id_bu']) ) {
 				</div>
 			  </div>
 			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
+			<div class="modal fade" id="export-gabungan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					  <h4 class="modal-title"></h4>
+					</div>
+					<div class="modal-body">
+					<div class="box border blue">
+											<div class="box-title">
+											<?php
+											$que=mysql_query("SELECT nama_cabang
+										    FROM bu 
+										    where id_bu=".$_SESSION['id_bu']."");
+											if ($que === FALSE) {
+											    die(mysql_error());
+											}
+											$data = mysql_fetch_array($que);
+											?>
+												<h4><i class="fa fa-bars"></i>Export Data Gabungan Cab <?php echo $data['nama_cabang'];?> </h4>
+												<div class="tools hidden-xs">
+													<a href="javascript:;" class="reload">
+														<i class="fa fa-refresh"></i>
+													</a>
+													<a href="javascript:;" class="collapse">
+														<i class="fa fa-chevron-up"></i>
+													</a>
+												</div>
+											</div>
+											<div class="box-body big">
+											
+											<form action="laporan_gabungan.php" method="POST" class="form-horizontal" role="form">
+												<div class="row">
+												<label class="col-xs-3">Data Bulan</label>
+												  <div class="col-xs-6">dari
+													<input type="text" id="from" name="from" class="form-control">
+														<label for="to">ke</label>
+														<input type="text" id="to" name="to" class="form-control" required>
+														<input type="hidden" id="name_cabang" value="<?php echo $data['nama_cabang'];?>" name="name_cabang">
+												  </div>
+												</div>
+											</div>
+										</div>
+					 </div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					 <input class="btn btn-primary" type="submit" name="submit" value="Export" />
+					</form>
+					</div>
+				  </div>
+				</div>
+			  </div>
 			<div class="container">
 				<div class="row">
 					<div id="content" class="col-lg-12">
@@ -184,17 +200,7 @@ if (!isset($_SESSION['id_bu']) ) {
 									</ul>
 									<!-- /BREADCRUMBS -->
 									<div class="clearfix">
-										<h3 class="content-title pull-left">Data Karyawan WOM Cab 
-										<?php 
-											$que=mysql_query("SELECT nama_cabang
-										    FROM bu 
-										    where id_bu=".$_SESSION['id_bu']."");
-											if ($que === FALSE) {
-											    die(mysql_error());
-											}
-											$data = mysql_fetch_array($que);
-											echo $data['nama_cabang'];
-											?>
+										<h3 class="content-title pull-left">Data Karyawan WOM Cab <?php echo $data['nama_cabang'];?>
 										</h3>
 									</div>
 								</div>
@@ -220,8 +226,12 @@ if (!isset($_SESSION['id_bu']) ) {
 								<div class="tab-content">
 								<div class="tab-pane fade in active" id="box_tab1">
 									<a href="index-step.php" class="btn btn-info"><i class="fa fa-plus-circle"></i> Tambah Data</a>
-									<a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="fa fa-upload"></i> Import</a>
-									<a href="#export-database" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Export</a>
+									<?php if ($_SESSION['level']=="1") { 
+										echo '
+									<a href="#myModal" data-toggle="modal" class="btn btn-warning"><i class="fa fa-upload"></i> Import</a> ';}?>
+									<a href="#export-database" data-toggle="modal" class="btn btn-success"><i class="fa fa-file-o"></i> Excel Data Active</a>
+									<a href="#" data-toggle="modal" class="btn btn-danger"><i class="fa fa-file-o"></i> PDF Report Daver</a>
+									<a href="#export-gabungan" data-toggle="modal" class="btn btn-primary"><i class="fa fa-file-o"></i> Excel Data Gabungan</a>
 									<div id="content-karyawan">
 									<table id="example1" class="table table-striped table-bordered table-hover">
 											<thead>
@@ -251,16 +261,18 @@ if (!isset($_SESSION['id_bu']) ) {
 											</thead>
 											<tbody>
 											<?php 
-											$query_tampil=mysql_query("SELECT karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.hire_date, contract.join1, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, karyawan.education, karyawan.gender, data_karyawan.status, data_karyawan.id_bu
-										    FROM karyawan 
+											/* && gaji.update_gaji = (SELECT max(update_gaji) FROM gaji)
+											group by karyawan.nama_karyawan */
+											$query_tampil=mysql_query("SELECT  karyawan.id_karyawan, karyawan.nama_karyawan, data_karyawan.position, bu.nama_cabang, data_karyawan.location, data_karyawan.nik, data_karyawan.virtual_nik, bu.bu, data_karyawan.hire_date, contract.join1, gaji.gaji_pokok, gaji.tun_maintenance, gaji.tun_jabatan, gaji.tun_jaga_malam, gaji.tun_lain, karyawan.education, karyawan.gender, data_karyawan.status, data_karyawan.id_bu
+										    FROM karyawan
 										    inner join data_karyawan on karyawan.id_karyawan=data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
 										    inner join contract on contract.id_karyawan = karyawan.id_karyawan
 										    inner join gaji on gaji.update_gaji = karyawan.update_gaji
-										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']."
+										    where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." 
 										    Order by karyawan.id_karyawan DESC");
 											if ($query_tampil === FALSE) {
-											    die(mysql_error());
+											   die(mysql_error());
 											}
 											$no=1;
 											while ($data = mysql_fetch_array($query_tampil)) {
@@ -416,7 +428,7 @@ if (!isset($_SESSION['id_bu']) ) {
 	<!-- CUSTOM SCRIPT -->
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger.min.css" />
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger-theme-flat.min.css" />
-	<script src="js/aplikasi.js"></script>
+	<script src="js/aplikasi.js"></script> 
 	<script src="js/script.js"></script>
 	<script>
 		jQuery(document).ready(function() {		

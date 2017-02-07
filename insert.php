@@ -41,7 +41,7 @@ if(isset($no_ijazah)){
 }else if (isset($no_bpkb) && isset($no_bpkb)) {
 	$no_jaminan = $no_ijazah." / ".$no_bpkb;
 }
-$no_jaminan = trim(addslashes(strtoupper($_POST['no_jaminan'])));
+/*$no_jaminan = trim(addslashes(strtoupper($_POST['no_jaminan'])));*/
 $kartu_ketenagakerjaan = $_POST['kartu_ketenagakerjaan'];
 $bpjs_ketenagakerjaan = trim(addslashes(strtoupper($_POST['bpjs_ketenagakerjaan'])));
 $kartu_kesehatan = $_POST['kartu_kesehatan'];
@@ -69,17 +69,17 @@ $no_rek = trim(addslashes($_POST['no_rek']));
 //mutasi&sp
 $mutasi1_dari = trim(addslashes(strtoupper($_POST['mutasi_dari'])));
 $mutasi1_ke = trim(addslashes(strtoupper($_POST['mutasi_ke'])));
-
-$date = date("d-m-y h:i:s");
+$date = date("d-m-y");
+$update_gaji = date("d-m-y h:i:s");
 //simpan data ke database
-$query = mysql_query("insert into karyawan(id_karyawan, nama_karyawan, religion, birthplace, birthdate, id_type, id_number, education, gender, marital_status, permanent_address, domisili_address, home_phone, mobile_phone, freshgraduate, financial) 
-	values('', '$nama_karyawan', '$religion', '$birthplace', '$birthdate', '$id_type', '$id_number', '$education', '$gender', '$marital_status', '$permanent_address', '$domisili_address', '$home_phone', '$mobile_phone', '$freshgraduate', '$financial')") or die(mysql_error());
+$query = mysql_query("insert into karyawan(id_karyawan, nama_karyawan, religion, birthplace, birthdate, id_type, id_number, education, gender, marital_status, permanent_address, domisili_address, home_phone, mobile_phone, freshgraduate, financial, update_active) 
+	values('', '$nama_karyawan', '$religion', '$birthplace', '$birthdate', '$id_type', '$id_number', '$education', '$gender', '$marital_status', '$permanent_address', '$domisili_address', '$home_phone', '$mobile_phone', '$freshgraduate', '$financial', '$date')") or die(mysql_error());
 //simpan data ke karyawan 
 $sql = "select max(id_karyawan) as last_id from karyawan limit 1";
  $hasil = mysql_query($sql);
  $row = mysql_fetch_array($hasil);
  $last_id = $row['last_id'];
-//simpan data ke data_karyawan 
+//simpan data ke data_karyawan
 $query = mysql_query("insert into data_karyawan (id_data_karyawan, id_karyawan, id_bu, nik, virtual_nik, npwp, hire_date, quit_date, position, job_class, location, cabang_induk, org_name, jaminan, no_jaminan, kartu_ketenagakerjaan, bpjs_ketenagakerjaan, kartu_kesehatan, bpjs_kesehatan, ket, status) 
 	values('', '$last_id', '$id_bu', '$nik', '$virtual_nik', '$npwp', '$hire_date', '$quit_date', '$position', '$job_class', '$location', '$cabang_induk', '$org_name', '$jaminan', '$no_jaminan', '$kartu_ketenagakerjaan', '$bpjs_ketenagakerjaan', '$kartu_kesehatan', '$bpjs_kesehatan', '$ket', '1')") or die(mysql_error());
 //simpan data ke keluarga 
@@ -93,22 +93,18 @@ $query = mysql_query("insert into mutasi (id_mutasi, id_karyawan, mutasi1_dari, 
 	values('', '$last_id', '$mutasi1_dari', '$mutasi1_ke')") or die(mysql_error());
 //simpan data ke contract
 $query = mysql_query("insert into contract (id_contract, id_karyawan, no_pkwt1, join1, end1, update_contract) 
-	values('', '$last_id', '$no_pkwt', '$join_date', '$end_date', '$date')") or die(mysql_error());
+	values('', '$last_id', '$no_pkwt', '$join_date', '$end_date', '$update_gaji')") or die(mysql_error());
 //simpan data ke gaji
 $query = mysql_query("insert into gaji (id_gaji, id_karyawan, ump, gaji_pokok, tun_maintenance, tun_jabatan, tun_jaga_malam, tun_lain, insentive, overtime, kehadiran, rapel, update_gaji) 
-	values('', '$last_id', '$ump', '$gaji_pokok', '$tun_maintenance', '$tun_jabatan', '$tun_jaga_malam', '$tun_lain', '$insentive', '$overtime', '$kehadiran', '$rapel', '$date')") or die(mysql_error());
-//simpan data ke karyawan 
-$sql = "select update_contract from contract order by id_contract desc";
- $hasil = mysql_query($sql);
- $row = mysql_fetch_array($hasil);
- $last_update_contract = $row['update_contract'];
+	values('', '$last_id', '$ump', '$gaji_pokok', '$tun_maintenance', '$tun_jabatan', '$tun_jaga_malam', '$tun_lain', '$insentive', '$overtime', '$kehadiran', '$rapel', '$update_gaji')") or die(mysql_error());
+
  //simpan data ke karyawan 
 $sql = "select update_gaji from gaji order by id_gaji desc";
  $hasil = mysql_query($sql);
  $row = mysql_fetch_array($hasil);
  $last_update_gaji = $row['update_gaji'];
 
-$query = mysql_query("update karyawan set update_contract='$last_update_contract', update_gaji='$last_update_gaji' where id_karyawan='$last_id'") or die(mysql_error());
+$query = mysql_query("update karyawan set  update_gaji='$last_update_gaji' where id_karyawan='$last_id'") or die(mysql_error());
 
 if ($query) {
 	echo "<script>

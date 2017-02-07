@@ -63,7 +63,7 @@ if (!isset($_SESSION['id_bu']) ) {
 					<div class="modal-body">
 					<div class="box border green">
 											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Export Data Gaji Per Periode </h4>
+												<h4><i class="fa fa-bars"></i>Export Data Gaji Karyawan Resign </h4>
 												<div class="tools hidden-xs">
 													<a href="javascript:;" class="reload">
 														<i class="fa fa-refresh"></i>
@@ -83,7 +83,7 @@ if (!isset($_SESSION['id_bu']) ) {
 											}
 											$data = mysql_fetch_array($que);
 											?>
-											<form action="laporan_payroll_active.php" method="POST" class="form-horizontal" role="form">
+											<form action="laporan_payroll_resign.php" method="POST" class="form-horizontal" role="form">
 												<div class="row">
 												<label class="col-xs-3">Data Bulan</label>
 												  <div class="col-xs-6">dari
@@ -115,7 +115,7 @@ if (!isset($_SESSION['id_bu']) ) {
 					<div class="modal-body">
 					<div class="box border blue">
 											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Export Database Data Active </h4>
+												<h4><i class="fa fa-bars"></i>Export Data Gaji Karyawan Resign Per Periode </h4>
 												<div class="tools hidden-xs">
 													<a href="javascript:;" class="reload">
 														<i class="fa fa-refresh"></i>
@@ -135,7 +135,7 @@ if (!isset($_SESSION['id_bu']) ) {
 											}
 											$data = mysql_fetch_array($que);
 											?>
-											<form action="laporan_payroll_periode_active.php" method="POST" class="form-horizontal" role="form">
+											<form action="laporan_payroll_periode_resign.php" method="POST" class="form-horizontal" role="form">
 												<h4>Tekan Tombol Export untuk download ke excel!</h4>
 											<input type="hidden" id="periode_bln" name="periode">
 											<input type="hidden" id="name_cabang" value="<?php echo $data['nama_cabang'];?>" name="name_cabang">
@@ -165,7 +165,7 @@ if (!isset($_SESSION['id_bu']) ) {
 									</ul>
 									<!-- /BREADCRUMBS -->
 									<div class="clearfix">
-										<h3 class="content-title pull-left">Data Gaji Karyawan WOM Cab <?php echo $data['nama_cabang'];?>
+										<h3 class="content-title pull-left">Data Gaji Karyawan Resign WOM Cab <?php echo $data['nama_cabang'];?>
 										</h3>
 									</div>
 								</div>
@@ -231,7 +231,7 @@ if (!isset($_SESSION['id_bu']) ) {
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
 										    inner join karyawan on gaji.update_gaji= karyawan.update_gaji
 										    inner join contract on contract.id_karyawan = karyawan.id_karyawan
-										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." 
+										   where data_karyawan.status = '2' && data_karyawan.id_bu=".$_SESSION['id_bu']." 
 										    Order by karyawan.id_karyawan ASC");
 											if ($query_tampil === FALSE) {
 											    die(mysql_error());
@@ -580,14 +580,13 @@ if (!isset($_SESSION['id_bu']) ) {
 	<!-- CUSTOM SCRIPT -->
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger.min.css" />
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger-theme-flat.min.css" />
-	<script src="js/app_payroll.js"></script>
+	<script src="js/app_payroll_resign.js"></script>
 	<script src="js/script.js"></script>
 	<script>
 		jQuery(document).ready(function() {		
 			App.setPage("dynamic_table");  
 			App.init();
 		});
-		
 	</script>
 	 
 </body>

@@ -1,8 +1,8 @@
 $(document).ready(function(){
   $("#boxs-resign").click(function(){
-    $('#tbl_jdl').html("Data Contract Karyawan Resign");
+    $('#tbl_jdl').html("Data SP Karyawan Resign");
     $.ajax({
-        url: "ambil_contract_resign.php",
+        url: "ambil_sp_resign.php",
         cache: false,
         success: function(msg){
             $(".box-resign").html(msg);
@@ -10,36 +10,36 @@ $(document).ready(function(){
     });
   });
   $("#boxs-active").click(function(){
-    $('#tbl_jdl').html("Data Contract Karyawan Active");
+    $('#tbl_jdl').html("Data SP Karyawan Active");
   });
 
- 
   $("#sbt-contract").click(function(){
     var id_kw = $('#input-res-id').val();
-    var pkwt_ke = $('#pkwt').val();
-    var noe_pkwt = $('#no_pkwt').val();
-    var start = $('#start_date').val();
-    var end = $('#end_date').val();
+    var no_sp = $('#sp').val();
+    var tglsp = $('#tgl_sp').val();
+    var berlaku = $('#berlaku_sp').val();
     var tableB = $("#example1").DataTable();
-    if(pkwt_ke == null || pkwt_ke == '' || pkwt_ke == undefined) {
-       $(".error-pkwt").fadeIn();
+    if(no_sp == null || no_sp == '' || no_sp == undefined) {
+       $(".error-sp").fadeIn();
             return false;
-    }else if(noe_pkwt == null || noe_pkwt == '' || noe_pkwt == undefined) {
-       $(".error-nopkwt").fadeIn();
+    }else if(tglsp == null || tglsp == '' || tglsp == undefined) {
+       $(".error-tgl-sp").fadeIn();
+            return false;
+    }else if(berlaku == null || berlaku == '' || berlaku == undefined) {
+       $(".error-ke").fadeIn();
             return false;
     }
     else{
      $.ajax({
       type: "POST",
-        url: "update-contract.php",
-        data: {id_karyawan:id_kw, pkwt: pkwt_ke, no_pkwt : noe_pkwt, start_date : start, end_date : end},
+        url: "update-sp.php",
+        data: {id_karyawan:id_kw, sp: no_sp, tgl_sp : tglsp, berlaku_sp : berlaku},
         cache: false,
         success: function(msg){
           if(msg == '0'){
-            alert("Gagal Memindahkan ke Data Resign!");
+            alert("Gagal Menyimpan ke Data !");
           }else{
               $('#content-karyawan').html(msg);
-              
               $('#open').modal('toggle');
             tableB.destroy();
             tableB = $('#example1').DataTable( {
@@ -59,9 +59,10 @@ $(document).ready(function(){
         scrollCollapse: true,
         paging:         true,
         fixedColumns:   {
-            leftColumns: 3,
+            leftColumns: 2,
             rightColumns: 1
         }
+       
     });
   
   $(document).on("click", "#setting", function () {
@@ -70,26 +71,17 @@ $(document).ready(function(){
      var nik = $(this).data('nik');
      $("#id_karyawan").html( id_karyawan );
      $("#nama_karyawan").val( nama_karyawan +" ("+nik+")" );
-     $("#btn-edit").attr( "href", "edit-step.php?id_karyawan="+id_karyawan );
-     $("#btn-hapus").attr( "data-id", id_karyawan );
      $("#input-res-id").attr( "value", id_karyawan );
      //reset form_add_gaji
-    $('#pkwt').val('');
-    $('#no_pkwt').val('');
-    $('#start_date').val('');
-    $('#end_date').val('');
+    $('#sp').val('');
+    $('#berlaku_sp').val('');
+    $('#tgl_sp').val('');
 });
-
-          $( "#start_date" ).datepicker({
+  
+$( "#tgl_sp" ).datepicker({
       changeMonth: true,
       changeYear: true,
       dateFormat: "dd-mm-yy"
     });
-          $( "#end_date" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      dateFormat: "dd-mm-yy"
-    });
-       
 
 });

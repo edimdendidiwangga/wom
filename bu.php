@@ -43,10 +43,81 @@ include('cek-login.php');
 <body>
 	<?php include 'header.php';?>
 		<section id="page">
-				<?php include 'menu.php';?>
+				<div id="sidebar" class="sidebar">
+					<div class="sidebar-menu nav-collapse">
+						<div class="divide-20"></div>
+						<!-- SEARCH BAR -->
+						<div id="search-bar">
+							<input class="search" type="text" placeholder="Search"><i class="fa fa-search search-icon"></i>
+						</div>
+						<ul>
+							
+							<li>
+								<a href="index.php">
+								<i class="fa fa-home fa-fw"></i> <span class="menu-text">Dashboard</span>
+								<span class="selected"></span>
+								</a>					
+							</li>
+							<?php if ($_SESSION['level']=="1") { 
+								echo'
+								<li>
+								<a href="bu.php">
+								<i class="fa fa-sitemap fa-fw"></i> <span class="menu-text">Manajemen BU</span>
+								<span class="selected"></span>
+								</a>					
+							</li>
+							<li>
+								<a href="admin.php">
+								<i class="fa fa-users fa-fw"></i> <span class="menu-text">Manajemen User</span>
+								<span class="selected"></span>
+								</a>					
+							</li>
+
+						';}?>
+						</ul>
+						<!-- /SIDEBAR MENU -->
+					</div>
+				</div>
 				<!-- /SIDEBAR -->
 		<div id="main-content">
 			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
+			<div class="modal fade" id="export-database" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					  <h4 class="modal-title"></h4>
+					</div>
+					<div class="modal-body">
+					<div class="box border green">
+											<div class="box-title">
+											
+												<h4><i class="fa fa-bars"></i>Export Data BU</h4>
+												<div class="tools hidden-xs">
+													<a href="javascript:;" class="reload">
+														<i class="fa fa-refresh"></i>
+													</a>
+													<a href="javascript:;" class="collapse">
+														<i class="fa fa-chevron-up"></i>
+													</a>
+												</div>
+											</div>
+											<div class="box-body big">
+											
+											<form action="laporan_bu.php" method="POST" class="form-horizontal" role="form">
+												<h4>Export ke Excel, Tekan Tombol Export dibawah !</h4>
+											</div>
+										</div>
+					 </div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					 <input class="btn btn-success" type="submit" name="submit" value="Export" />
+					</form>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			  <!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
 			<div class="modal fade" id="edit_bu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 				  <div class="modal-content">
@@ -69,7 +140,7 @@ include('cek-login.php');
 											</div>
 											<div class="box-body big">
 											<form action="edit_bu.php" method="POST" class="form-horizontal" role="form">
-											<input type="hidden" id="id_bu">
+											<input type="hidden" id="id_bu" name="id_bu">
 												<div class="form-group">
 													<label class="col-sm-4 control-label"> BU</label>
 													<div class="col-sm-8">
@@ -115,7 +186,7 @@ include('cek-login.php');
 					 </div>
 					<div class="modal-footer">
 					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					 <input class="btn btn-primary" type="submit" name="submit" value="Export" />
+					 <input class="btn btn-primary" type="submit" name="submit" value="Simpan" />
 					</form>
 					</div>
 				  </div>
@@ -158,7 +229,7 @@ include('cek-login.php');
 								<div class="tab-content">
 								<div class="tab-pane fade in active" id="box_tab1">
 
-								<a href="#add-bu" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Tambah BU</a>
+								<a href="#add-bu" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Tambah BU</a> <a href="#export-database" data-toggle="modal" class="btn btn-success"><i class="fa fa-rocket"></i> Export Excel</a>
 									<table id="example1" class="table table-striped table-bordered table-hover">
 											<thead>
 												<tr>
@@ -170,8 +241,10 @@ include('cek-login.php');
 												</tr>
 											</thead>
 											<tbody>
+											 <!-- where bu.id_users=".$_SESSION['id_users']." -->
 											<?php 
-											$query_tampil=mysql_query("SELECT * FROM bu INNER JOIN users ON bu.id_users = users.id_users where bu.id_users=".$_SESSION['id_users']."
+											$query_tampil=mysql_query("SELECT * FROM bu INNER JOIN users ON bu.id_users = users.id_users
+
 										    Order by bu.nama_cabang ASC");
 											if ($query_tampil === FALSE) {
 											    die(mysql_error());
@@ -236,7 +309,7 @@ include('cek-login.php');
 												</div>
 											</div>
 											<div class="box-body big">
-											<form action="add_bu.php" method="POST" class="form-horizontal" role="form">
+											<form action="add- bu.php" method="POST" class="form-horizontal" role="form">
 												<div class="form-group">
 													<label class="col-sm-4 control-label"> BU</label>
 													<div class="col-sm-8">
@@ -343,6 +416,18 @@ include('cek-login.php');
      $("#id_users").html( nama_users );
      //reset form_add_gaji
 });
+		 $( "#seko" ).datepicker({
+      showButtonPanel: true,
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-mm-yy"
+    });
+    $( "#tekan" ).datepicker({
+      showButtonPanel: true,
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "dd-mm-yy"
+    });
 	</script>
 	
  

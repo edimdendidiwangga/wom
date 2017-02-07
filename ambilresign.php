@@ -5,7 +5,7 @@ if (!isset($_SESSION['id_bu']) ) {
 	header('location:index.php');
 }
 ?>
-<a href="#export-database" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Export</a>
+
 <table id="example2" class="table table-striped table-bordered table-hover">
 											<thead>
 												<tr>
@@ -40,8 +40,8 @@ if (!isset($_SESSION['id_bu']) ) {
 										    inner join data_karyawan on karyawan.id_karyawan=data_karyawan.id_karyawan
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
 										    inner join contract on contract.id_karyawan = karyawan.id_karyawan
-										    inner join gaji on gaji.update_gaji = karyawan.update_gaji
-										   where data_karyawan.status = '2' && data_karyawan.id_bu=".$_SESSION['id_bu']."
+										    inner join gaji on gaji.id_karyawan = karyawan.id_karyawan
+										   where data_karyawan.status = '2' && data_karyawan.id_bu=".$_SESSION['id_bu']." && gaji.update_gaji = (SELECT max(update_gaji)FROM gaji)
 										    Order by karyawan.id_karyawan DESC");
 											if ($query_tampil === FALSE) {
 											    die(mysql_error());

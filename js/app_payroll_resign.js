@@ -3,7 +3,7 @@ $(document).ready(function(){
   $("#boxs-periode").click(function(){
     $('#tbl_jdl').html("Data Gaji Per Periode");
     $.ajax({
-        url: "gaji-history.php",
+        url: "gaji-resign-history.php",
         cache: false,
         success: function(msg){
             $(".box-periode").html(msg);

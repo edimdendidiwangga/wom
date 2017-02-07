@@ -20,13 +20,17 @@
 								<span class="selected"></span>
 								</a>					
 							</li>
-							<li>
-								<a href="payroll.php">
-								<i class="fa fa-dollar fa-fw"></i> <span class="menu-text">Payroll</span>
-								<span class="selected"></span>
-								</a>					
-							</li>
 							
+							<li class="has-sub">
+								<a href="javascript:;" class="">
+								<i class="fa  fa-dollar fa-fw"></i> <span class="menu-text">Payroll</span>
+								<span class="arrow"></span>
+								</a>
+								<ul class="sub">
+									<li><a class="" href="payroll.php"><span class="sub-menu-text">Data Gaji Karyawan Active</span></a></li>
+									<li><a class="" href="payroll_resign.php"><span class="sub-menu-text">Data Gaji Karyawan Resign</span></a></li>
+								</ul>
+							</li>
 							<li>
 								<a href="contract.php">
 								<i class="fa fa-suitcase fa-fw"></i> <span class="menu-text">Contract</span>
@@ -51,18 +55,7 @@
 								<span class="selected"></span>
 								</a>					
 							</li>
-							<li>
-								<a href="bu.php">
-								<i class="fa fa-sitemap fa-fw"></i> <span class="menu-text">Manajemen BU</span>
-								<span class="selected"></span>
-								</a>					
-							</li>
-							<li>
-								<a href="admin.php">
-								<i class="fa fa-users fa-fw"></i> <span class="menu-text">Manajemen User</span>
-								<span class="selected"></span>
-								</a>					
-							</li>
+							
 						</ul>
 						<!-- /SIDEBAR MENU -->
 					</div>

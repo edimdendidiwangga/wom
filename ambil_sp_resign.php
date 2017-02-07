@@ -5,7 +5,7 @@ if (!isset($_SESSION['id_bu']) ) {
 	header('location:index.php');
 }
 ?>
-<a href="#export-database" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Export</a>
+
 									<table id="example2" class="table table-striped table-bordered table-hover">
 											<thead>
 												<tr>

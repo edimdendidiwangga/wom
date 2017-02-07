@@ -17,7 +17,7 @@ $insentive = $_POST['insentive'];
 $overtime = $_POST['overtime'];
 $rapel = $_POST['rapel'];
 $periode_gaji = $_POST['periode_gaji'];
-$update_gaji = date("d-m-y h:i:s");
+$update_gaji = date("dd-mm-yy h:i:s");
 //simpan data ke database
 $que = mysql_query("update gaji set ump = '$ump', gaji_pokok = '$gaji_pokok', tun_maintenance = '$tun_maintenance', tun_jabatan = '$tun_jabatan', tun_jaga_malam = '$tun_jaga_malam', tun_lain = '$tun_lain', insentive = '$insentive', overtime = '$overtime', kehadiran = '$kehadiran', rapel = '$rapel', periode_gaji = '$periode_gaji', update_gaji = '$update_gaji' where id_gaji = '$id_gaji'") or die(mysql_error());
 $sql = "select update_gaji from gaji order by id_gaji desc";

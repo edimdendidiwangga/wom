@@ -52,9 +52,7 @@ if (!isset($_SESSION['id_bu']) ) {
 	<section id="page">
 				<?php include 'menu.php';?>
 		<div id="main-content">
-			
-			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
-			<div class="modal fade" id="export-pengiriman" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal fade" id="export-database" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 				  <div class="modal-content">
 					<div class="modal-header">
@@ -64,7 +62,16 @@ if (!isset($_SESSION['id_bu']) ) {
 					<div class="modal-body">
 					<div class="box border green">
 											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Export Database Interview Pengiriman</h4>
+											<?php
+											$que=mysql_query("SELECT nama_cabang
+										    FROM bu 
+										    where id_bu=".$_SESSION['id_bu']."");
+											if ($que === FALSE) {
+											    die(mysql_error());
+											}
+											$data = mysql_fetch_array($que);
+											?>
+												<h4><i class="fa fa-bars"></i>Export Data Resign Cab <?php echo $data['nama_cabang'];?> </h4>
 												<div class="tools hidden-xs">
 													<a href="javascript:;" class="reload">
 														<i class="fa fa-refresh"></i>
@@ -75,13 +82,15 @@ if (!isset($_SESSION['id_bu']) ) {
 												</div>
 											</div>
 											<div class="box-body big">
-											<form action="laporan-menunggu.php" method="POST" class="form-horizontal" role="form">
+											
+											<form action="laporan_data_resign.php" method="POST" class="form-horizontal" role="form">
 												<div class="row">
 												<label class="col-xs-3">Data Bulan</label>
-												  <div class="col-xs-6">
-													<input type="text" id="dari1" name="from" class="form-control" required>
-														<label for="to">to</label>
-														<input type="text" id="ke1" name="to" class="form-control" required>
+												  <div class="col-xs-6">dari
+													<input type="text" id="seko" name="from" class="form-control">
+														<label for="to">ke</label>
+														<input type="text" id="tekan" name="to" class="form-control" required>
+														<input type="hidden" id="name_cabang" value="<?php echo $data['nama_cabang'];?>" name="name_cabang">
 												  </div>
 												</div>
 											</div>
@@ -147,7 +156,7 @@ if (!isset($_SESSION['id_bu']) ) {
 								<div class="tab-content">
 								<div class="tab-pane fade in active" id="box_tab1">
 									
-									<a href="#export-database" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Export</a>
+									<a href="#export-database" data-toggle="modal" class="btn btn-success"><i class="fa fa-rocket"></i> Export</a>
 									<div id="content-karyawan">
 									<table id="example1" class="table table-striped table-bordered table-hover">
 											<thead>

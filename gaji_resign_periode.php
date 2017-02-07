@@ -50,7 +50,7 @@ $periode_gaji = $_POST['periode_gaji'];
 										    inner join bu on bu.id_bu = data_karyawan.id_bu
 										    inner join karyawan on gaji.id_karyawan= karyawan.id_karyawan
 										    inner join contract on contract.id_karyawan = karyawan.id_karyawan
-										   where data_karyawan.status = '1' && data_karyawan.id_bu=".$_SESSION['id_bu']." && gaji.periode_gaji = '".$periode_gaji."'
+										   where data_karyawan.status = '2' && data_karyawan.id_bu=".$_SESSION['id_bu']." && gaji.periode_gaji = '".$periode_gaji."'
 										    Order by karyawan.id_karyawan ASC");
 											if ($query_tampil === FALSE) {
 											    die(mysql_error());

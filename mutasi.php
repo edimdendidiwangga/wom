@@ -53,48 +53,6 @@ if (!isset($_SESSION['id_bu']) ) {
 		<div id="main-content">
 			
 			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
-			<div class="modal fade" id="export-pengiriman" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				  <div class="modal-content">
-					<div class="modal-header">
-					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h4 class="modal-title"></h4>
-					</div>
-					<div class="modal-body">
-					<div class="box border green">
-											<div class="box-title">
-												<h4><i class="fa fa-bars"></i>Export Database Interview Pengiriman</h4>
-												<div class="tools hidden-xs">
-													<a href="javascript:;" class="reload">
-														<i class="fa fa-refresh"></i>
-													</a>
-													<a href="javascript:;" class="collapse">
-														<i class="fa fa-chevron-up"></i>
-													</a>
-												</div>
-											</div>
-											<div class="box-body big">
-											<form action="laporan-menunggu.php" method="POST" class="form-horizontal" role="form">
-												<div class="row">
-												<label class="col-xs-3">Data Bulan</label>
-												  <div class="col-xs-6">
-													<input type="text" id="dari1" name="from" class="form-control" required>
-														<label for="to">to</label>
-														<input type="text" id="ke1" name="to" class="form-control" required>
-												  </div>
-												</div>
-											</div>
-										</div>
-					 </div>
-					<div class="modal-footer">
-					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					 <input class="btn btn-success" type="submit" name="submit" value="Export" />
-					</form>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			<!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
 			<div class="container">
 				<div class="row">
 					<div id="content" class="col-lg-12">
@@ -146,7 +104,7 @@ if (!isset($_SESSION['id_bu']) ) {
 										  </ul>
 								<div class="tab-content">
 								<div class="tab-pane fade in active" id="box_tab1">
-									<a href="#export-database" data-toggle="modal" class="btn btn-primary"><i class="fa fa-rocket"></i> Export</a>
+									
 									<div id="content-karyawan">
 									<table id="example1" class="table table-striped table-bordered table-hover">
 											<thead>
@@ -352,93 +310,14 @@ if (!isset($_SESSION['id_bu']) ) {
 	<!-- CUSTOM SCRIPT -->
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger.min.css" />
 	<link rel="stylesheet" type="text/css" href="js/hubspot-messenger/css/messenger-theme-flat.min.css" />
-	<!-- <script src="js/app_contract.js"></script> -->
+	<script src="js/app_mutasi.js"></script>
 	<script src="js/script.js"></script>
 	<script>
 		jQuery(document).ready(function() {		
 			App.setPage("dynamic_table");  //Set current page
 			App.init(); //Initialise plugins and elements
 		});
-		$(document).ready(function(){
-  $("#boxs-resign").click(function(){
-    $('#tbl_jdl').html("Data Mutasi Karyawan Resign");
-    $.ajax({
-        url: "ambil_mutasi_resign.php",
-        cache: false,
-        success: function(msg){
-            $(".box-resign").html(msg);
-        }
-    });
-  });
-  $("#boxs-active").click(function(){
-    $('#tbl_jdl').html("Data Mutasi Karyawan Active");
-  });
-
- 
-  $("#sbt-contract").click(function(){
-    var id_kw = $('#input-res-id').val();
-    var mut = $('#mutasi').val();
-    var from = $('#dari').val();
-    var to = $('#ke').val();
-    var tableB = $("#example1").DataTable();
-    if(mut == null || mut == '' || mut == undefined) {
-       $(".error-mutasi").fadeIn();
-            return false;
-    }else if(from == null || from == '' || from == undefined) {
-       $(".error-dari").fadeIn();
-            return false;
-    }else if(to == null || to == '' || to == undefined) {
-       $(".error-ke").fadeIn();
-            return false;
-    }
-    else{
-     $.ajax({
-      type: "POST",
-        url: "update-mutasi.php",
-        data: {id_karyawan:id_kw, mutasi: mut, dari : from, ke : to},
-        cache: false,
-        success: function(msg){
-          if(msg == '0'){
-            alert("Gagal Memindahkan ke Data !");
-          }else{
-              $('#content-karyawan').html(msg);
-              $('#open').modal('toggle');
-            tableB.destroy();
-            tableB = $('#example1').DataTable( {
-            scrollX:        true,
-            scrollCollapse: true,
-            paging:         true
-            });
-          }        
-        }
-    });
-    }
-    
-   });
-
-    var table = $('#example1').DataTable( {
-        scrollX:        true,
-        scrollCollapse: true,
-        paging:         true,
-        fixedColumns:   {
-            rightColumns: 1
-       	}
-    });
-  
-  $(document).on("click", "#setting", function () {
-     var id_karyawan = $(this).data('id');
-     var nama_karyawan = $(this).data('nama');
-     var nik = $(this).data('nik');
-     $("#id_karyawan").html( id_karyawan );
-     $("#nama_karyawan").val( nama_karyawan +" ("+nik+")" );
-     $("#input-res-id").attr( "value", id_karyawan );
-     //reset form_add_gaji
-    $('#mutasi').val('');
-    $('#dari').val('');
-    $('#ke').val('');
-});
-
-});
+		
 	</script>
 	
 </body>
